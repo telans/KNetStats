@@ -2,6 +2,7 @@ v1.2
 
 - Added Brazilian portuguese translation (me).
 - Added Kirghiz translation (Ilyas Bakirov).
+- Added Italian translation (Roberto Leandrini).
 - Bug Fix: When network interface in changed, the Statistics window caption is changed too.
 - Bug Fix: Statistics window now correctly format Download/Upload Speed.
 
