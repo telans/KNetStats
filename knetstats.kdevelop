@@ -11,7 +11,7 @@
     </keywords>
     <projectdirectory>.</projectdirectory>
     <absoluteprojectpath>false</absoluteprojectpath>
-    <description></description>
+    <description/>
     <ignoreparts>
       <part>KDevcopyto</part>
       <part>KDevCTags</part>
@@ -84,12 +84,12 @@
   </kdevdoctreeview>
   <kdevdebugger>
     <general>
-      <dbgshell></dbgshell>
-      <programargs></programargs>
-      <gdbpath></gdbpath>
-      <configGdbScript></configGdbScript>
-      <runShellScript></runShellScript>
-      <runGdbScript></runGdbScript>
+      <dbgshell/>
+      <programargs/>
+      <gdbpath/>
+      <configGdbScript/>
+      <runShellScript/>
+      <runGdbScript/>
       <breakonloadinglibs>true</breakonloadinglibs>
       <separatetty>false</separatetty>
       <floatingtoolbar>false</floatingtoolbar>
@@ -109,13 +109,13 @@
   </kdevfilecreate>
   <kdevtrollproject>
     <general>
-      <activedir>src</activedir>
+      <activedir></activedir>
     </general>
     <run>
       <directoryradio>executable</directoryradio>
       <customdirectory>/</customdirectory>
-      <mainprogram></mainprogram>
-      <programargs></programargs>
+      <mainprogram/>
+      <programargs/>
       <terminal>false</terminal>
       <autocompile>true</autocompile>
       <envvars/>
@@ -124,10 +124,11 @@
       <abortonerror>false</abortonerror>
       <numberofjobs>1</numberofjobs>
       <dontact>false</dontact>
-      <makebin></makebin>
+      <makebin/>
       <prio>0</prio>
       <envvars/>
     </make>
+    <subclassing/>
   </kdevtrollproject>
   <cppsupportpart>
     <filetemplates>

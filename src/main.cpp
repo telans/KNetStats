@@ -6,6 +6,7 @@
 #include <kaboutdata.h>
 #include <kapp.h>
 #include <klocale.h>
+
 #include "knetstats.h"
 
 static const char *appName = "knetstats";

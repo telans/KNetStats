@@ -1,8 +1,8 @@
 v1.1.1
 
-- Clinking on trayicon show/hide statistics window (suggestion by Fredy Yanardi)
-- All dialogs now show the KNetStats on windows decoration.
-- It's possible to change the font used in textmode (suggestion by Volker)
+- Clinking on trayicon show/hide statistics window (suggestion by Fredy Yanardi).
+- All dialogs now show the KNetStats icon on windows decoration.
+- It's possible to change the font used in textmode (suggestion by Vik).
 
 
 v1.1

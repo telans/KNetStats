@@ -8,7 +8,7 @@ INSTALLS += images \
             desktop \
             target 
 target.path = /usr/bin 
-desktop.files += ../knetstats.desktop
+desktop.files += ../knetstats.desktop 
 desktop.path = /usr/share/applications/ 
 docs.files += ../doc/* 
 docs.path = /usr/share/doc/HTML/en/knetstats/ 
@@ -37,3 +37,4 @@ warn_on \
 qt
 TEMPLATE = app
 LANGUAGE = C++
+
