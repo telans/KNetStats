@@ -7,9 +7,9 @@
     <property name="geometry">
         <rect>
             <x>0</x>
-            <y>12</y>
-            <width>357</width>
-            <height>302</height>
+            <y>0</y>
+            <width>392</width>
+            <height>295</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -21,13 +21,7 @@
         </sizepolicy>
     </property>
     <property name="caption">
-        <string>Configure</string>
-    </property>
-    <property name="sizeGripEnabled">
-        <bool>false</bool>
-    </property>
-    <property name="modal">
-        <bool>true</bool>
+        <string>Configure KNetStats</string>
     </property>
     <grid>
         <property name="name">
@@ -36,23 +30,9 @@
         <property name="resizeMode">
             <enum>Minimum</enum>
         </property>
-        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+        <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>textLabel1</cstring>
-            </property>
-            <property name="text">
-                <string>Choice which networkl interfaces do you want to monitor.</string>
-            </property>
-            <property name="textFormat">
-                <enum>PlainText</enum>
-            </property>
-            <property name="alignment">
-                <set>WordBreak|AlignVCenter</set>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
-            <property name="name">
-                <cstring>mLayout</cstring>
+                <cstring>layout7</cstring>
             </property>
             <hbox>
                 <property name="name">
@@ -70,7 +50,7 @@
                     </property>
                     <property name="sizeHint">
                         <size>
-                            <width>40</width>
+                            <width>120</width>
                             <height>20</height>
                         </size>
                     </property>
@@ -88,15 +68,34 @@
                 </widget>
                 <widget class="KPushButton">
                     <property name="name">
+                        <cstring>mApply</cstring>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Apply</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                </widget>
+                <widget class="KPushButton">
+                    <property name="name">
                         <cstring>mCancel</cstring>
                     </property>
                     <property name="text">
-                        <string>Ca&amp;ncel</string>
+                        <string>&amp;Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+C</string>
                     </property>
                 </widget>
             </hbox>
         </widget>
-        <widget class="QGroupBox" row="2" column="1">
+        <widget class="QListBox" row="0" column="0" rowspan="2" colspan="1">
+            <property name="name">
+                <cstring>mInterfaces</cstring>
+            </property>
+        </widget>
+        <widget class="QGroupBox" row="1" column="1">
             <property name="name">
                 <cstring>mAppearanceGroup</cstring>
             </property>
@@ -192,7 +191,7 @@
                             </widget>
                             <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>layout7</cstring>
+                                    <cstring>layout7_2</cstring>
                                 </property>
                                 <hbox>
                                     <property name="name">
@@ -525,7 +524,7 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QGroupBox" row="1" column="1">
+        <widget class="QGroupBox" row="0" column="1">
             <property name="name">
                 <cstring>mConfigurationGroup</cstring>
             </property>
@@ -545,11 +544,6 @@
                     <item>
                         <property name="text">
                             <string>Text (Speed)</string>
-                        </property>
-                    </item>
-                    <item>
-                        <property name="text">
-                            <string>Bars (Loading)</string>
                         </property>
                     </item>
                     <property name="name">
@@ -602,19 +596,20 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QListBox" row="1" column="0" rowspan="2" colspan="1">
-            <property name="name">
-                <cstring>mInterfaces</cstring>
-            </property>
-        </widget>
     </grid>
 </widget>
 <connections>
     <connection>
+        <sender>mOk</sender>
+        <signal>clicked()</signal>
+        <receiver>ConfigureBase</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
         <sender>mCancel</sender>
         <signal>clicked()</signal>
         <receiver>ConfigureBase</receiver>
-        <slot>close()</slot>
+        <slot>reject()</slot>
     </connection>
     <connection>
         <sender>mViewMode</sender>
@@ -622,15 +617,10 @@
         <receiver>mWdgStack</receiver>
         <slot>raiseWidget(int)</slot>
     </connection>
-    <connection>
-        <sender>mOk</sender>
-        <signal>clicked()</signal>
-        <receiver>ConfigureBase</receiver>
-        <slot>accept()</slot>
-    </connection>
 </connections>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kcolorbutton.h</includehint>

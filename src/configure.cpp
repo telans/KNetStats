@@ -26,6 +26,7 @@
 #include <qlistbox.h>
 #include <qcheckbox.h>
 #include <qlabel.h>
+#include <qwidgetstack.h>
 // Kde includes
 #include <kapplication.h>
 #include <klocale.h>
@@ -36,60 +37,47 @@
 #include <kcolorbutton.h>
 #include <kcombobox.h>
 #include <kmessagebox.h>
+#include <kpushbutton.h>
 
 
-#include <iostream>
-
-
-Configure::Configure(KNetStats* parent) : ConfigureBase(parent)
+Configure::Configure(KNetStats* parent, const QStringList& ifs) : ConfigureBase(parent)
 {
 	KConfig* cfg = kapp->config();
 
-	QStringList ifs = KNetStats::searchInterfaces();
+	// Load configuration
+	QFont defaultFont = font();
+	KIconLoader* loader = kapp->iconLoader();
 
-	if (!ifs.size())
+	QPixmap iconPCI = loader->loadIcon("icon_pci.png", KIcon::Small, 16);
+
+
+	for(QStringList::ConstIterator i = ifs.begin(); i != ifs.end(); ++i)
 	{
-	}
-	else
-	{
-		// Load configuration
-		QFont defaultFont = font();
-		KIconLoader* loader = kapp->iconLoader();
+		KConfigGroupSaver groupSaver(cfg, *i);
+		ViewOpts view;
+		// general
+		view.mUpdateInterval = cfg->readNumEntry("UpdateInterval", 300);
+		view.mViewMode = (ViewMode)cfg->readNumEntry("ViewMode", 0);
+		view.mMonitoring = cfg->readBoolEntry("Monitoring", true);
+		// txt view
+		view.mTxtFont = cfg->readFontEntry("TxtFont", &defaultFont);
+		view.mTxtUplColor = cfg->readColorEntry("TxtUplColor", &Qt::red);
+		view.mTxtDldColor = cfg->readColorEntry("TxtDldColor", &Qt::green);
+		// IconView
 
-		QPixmap iconWlan = loader->loadIcon("icon_wlan.png", KIcon::Small, 16);
-		QPixmap iconPCI = loader->loadIcon("icon_pci.png", KIcon::Small, 16);
-		QPixmap iconModem = loader->loadIcon("icon_modem.png", KIcon::Small, 16);
+		int defaultTheme = 0;
+		if ((*i).startsWith("wlan"))
+			defaultTheme = 3;
+		mInterfaces->insertItem(iconPCI, *i);
+		view.mTheme = cfg->readNumEntry("Theme", defaultTheme);
 
-
-		for(QStringList::Iterator i = ifs.begin(); i != ifs.end(); ++i)
-		{
-			KConfigGroupSaver groupSaver(cfg, *i);
-			ViewOpts view;
-			// general
-			view.mUpdateInterval = cfg->readNumEntry("UpdateInterval", 300);
-			view.mViewMode = (ViewMode)cfg->readNumEntry("ViewMode", 0);
-			view.mMonitoring = cfg->readBoolEntry("Monitoring", true);
-			// txt view
-			view.mTxtFont = cfg->readFontEntry("TxtFont", &defaultFont);
-			view.mTxtUplColor = cfg->readColorEntry("TxtUplColor", &Qt::red);
-			view.mTxtDldColor = cfg->readColorEntry("TxtDldColor", &Qt::green);
-			// IconView
-			view.mTheme = cfg->readNumEntry("Theme", 0);
-
-			if ((*i).startsWith("wlan"))
-				mInterfaces->insertItem(iconWlan, *i);
-			else if ((*i).startsWith("ppp"))
-				mInterfaces->insertItem(iconModem, *i);
-			else
-				mInterfaces->insertItem(iconPCI, *i);
-
-			mConfig[*i] = view;
-		}
-
-		mInterfaces->setCurrentItem(0);
-		changeInterface(mInterfaces->selectedItem());
+		mConfig[*i] = view;
 	}
 
+	mInterfaces->setCurrentItem(0);
+	changeInterface(mInterfaces->selectedItem());
+
+	connect(mApply, SIGNAL(clicked()), this, SLOT(apply()));
 	connect(mInterfaces, SIGNAL(selectionChanged(QListBoxItem*)), this, SLOT(changeInterface(QListBoxItem*)));
 	connect(mTheme, SIGNAL(activated(int)), this, SLOT(changeTheme(int)));
 }
@@ -122,17 +110,19 @@ void Configure::changeInterface(QListBoxItem* item)
 	mMonitoring->setChecked(view.mMonitoring);
 	mUpdateInterval->setValue(view.mUpdateInterval);
 	mViewMode->setCurrentItem(view.mViewMode);
+	mWdgStack->raiseWidget(view.mViewMode);
 	// txt options
 	mTxtUplColor->setColor(view.mTxtUplColor);
 	mTxtDldColor->setColor(view.mTxtDldColor);
 	mTxtFont->setFont( view.mTxtFont );
 	// icon options
 	mTheme->setCurrentItem(view.mTheme);
+	changeTheme(view.mTheme);
 
 	mCurrentItem = interface;
 }
 
-void Configure::accept()
+bool Configure::saveConfig()
 {
 	// Atualiza o cache de opções
 	changeInterface(mInterfaces->item( mInterfaces->currentItem() ));
@@ -150,7 +140,7 @@ void Configure::accept()
 	if (!ok)
 	{
 		KMessageBox::error(this, i18n("You need select at least one interface to monitor."));
-		return;
+		return false;
 	}
 
 	KConfig* cfg = kapp->config();
@@ -172,8 +162,20 @@ void Configure::accept()
 		if (view.mMonitoring)
 			views.append(i.key());
 	}
-	cfg->writeEntry("Views", views);
-	done(QDialog::Accepted);
+	cfg->writeEntry("CurrentViews", views);
+	return true;
+}
+
+void Configure::accept()
+{
+	if (saveConfig())
+		done(QDialog::Accepted);
+}
+
+void Configure::apply()
+{
+	if (saveConfig())
+		static_cast<KNetStats*>(parent())->applyConfig(mConfig);
 }
 
 void Configure::changeTheme(int theme)

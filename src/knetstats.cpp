@@ -38,11 +38,10 @@
 #include <kaboutapplication.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
+// StdC++ includes
+#include <algorithm>
 
-
-#include <iostream>
-
-KNetStats::KNetStats() : QWidget(0, "knetstats")
+KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true)
 {
 	setIcon(kapp->icon());
 
@@ -67,35 +66,30 @@ KNetStats::KNetStats() : QWidget(0, "knetstats")
 
 	// lê arquivo de configuração
 	KConfig* cfg = kapp->config();
-	QStringList views = cfg->readListEntry("Views");
+	QStringList views = cfg->readListEntry("CurrentViews");
 
 	if (!views.size())	// no views... =/, mostra tela de configuração
 	{
-		this->configure();
+		if (!this->configure())
+			mAllOk = false;
 	}
 	else
 	{
-	std::cout << "#views: " << views.size() << std::endl;
 		// inicia as views necessarias.
 		for (QStringList::Iterator i = views.begin(); i != views.end(); ++i)
 		{
 			KNetStatsView* kview = new KNetStatsView(this, *i, getViewOpt(*i));
 			mView[*i] = kview;
-	std::cout << "monitorando " << *i << " - " << std::endl;
 		}
 	}
 
 }
 
-KNetStats::~KNetStats()
-{
-}
-
+// move it to knetstats view constructor?
 ViewOpts* KNetStats::getViewOpt( const QString& interface )
 {
 	KConfig* cfg = kapp->config();
 	QFont defaultFont = font();
-	KIconLoader* loader = kapp->iconLoader();
 
 	KConfigGroupSaver groupSaver(cfg, interface);
 	ViewOpts* view = new ViewOpts;
@@ -135,47 +129,59 @@ QStringList KNetStats::searchInterfaces()
 	return list;
 }
 
-void KNetStats::configure()
+bool KNetStats::configure()
 {
-	Configure dlg(this);
-	int res = dlg.exec();
-	if (res == QDialog::Accepted )
+	// Procura interfaces de rede
+	QStringList ifs = KNetStats::searchInterfaces();
+	ifs += kapp->config()->readListEntry("AllViews");
+	ifs.sort();
+	ifs.erase( std::unique(ifs.begin(), ifs.end()), ifs.end() );
+	kapp->config()->writeEntry("AllViews", ifs);
+
+	if (!ifs.size())
 	{
-std::cout << "Ok, verificando mudanças...\n";
-		const ViewsMap& map = dlg.currentConfig();
-		for (ViewsMap::ConstIterator i = map.begin(); i != map.end(); ++i)
+		KMessageBox::error(this, i18n("You don't have any network interface.\nKNetStats will quit now."));
+		return false;
+	}
+
+	Configure dlg(this, ifs);
+	int res = dlg.exec();
+
+	if (res == QDialog::Accepted )
+		applyConfig( dlg.currentConfig() );
+	return true;
+}
+
+void KNetStats::applyConfig(const ViewsMap& map)
+{
+	for (ViewsMap::ConstIterator i = map.begin(); i != map.end(); ++i)
+	{
+		if (i.data().mMonitoring)
 		{
-std::cout << i.key() << "?\n";
-			if (i.data().mMonitoring)
+			// Verifica se ja esta sendo monitorada
+			TrayIconMap::Iterator it = mView.find(i.key());
+			if (it == mView.end())
 			{
-				// Verifica se ja esta sendo monitorada
-				TrayIconMap::Iterator it = mView.find(i.key());
-				if (it == mView.end())
-				{
-					ViewOpts* view = new ViewOpts(i.data()); // coping data.. hmm... ugly!
-					KNetStatsView* kview = new KNetStatsView(this, i.key(), view);
-					mView[i.key()] = kview;
-				}
-				else
-				{
-					std::cout << "ViewMode (" << i.key() << "): " << (int)i.data().mViewMode << std::endl;
-					it.data()->setViewOpts( new ViewOpts(i.data()) );
-				}
+				ViewOpts* view = new ViewOpts(i.data()); // coping data.. hmm... ugly!
+				KNetStatsView* kview = new KNetStatsView(this, i.key(), view);
+				mView[i.key()] = kview;
 			}
 			else
+				it.data()->setViewOpts( new ViewOpts(i.data()) );
+		}
+		else
+		{
+			// Verificar se existe um trayicon, e apagar o mesmo!
+			TrayIconMap::Iterator it = mView.find(i.key());
+			if (it != mView.end())
 			{
-				// Verificar se existe um trayicon, e apagar o mesmo!
-				TrayIconMap::Iterator it = mView.find(i.key());
-				if (it != mView.end())
-				{
-					delete it.data();
-					mView.erase(it);
-				}
+				delete it.data();
+				mView.erase(it);
 			}
 		}
-
 	}
 }
+
 
 void KNetStats::about()
 {

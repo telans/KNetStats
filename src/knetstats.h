@@ -24,12 +24,12 @@
 #include <qwidget.h>
 #include <set>
 #include <qstring.h>
+#include "configure.h"
 
 class KNetStatsView;
 class KConfig;
 class KPopupMenu;
 class KActionCollection;
-class ViewOpts;
 
 class KNetStats : public QWidget
 {
@@ -37,8 +37,6 @@ class KNetStats : public QWidget
 public:
 	/// Constructor
 	KNetStats();
-	/// Destructor
-	~KNetStats();
 
 	KPopupMenu* const contextMenu() const { return mContextMenu; }
 	ViewOpts* getViewOpt( const QString& interface );
@@ -48,13 +46,21 @@ public:
 	*/
 	static QStringList searchInterfaces();
 
+	void applyConfig(const ViewsMap& map);
+
+	bool allOk() const
+	{
+		return mAllOk;
+	}
+
 public slots:
 	/// Display configure the dialog box
-	void configure();
+	bool configure();
 	/// Diaplay the about box
 	void about();
 
 private:
+	bool mAllOk;
 	KPopupMenu* mContextMenu; // help menu usado por todos os tray icons
 	KActionCollection* mActionCollection;
 	typedef QMap<QString, KNetStatsView*> TrayIconMap;

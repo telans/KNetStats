@@ -33,6 +33,8 @@ class QPaintEvent;
 class Statistics;
 class KNetStats;
 
+#define HISTORY_SIZE 5
+
 /**
 *	Main class
 */
@@ -96,18 +98,31 @@ private:
 	/// Statistics
 	unsigned int mTotalBytesRx, mTotalBytesTx, mTotalPktRx, mTotalPktTx;
 	/// Speeds
-	double mSpeedRx, mSpeedTx, mSpeedPRx, mSpeedPTx;
+	double mSpeedRx[HISTORY_SIZE], mSpeedTx[HISTORY_SIZE];
+	double mSpeedPRx[HISTORY_SIZE], mSpeedPTx[HISTORY_SIZE];
+
+	int mPtr;
+
 	/// is connected?
 	bool mbConnected;
 
 	void setup();
+	inline double calcSpeed(const double* field) const;
 private slots:
 	/// Called by the timer to update statistics
-	void update();
+	void updateStats();
 	/// Display the statistics dialog box
 	void statistics();
 
 };
+
+double KNetStatsView::calcSpeed(const double* field) const
+{
+	double total = 0.0;
+	for (int i = 0; i < HISTORY_SIZE; ++i)
+		total += field[i];
+	return total/HISTORY_SIZE;
+}
 
 const QString& KNetStatsView::interface() const
 {
@@ -146,22 +161,22 @@ unsigned int KNetStatsView::totalPktTx() const
 
 double KNetStatsView::byteSpeedRx() const
 {
-	return mSpeedRx;
+	return calcSpeed(mSpeedRx);
 }
 
 double KNetStatsView::byteSpeedTx() const
 {
-	return mSpeedTx;
+	return calcSpeed(mSpeedTx);
 }
 
 double KNetStatsView::pktSpeedRx() const
 {
-	return mSpeedPRx;
+	return calcSpeed(mSpeedPRx);
 }
 
 double KNetStatsView::pktSpeedTx() const
 {
-	return mSpeedPTx;
+	return calcSpeed(mSpeedPTx);
 }
 
 #endif

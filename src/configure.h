@@ -27,6 +27,7 @@
 #include <qfont.h>
 #include <qcolor.h>
 #include <qpixmap.h>
+#include <qstringlist.h>
 
 static const int ICONSIZE = 22;
 
@@ -34,7 +35,7 @@ class KNetStats;
 class QListBoxItem;
 
 enum ViewMode {
-	Icon, Text, Bars
+	Icon, Text//, Bars
 };
 
 struct ViewOpts
@@ -57,7 +58,7 @@ class Configure : public ConfigureBase
 {
 	Q_OBJECT
 public:
-	Configure(KNetStats* parent);
+	Configure(KNetStats* parent, const QStringList& ifs);
 
 	const ViewsMap& currentConfig()
 	{
@@ -67,8 +68,10 @@ private:
 	QString mCurrentItem;
 	ViewsMap mConfig;
 
+	bool saveConfig();
 public slots:
 	void accept();
+	void apply();
 protected slots:
 	void changeInterface(QListBoxItem* item);
 	void changeTheme(int theme);

@@ -50,7 +50,6 @@ void Statistics::update()
 
 void Statistics::show()
 {
-
 	mTimer->start( static_cast<KNetStatsView*>(parent())->updateInterval() );
 	StatisticsBase::show();
 }

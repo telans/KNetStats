@@ -21,7 +21,8 @@
 #include "knetstats.h"
 
 // KDE headers
-#include <kapp.h>
+#include <kapplication.h>
+#include <kiconloader.h>
 #include <kpopupmenu.h>
 #include <kmessagebox.h>
 #include <kaboutapplication.h>
@@ -48,7 +49,6 @@
 // C headers
 #include <cstring>
 #include <cstdio>
-#include <iostream>
 
 #include "configure.h"
 #include "statistics.h"
@@ -56,43 +56,56 @@
 extern const char* programName;
 
 KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOpts* view)
-	: KSystemTray(parent, 0), mStatistics(0), mInterface(interface),mView(view), mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTotalBytesTx(0), mTotalPktRx(0), mTotalPktTx(0), mSpeedRx(0), mSpeedTx(0), mbConnected(true)
+	: KSystemTray(parent, 0), mInterface(interface),mView(view)
 {
+	mStatistics = 0;
+	mBRx = mBTx = mPRx = mPTx = 0;
+	mbConnected = true;
+	mTotalBytesRx = mTotalBytesTx = mTotalPktRx = mTotalPktTx = 0;
+	mPtr = 0;
+	memset(mSpeedRx, 0, sizeof(double)*HISTORY_SIZE);
+	memset(mSpeedTx, 0, sizeof(double)*HISTORY_SIZE);
+	memset(mSpeedPRx, 0, sizeof(double)*HISTORY_SIZE);
+	memset(mSpeedPTx, 0, sizeof(double)*HISTORY_SIZE);
 
-	std::cout << "Fui criado!! vou monitorar " << interface << "\n";
 	setTextFormat(Qt::PlainText);
+	show();
 
 	// Context menu
 	mContextMenu = parent->contextMenu();
 
 	// Timer
 	mTimer = new QTimer(this, "timer");
-	connect(mTimer, SIGNAL(timeout()), this, SLOT(update(void)));
+	connect(mTimer, SIGNAL(timeout()), this, SLOT(updateStats(void)));
 
-	// Load config
 	QToolTip::add(this, i18n("Monitoring %1").arg(mInterface));
-
 	setup();
-
 	mStatistics = new Statistics(this);
-	show();
 }
 
 void KNetStatsView::setup()
 {
 	if (mView->mViewMode == Text)
-	{
 		setFont(mView->mTxtFont);
-		mSpeedTx = mSpeedRx = 0;
-		mTimer->start(1000);
-	}
 	else if (mView->mViewMode == Icon)
 	{
-		mCurrentIcon = &mIconNone;
-		mTimer->start(mView->mUpdateInterval);
-		setPixmap( *mCurrentIcon );
+		// Load Icons
+		KIconLoader* loader = kapp->iconLoader();
+		mIconError = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_error.png",
+							KIcon::Panel, ICONSIZE);
+		mIconNone = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_none.png",
+							KIcon::Panel, ICONSIZE);
+		mIconTx = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_tx.png",
+						KIcon::Panel, ICONSIZE);
+		mIconRx =loader->loadIcon("theme"+QString::number(mView->mTheme)+"_rx.png",
+						KIcon::Panel, ICONSIZE);
+		mIconBoth = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_both.png",
+							KIcon::Panel, ICONSIZE);
+		mCurrentIcon = mbConnected ? &mIconNone : &mIconError;
 	}
-	update();
+	mTimer->start(mView->mUpdateInterval);
+	updateStats();
+	QWidget::update();
 }
 
 KNetStatsView::~KNetStatsView()
@@ -107,7 +120,7 @@ void KNetStatsView::setViewOpts( ViewOpts* view )
 	setup();
 }
 
-void KNetStatsView::update()
+void KNetStatsView::updateStats()
 {
 	// Read and parse /proc/net/dev
 	FILE* fp = fopen("/proc/net/dev", "r");
@@ -137,10 +150,10 @@ void KNetStatsView::update()
 			QPixmap* newIcon;
 
 			// Calcula as velocidades
-			mSpeedTx = ((btx - mBTx)*(1000.0f/mView->mUpdateInterval));
-			mSpeedRx = ((brx - mBRx)*(1000.0f/mView->mUpdateInterval));
-			mSpeedPTx = ((ptx - mPTx)*(1000.0f/mView->mUpdateInterval));
-			mSpeedPRx = ((prx - mPRx)*(1000.0f/mView->mUpdateInterval));
+			mSpeedTx[mPtr] = ((btx - mBTx)*(1000.0f/mView->mUpdateInterval));
+			mSpeedRx[mPtr] = ((brx - mBRx)*(1000.0f/mView->mUpdateInterval));
+			mSpeedPTx[mPtr] = ((ptx - mPTx)*(1000.0f/mView->mUpdateInterval));
+			mSpeedPRx[mPtr] = ((prx - mPRx)*(1000.0f/mView->mUpdateInterval));
 
 			if (mView->mViewMode == Text)
 				QWidget::update();
@@ -164,7 +177,7 @@ void KNetStatsView::update()
 				if (newIcon != mCurrentIcon)
 				{
 					mCurrentIcon = newIcon;
-					setPixmap( *mCurrentIcon );
+					QWidget::update();
 				}
 			}
 
@@ -185,6 +198,8 @@ void KNetStatsView::update()
 				KPassivePopup::message(programName, i18n("%1 is active").arg(mInterface), kapp->miniIcon(), this);
 			}
 			linkok = true;
+			if (++mPtr >= HISTORY_SIZE)
+				mPtr = 0;
 			break;
 		}
 	}
@@ -195,11 +210,13 @@ void KNetStatsView::update()
 	{
 		mbConnected = false;
 		mCurrentIcon = &mIconError;
-		setPixmap(*mCurrentIcon);
+		memset(mSpeedRx, 0, sizeof(double)*HISTORY_SIZE);
+		memset(mSpeedTx, 0, sizeof(double)*HISTORY_SIZE);
+		memset(mSpeedPRx, 0, sizeof(double)*HISTORY_SIZE);
+		memset(mSpeedPTx, 0, sizeof(double)*HISTORY_SIZE);
+		QWidget::update();
 		KPassivePopup::message(programName, i18n("%1 is inactive").arg(mInterface), kapp->miniIcon(), this);
-		mSpeedRx = mSpeedTx = mSpeedPRx = mSpeedPTx = 0;
 	}
-
 }
 
 void KNetStatsView::paintEvent( QPaintEvent* ev )
@@ -208,20 +225,19 @@ void KNetStatsView::paintEvent( QPaintEvent* ev )
 	switch(mView->mViewMode)
 	{
 		case Icon:
-			paint.drawPixmap(0, 0, *pixmap());
+			paint.drawPixmap(0, 0, *mCurrentIcon);
 			break;
 		case Text:
 		{
 			paint.setFont( mView->mTxtFont );
 			paint.setPen( mView->mTxtUplColor );
-			paint.drawText( rect(), Qt::AlignTop, Statistics::byteFormat(mSpeedTx, 1, "", "KB", "MB"));
+			paint.drawText( rect(), Qt::AlignTop, Statistics::byteFormat(byteSpeedTx(), 1, "", "KB", "MB"));
 			paint.setPen( mView->mTxtDldColor );
-			paint.drawText( rect(), Qt::AlignBottom, Statistics::byteFormat(mSpeedRx, 1, "", "KB", "MB"));
+			paint.drawText( rect(), Qt::AlignBottom, Statistics::byteFormat(byteSpeedRx(), 1, "", "KB", "MB"));
 			break;
 		}
-		case Bars:
-std::cout << "Bars!\n";
-			break;
+/*		case Bars:
+			break;*/
 	}
 }
 
