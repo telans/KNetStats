@@ -30,9 +30,8 @@ env.Alias( target='install', source=env.Install('/usr/share/applications/', 'kne
 env.Alias( target='install', source=env.Install('/usr/doc/HTML/en/knetstats/', 'doc/index.docbook') );
 env.Alias( target='install', source=env.Install('/usr/share/apps/knetstats/pics/', Split('src/pics/icon_both.png  src/pics/icon_configure.png  src/pics/icon_error.png  src/pics/icon_none.png  src/pics/icon_rx.png  src/pics/icon_tx.png  src/pics/knetstats.png')) );
 # i18n installation
-i18ndir = '/usr/share/locale/'
-env.Alias( target='install', source=env.Install(i18ndir+'pt_BR/LC_MESSAGES', 'po/pt_BR.mo') );
-env.Alias( target='install', source=env.Install(i18ndir+'ky_KG/LC_MESSAGES', 'po/ky_KG.mo') );
+env.Alias( target='install', source=env.InstallAs('/usr/share/locale/pt_BR/LC_MESSAGES/knetstats.mo', 'po/pt_BR.mo') );
+env.Alias( target='install', source=env.InstallAs('/usr/share/locale/ky_KG/LC_MESSAGES/knetstats.mo', 'po/ky_KG.mo') );
 
 env.Help(	"\nTo compile KNetStats type:\n"
 			"  scons\n"
