@@ -5,8 +5,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: pt_BR\n"
-"Report-Msgid-Bugs-To: \n"
+"Project-Id-Version: KNetStats 1.2\n"
+"Report-Msgid-Bugs-To: hugo_pl@users.sourceforge.net\n"
 "POT-Creation-Date: 2004-12-18 15:46+0000\n"
 "PO-Revision-Date: 2004-12-19 05:45+0000\n"
 "Last-Translator: Hugo Parente Lima <hugo_pl@users.sourceforge.net>\n"
