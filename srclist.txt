@@ -1,6 +1,7 @@
 src/statistics.cpp
 src/main.cpp
 src/knetstats.cpp
+src/knetstatsview.cpp
 src/configure.cpp
-src/.ui/statisticsbase.cpp
-src/.ui/configurebase.cpp
+src/statisticsbase.cc
+src/configurebase.cc
