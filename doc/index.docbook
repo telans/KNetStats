@@ -82,7 +82,7 @@ Do NOT change these in the translation. -->
 
 <abstract>
 <para>
-&knetstats; Is a simple KDE network monitor that show rx/tx LEDs of any network interface on a system tray icon, written in c++, using the kde libraries.
+&knetstats; Is a simple KDE network monitor that show rx/tx LEDs of any network interface on a system tray icon.
 </para>
 </abstract>
 
