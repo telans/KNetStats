@@ -4,6 +4,7 @@ v1.2
 - Added Brazilian portuguese translation (me).
 - Added Kirghiz translation (Ilyas Bakirov).
 - Added Italian translation (Roberto Leandrini).
+- Added Spanish translation (Carlos Ortiz).
 - Bug Fix: When network interface in changed, the Statistics window caption is changed too.
 - Bug Fix: Statistics window now correctly format Download/Upload Speed.
 - Bug Fix: When start KNetstats with a unavaliable interface, now upload speed is equals to 0pkts/s (not -2pkts/s)
