@@ -1,10 +1,13 @@
 v1.2
 
+- Now using SCons as building and install tool, so you will need to have Python installed in your distro to run SCons scripts and compile/install KNetStats.
 - Added Brazilian portuguese translation (me).
 - Added Kirghiz translation (Ilyas Bakirov).
 - Added Italian translation (Roberto Leandrini).
 - Bug Fix: When network interface in changed, the Statistics window caption is changed too.
 - Bug Fix: Statistics window now correctly format Download/Upload Speed.
+- Bug Fix: When start KNetstats with a unavaliable interface, now upload speed is equals to 0pkts/s (not -2pkts/s)
+- Bug Fix: When knetstats starts and statistics windows is hidden it is not updated.
 
 v1.1.2
 

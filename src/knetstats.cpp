@@ -153,7 +153,7 @@ void KNetStats::update()
 		{
 			QPixmap* newIcon;
 
-			// Calcula as velocidade
+			// Calcula as velocidades
 			if (mTextMode)
 			{
 				mSpeedTx = (btx - mBTx);
@@ -226,6 +226,7 @@ void KNetStats::update()
 		mCurrentIcon = &mIconError;
 		setPixmap(*mCurrentIcon);
 		KPassivePopup::message(programName, i18n("%1 is inactive").arg(mInterface), mIconError, this);
+		mSpeedRx = mSpeedTx = mSpeedPRx = mSpeedPTx = 0;
 	}
 
 }

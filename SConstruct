@@ -14,6 +14,7 @@ def KDELibs( env, str ):
 env = Environment(
 				tools = ['default','qt'],
 				LIBS = ['dl', 'kdecore', 'kdeui'],
+				CPPFLAGS = ['-O2', '-Wall', '-pipe', '-fomit-frame-pointer'],
 				plataform = 'posix'
 			);
 env.ParseConfig('kde-config --prefix', KDEPrefix );
@@ -25,13 +26,14 @@ SrcList = [ 'src/configurebase.ui', 'src/statisticsbase.ui', 'src/main.cpp', 'sr
 env.Program('bin/knetstats', SrcList)
 
 # Installation
-env.Alias( target='install', source=env.Install('/usr/bin', 'bin/knetstats') );
-env.Alias( target='install', source=env.Install('/usr/share/applications/', 'knetstats.desktop') );
-env.Alias( target='install', source=env.Install('/usr/doc/HTML/en/knetstats/', 'doc/index.docbook') );
-env.Alias( target='install', source=env.Install('/usr/share/apps/knetstats/pics/', Split('src/pics/icon_both.png  src/pics/icon_configure.png  src/pics/icon_error.png  src/pics/icon_none.png  src/pics/icon_rx.png  src/pics/icon_tx.png  src/pics/knetstats.png')) );
+env.Alias( 'install', env.Install('/usr/bin', 'bin/knetstats') );
+env.Alias( 'install', env.Install('/usr/share/applications/', 'knetstats.desktop') );
+env.Alias( 'install', env.Install('/usr/doc/HTML/en/knetstats/', 'doc/index.docbook') );
+env.Alias( 'install', env.Install('/usr/share/apps/knetstats/pics/', Split('src/pics/icon_both.png  src/pics/icon_configure.png  src/pics/icon_error.png  src/pics/icon_none.png  src/pics/icon_rx.png  src/pics/icon_tx.png  src/pics/knetstats.png')) );
 # i18n installation
-env.Alias( target='install', source=env.InstallAs('/usr/share/locale/pt_BR/LC_MESSAGES/knetstats.mo', 'po/pt_BR.mo') );
-env.Alias( target='install', source=env.InstallAs('/usr/share/locale/ky_KG/LC_MESSAGES/knetstats.mo', 'po/ky_KG.mo') );
+env.Alias( 'install', env.InstallAs('/usr/share/locale/pt_BR/LC_MESSAGES/knetstats.mo', 'po/pt_BR.mo'));
+env.Alias( 'install', env.InstallAs('/usr/share/locale/ky_KG/LC_MESSAGES/knetstats.mo', 'po/ky_KG.mo'));
+env.Alias( 'install', env.InstallAs('/usr/share/locale/it/LC_MESSAGES/knetstats.mo', 'po/it.mo'));
 
 env.Help(	"\nTo compile KNetStats type:\n"
 			"  scons\n"

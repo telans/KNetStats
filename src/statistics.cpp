@@ -35,7 +35,6 @@ Statistics::Statistics( KNetStats* parent, const char *name )
 
 	mTimer = new QTimer( this );
 	connect( mTimer, SIGNAL( timeout() ), this, SLOT( update() ) );
-	mTimer->start( parent->updateInterval() );
 }
 
 void Statistics::update()

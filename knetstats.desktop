@@ -1,7 +1,7 @@
 [Desktop Entry]
 Encoding=UTF-8
 Name=KNetStats
-GenericName=Network monitor (LED)
+GenericName=KNetStats
 Comment=Netwrok monitor
 Exec=knetstats
 Icon=/usr/share/apps/knetstats/pics/knetstats.png
@@ -11,3 +11,5 @@ Categories=Application;Network;
 StartupNotify=true
 Categories=KDE;Application;Network;
 
+Comment[ky]=Такрамактын монитор жабдыгы
+Comment[pt_BR]=Um monitor de rede
