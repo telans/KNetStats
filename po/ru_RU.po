@@ -1,18 +1,18 @@
-# Russian KOI8-R translation of KNetStats -
+# Russian UTF-8 translation of KNetStats -
 # - KDE Network Statistics Applet.
-# Copyright (C) 1995-2005 xUnion
+# Copyright (C) 1995-2005 xUnion "Made in Ukraine"
 # This file is distributed under BSD license.
 # xUnion <xUnion@ukr.net>, 2005.
 # Russian translation of any projects
 # of any complication...
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: KNetStats 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-02 17:44+0000\n"
-"PO-Revision-Date: 2005-02-21 20:25GMT+02:00\n"
+"POT-Creation-Date: 2005-03-03 20:10GMT+02:00\n"
+"PO-Revision-Date: 2005-03-03 20:10GMT+02:00\n"
 "Last-Translator: Edward Romantsov <xUnion@ukr.net>\n"
 "Language-Team: xUnion <xUnion@ukr.net>\n"
 "MIME-Version: 1.0\n"
@@ -33,15 +33,15 @@ msgstr "Монитор сетевых интерфейсов."
 
 #: src/main.cpp:23
 msgid "_: NAME OF TRANSLATORS"
-msgstr "_: имя переводчика Edward Romantsov"
+msgstr "_: Edward Romantsov"
 
 #: src/main.cpp:23
 msgid "_: EMAIL OF TRANSLATORS"
-msgstr "_: адрес электронной почты переводчика xunion@ukr.net"
+msgstr "_: xunion@ukr.net"
 
 #: src/main.cpp:27
 msgid "SCons help, Debian packages, etc."
-msgstr ""
+msgstr "Помощь по программе SCons, пакетам ОС Debian и т.д."
 
 #: src/main.cpp:28
 msgid "Icon themes"
@@ -49,7 +49,7 @@ msgstr "Темы"
 
 #: src/main.cpp:31
 msgid "KNetStats translation to other languages"
-msgstr ""
+msgstr "Перевод KNetStats на другие языки"
 
 #: src/knetstats.cpp:58
 msgid "&Help"
@@ -61,7 +61,7 @@ msgid ""
 "KNetStats will quit now."
 msgstr ""
 "Сетевые интерфейсы отсутствуют.\n"
-"Апплет KNetStats по-понятиям обязан завершить свою работу."
+"KNetStats завершает работу."
 
 #: src/knetstatsview.cpp:81
 msgid "Monitoring %1"
@@ -120,12 +120,10 @@ msgid "O&k"
 msgstr "О.К."
 
 #: src/uic_configurebase.cc:246
-#, fuzzy
 msgid "Appl&y"
 msgstr "Применить"
 
 #: src/uic_configurebase.cc:247
-#, fuzzy
 msgid "Ca&ncel"
 msgstr "Отмена"
 
@@ -139,7 +137,7 @@ msgstr "Тема:"
 
 #: src/uic_configurebase.cc:251
 msgid "Classic"
-msgstr ""
+msgstr "Классик"
 
 #: src/uic_configurebase.cc:252
 msgid "Modem"
@@ -159,11 +157,11 @@ msgstr "Kppp"
 
 #: src/uic_configurebase.cc:257
 msgid "Download color:"
-msgstr "Индикатор входящих пакетов:"
+msgstr "Цвет индикатора входящих пакетов:"
 
 #: src/uic_configurebase.cc:259
 msgid "Upload color:"
-msgstr "Индикатор исходящих пакетов:"
+msgstr "Цвет индикатора исходящих пакетов:"
 
 #: src/uic_configurebase.cc:261
 msgid "Medium color:"
@@ -202,47 +200,46 @@ msgid "ms"
 msgstr "мс"
 
 #: src/uic_configurebase.cc:273
-#, fuzzy
 msgid "To monitor this &interface"
-msgstr "Наблюдение за интерфейсом &interface"
+msgstr "Наблюдение за интерфейсом"
 
-#, fuzzy
-#~ msgid "Alt+Y"
-#~ msgstr "Alt+A"
+# OLD Fussy __________Old Fussy__________Old Fussy
 
-#, fuzzy
-#~ msgid "Alt+N"
-#~ msgstr "Alt+A"
+msgid "Alt+Y"
+msgstr "Alt+Y"
 
-#~ msgid "Kirghiz translation"
-#~ msgstr "Киргизский"
+msgid "Alt+N"
+msgstr "Alt+N"
 
-#~ msgid "Italian translation"
-#~ msgstr "Итальянский"
+msgid "Kirghiz translation"
+msgstr "Киргизский перевод"
 
-#~ msgid "Spanish translation"
-#~ msgstr "Испанский"
+msgid "Italian translation"
+msgstr "Итальянский перевод"
 
-#~ msgid "Deutsch translation"
-#~ msgstr "Немецкий"
+msgid "Spanish translation"
+msgstr "Испанский перевод"
 
-#~ msgid "Russian translation"
-#~ msgstr "Русский"
+msgid "Deutsch translation"
+msgstr "Немецкий перевод"
 
-#~ msgid "Polish translation"
-#~ msgstr "Польский"
+msgid "Russian translation"
+msgstr "Русский перевод"
 
-#~ msgid "Alt+C"
-#~ msgstr "Alt+C"
+msgid "Polish translation"
+msgstr "Польский перевод"
 
-#~ msgid "Monitor"
-#~ msgstr "Наблюдение"
+msgid "Alt+C"
+msgstr "(Alt+C)"
 
-#~ msgid "&Statistics"
-#~ msgstr "&Статистика"
+msgid "Monitor"
+msgstr "Монитор"
 
-#~ msgid "Now monitoring %1"
-#~ msgstr "Сейчас наблюдается интерфейс %1"
+msgid "&Statistics"
+msgstr "Статистика"
 
-#~ msgid "Network Interface:"
-#~ msgstr "Сетевой Интерфейс:"
+msgid "Now monitoring %1"
+msgstr "Сейчас наблюдается %1"
+
+msgid "Network Interface:"
+msgstr "Сетевой Интерфейс:"
