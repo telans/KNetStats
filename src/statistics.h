@@ -59,7 +59,7 @@ QString Statistics::byteFormat( double num, unsigned int decimal, const char* by
 	else if ( num >= 1024.0f ) 	// Kb
 		return QString::number( num/1024, 'f', decimal ) + ksufix;
 	else	// bytes
-		return QString::number( num ) + bytesufix;
+		return QString::number( num, 'f', decimal ) + bytesufix;
 }
 
 #endif

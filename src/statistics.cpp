@@ -44,6 +44,7 @@ void Statistics::update()
 	mBTx->setText( byteFormat( static_cast<KNetStats*>( parent() )->totalBytesTx() ) );
 	mByteSpeedRx->setText( byteFormat( static_cast<KNetStats*>( parent() )->byteSpeedRx(), 1, " B" )+"/s" );
 	mByteSpeedTx->setText( byteFormat( static_cast<KNetStats*>( parent() )->byteSpeedTx(), 1, " B" )+"/s" );
+
 	mPRx->setText( QString::number( static_cast<KNetStats*>( parent() )->totalPktRx() ) );
 	mPTx->setText( QString::number( static_cast<KNetStats*>( parent() )->totalPktTx() ) );
 	mPktSpeedRx->setText( QString::number( static_cast<KNetStats*>( parent() )->pktSpeedRx(), 'f', 1 )+"pkts/s" );

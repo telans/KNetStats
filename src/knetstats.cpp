@@ -258,19 +258,13 @@ void KNetStats::configure()
 	int res = dlg.exec();
 	if (res == QDialog::Accepted)
 	{
+		KConfig cfg(KGlobal::dirs()->localkdedir()+"/share/config/knetstatsrc");
 		QString newInterface = dlg.interface();
 		mUpdateInterval = dlg.updateInterval();
 		mTextMode = (dlg.viewMode() == Configure::TextMode);
 		const QFont Font = dlg.font();
 		setFont( Font );
 		mbConnected = true;
-
-		KConfig cfg(KGlobal::dirs()->localkdedir()+"/share/config/knetstatsrc");
-		mInterface = newInterface;
-		cfg.writeEntry("UpdateInterval", mUpdateInterval);
-		cfg.writeEntry("Interface", mInterface);
-		cfg.writeEntry("TextMode", mTextMode);
-		cfg.writeEntry("Font", Font);
 
 		if (!mTextMode)	// Update icon, if we changed to icon mode from textmode
 		{
@@ -283,12 +277,20 @@ void KNetStats::configure()
 
 		if (newInterface != mInterface)
 		{
+			mInterface = newInterface;
+			cfg.writeEntry("Interface", mInterface);
+
 			mTotalBytesRx = mTotalBytesTx = mTotalPktRx = mTotalPktTx = 0;
 			mBRx = mBTx = mPRx = mPTx = 0;
 			mSpeedRx = mSpeedTx = mSpeedPRx = mSpeedPTx = 0;
 			QToolTip::add(this, i18n("Monitoring ")+mInterface);
 			KPassivePopup::message(programName, i18n("Now monitoring %1").arg(mInterface), mIconTx, this);
+			mStatistics->setCaption( i18n( "Statistics for %1" ).arg( mInterface ) );
 		}
+
+		cfg.writeEntry("UpdateInterval", mUpdateInterval);
+		cfg.writeEntry("TextMode", mTextMode);
+		cfg.writeEntry("Font", Font);
 	}
 }
 
