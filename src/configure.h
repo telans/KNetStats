@@ -39,6 +39,7 @@ public:
 	unsigned int updateInterval() const;
 	const QString interface() const;
 	ViewMode viewMode() const;
+	const QFont font() const;
 
 };
 

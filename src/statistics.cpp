@@ -24,15 +24,18 @@
 #include <qtimer.h>
 #include <kapplication.h>
 
+extern QPixmap* appIcon;
+
 Statistics::Statistics( KNetStats* parent, const char *name )
 		: StatisticsBase( parent, name )
 {
 	setCaption( i18n( "Statistics for %1" ).arg( parent->interface() ) );
+	setIcon(*appIcon);
 	update();
 
-	QTimer* timer = new QTimer( this );
-	connect( timer, SIGNAL( timeout() ), this, SLOT( update() ) );
-	timer->start( parent->updateInterval() );
+	mTimer = new QTimer( this );
+	connect( mTimer, SIGNAL( timeout() ), this, SLOT( update() ) );
+	mTimer->start( parent->updateInterval() );
 }
 
 void Statistics::update()
@@ -45,4 +48,16 @@ void Statistics::update()
 	mPTx->setText( QString::number( static_cast<KNetStats*>( parent() )->totalPktTx() ) );
 	mPktSpeedRx->setText( QString::number( static_cast<KNetStats*>( parent() )->pktSpeedRx(), 'f', 1 )+"pkts/s" );
 	mPktSpeedTx->setText( QString::number( static_cast<KNetStats*>( parent() )->pktSpeedTx(), 'f', 1 )+"pkts/s" );
+}
+
+void Statistics::show()
+{
+	mTimer->start( static_cast<KNetStats*>(parent())->updateInterval() );
+	StatisticsBase::show();
+}
+
+void Statistics::accept()
+{
+	mTimer->stop();
+	StatisticsBase::accept();
 }

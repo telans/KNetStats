@@ -27,6 +27,7 @@
 
 class QTimer;
 class QMouseEvent;
+class Statistics;
 
 /**
 *	Main class
@@ -35,6 +36,7 @@ class KNetStats : public KSystemTray
 {
 	Q_OBJECT
 private:
+	Statistics* mStatistics;
 	///	Icons
 	QPixmap mIconBoth, mIconRx, mIconTx, mIconNone, mIconError;
 	/// Current state

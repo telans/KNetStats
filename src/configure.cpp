@@ -22,16 +22,22 @@
 
 #include <knuminput.h>
 #include <kcombobox.h>
+#include <kfontrequester.h>
 #include <qstringlist.h>
+#include <qpixmap.h>
+
+extern QPixmap* appIcon;
 
 Configure::Configure( KNetStats *parent, const char *name )
 		: ConfigureBase( parent, name )
 {
+	setIcon(*appIcon);
 	mInterface->insertStringList( KNetStats::searchInterfaces() );
 	mInterface->setCurrentItem( parent->interface() );
 	if (parent->textMode())
 		mViewMode->setCurrentItem( 1 );
 	mUpdateInterval->setValue( parent->updateInterval() );
+	mFont->setFont( parent->font() );
 }
 
 unsigned int Configure::updateInterval() const
@@ -47,4 +53,9 @@ const QString Configure::interface() const
 Configure::ViewMode Configure::viewMode() const
 {
 	return (mViewMode->currentItem() == 0) ? IconMode : TextMode;
+}
+
+const QFont Configure::font() const
+{
+	return mFont->font();
 }

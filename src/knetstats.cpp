@@ -1,3 +1,22 @@
+/***************************************************************************
+ *   Copyright (C) 2004 by Hugo Parente Lima                               *
+ *   hugo_pl@users.sourceforge.net                                         *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
 #include "knetstats.h"
 
 // KDE headers
@@ -21,6 +40,7 @@
 #include <qtooltip.h>
 #include <qcursor.h>
 #include <qevent.h>
+#include <qfont.h>
 
 // C headers
 #include <cstring>
@@ -29,11 +49,13 @@
 #include "configure.h"
 #include "statistics.h"
 
-#include <iostream>
-
 extern const char* programName;
 
-KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTotalBytesTx(0), mTotalPktRx(0), mTotalPktTx(0), mSpeedRx(0), mSpeedTx(0), mbConnected(true), mTextMode(false)
+// Application icon...
+QPixmap* appIcon = 0;
+
+
+KNetStats::KNetStats():mStatistics(0),mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTotalBytesTx(0), mTotalPktRx(0), mTotalPktTx(0), mSpeedRx(0), mSpeedTx(0), mbConnected(true), mTextMode(false)
 {
 	setTextFormat(Qt::PlainText);
 
@@ -44,6 +66,8 @@ KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTo
 	mIconNone = loadIcon("icon_none.png");
 	mIconError = loadIcon("icon_error.png");
 	mCurrentIcon = &mIconNone;
+
+	appIcon = &mIconTx;
 
 	// Context menu
 	KPopupMenu* menu = contextMenu();
@@ -65,6 +89,9 @@ KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTo
 	if (!mInterface.isEmpty())
 		QToolTip::add(this, i18n("Monitoring ")+mInterface);
 	mTextMode = cfg.readBoolEntry("TextMode", false);
+	const QFont& currentFont = font();
+	const QFont& font = cfg.readFontEntry("Font", &currentFont);
+	setFont(font);
 
 	// Quit signal
 	connect(this, SIGNAL(quitSelected()), kapp, SLOT(quit(void)));
@@ -85,6 +112,8 @@ KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTo
 		setPixmap(*mCurrentIcon);
 		mTimer->start(mUpdateInterval);
 	}
+
+	mStatistics = new Statistics(this);
 }
 
 void KNetStats::update()
@@ -139,11 +168,6 @@ void KNetStats::update()
 				mSpeedPTx = ((ptx - mPTx)*(1000.0f/mUpdateInterval));
 				mSpeedPRx = ((prx - mPRx)*(1000.0f/mUpdateInterval));
 			}
-// DEBUG
-std::cout << "Diff: " << (btx - mBTx) << std::endl;
-std::cout << "Interval: " << mUpdateInterval << std::endl;
-std::cout << "Speed: " << mSpeedTx << std::endl;
-std::cout << "-------------------------------\n";
 
 			if (mTextMode)
 			{
@@ -237,6 +261,8 @@ void KNetStats::configure()
 		QString newInterface = dlg.interface();
 		mUpdateInterval = dlg.updateInterval();
 		mTextMode = (dlg.viewMode() == Configure::TextMode);
+		const QFont Font = dlg.font();
+		setFont( Font );
 		mbConnected = true;
 
 		KConfig cfg(KGlobal::dirs()->localkdedir()+"/share/config/knetstatsrc");
@@ -244,6 +270,7 @@ void KNetStats::configure()
 		cfg.writeEntry("UpdateInterval", mUpdateInterval);
 		cfg.writeEntry("Interface", mInterface);
 		cfg.writeEntry("TextMode", mTextMode);
+		cfg.writeEntry("Font", Font);
 
 		if (!mTextMode)	// Update icon, if we changed to icon mode from textmode
 		{
@@ -285,7 +312,17 @@ void KNetStats::statistics()
 		configure();
 	else
 	{
-		Statistics dlg(this);
-		dlg.exec();
+		if (!mStatistics)
+		{
+			mStatistics = new Statistics(this);
+			mStatistics->show();
+		}
+		else
+		{
+			if (mStatistics->isShown())
+				mStatistics->accept();
+			else
+				mStatistics->show();
+		}
 	}
 }
