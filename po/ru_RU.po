@@ -33,11 +33,11 @@ msgstr "Монитор сетевых интерфейсов."
 
 #: src/main.cpp:23
 msgid "_: NAME OF TRANSLATORS"
-msgstr "_: Edward Romantsov"
+msgstr "Edward Romantsov"
 
 #: src/main.cpp:23
 msgid "_: EMAIL OF TRANSLATORS"
-msgstr "_: xunion@ukr.net"
+msgstr "xunion@ukr.net"
 
 #: src/main.cpp:27
 msgid "SCons help, Debian packages, etc."
@@ -203,43 +203,4 @@ msgstr "мс"
 msgid "To monitor this &interface"
 msgstr "Наблюдение за интерфейсом"
 
-# OLD Fussy __________Old Fussy__________Old Fussy
 
-msgid "Alt+Y"
-msgstr "Alt+Y"
-
-msgid "Alt+N"
-msgstr "Alt+N"
-
-msgid "Kirghiz translation"
-msgstr "Киргизский перевод"
-
-msgid "Italian translation"
-msgstr "Итальянский перевод"
-
-msgid "Spanish translation"
-msgstr "Испанский перевод"
-
-msgid "Deutsch translation"
-msgstr "Немецкий перевод"
-
-msgid "Russian translation"
-msgstr "Русский перевод"
-
-msgid "Polish translation"
-msgstr "Польский перевод"
-
-msgid "Alt+C"
-msgstr "(Alt+C)"
-
-msgid "Monitor"
-msgstr "Монитор"
-
-msgid "&Statistics"
-msgstr "Статистика"
-
-msgid "Now monitoring %1"
-msgstr "Сейчас наблюдается %1"
-
-msgid "Network Interface:"
-msgstr "Сетевой Интерфейс:"

@@ -1,4 +1,5 @@
 # translation of de.po to 
+# translation of de.po to
 # Deutsch translation for KNetStats package
 # This file is distributed under the same license as the KNetStats package.
 # Copyright (C) 2004 Hugo Parente Lima.
@@ -9,7 +10,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-03-02 17:44+0000\n"
-"PO-Revision-Date: 2005-02-23 00:48+0100\n"
+"PO-Revision-Date: 2005-03-08 23:41+0100\n"
 "Last-Translator: Henrik Gebauer <henrik.gebauer@web.de>\n"
 "Language-Team:  <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -40,15 +41,15 @@ msgstr "henrik.gebauer@web.de"
 
 #: src/main.cpp:27
 msgid "SCons help, Debian packages, etc."
-msgstr ""
+msgstr "Hilfe mit SCons, Debian-Pakete usw."
 
 #: src/main.cpp:28
 msgid "Icon themes"
-msgstr "Icon-Themen"
+msgstr "Symbole"
 
 #: src/main.cpp:31
 msgid "KNetStats translation to other languages"
-msgstr ""
+msgstr "KNetStats-Übersetzung in andere Sprachen"
 
 #: src/knetstats.cpp:58
 msgid "&Help"
@@ -72,11 +73,11 @@ msgstr "Fehler beim Öffnen von /proc/net/dev!"
 
 #: src/knetstatsview.cpp:198
 msgid "%1 is active"
-msgstr "%1 ist aktiv"
+msgstr "%1 ist aktiv."
 
 #: src/knetstatsview.cpp:218
 msgid "%1 is inactive"
-msgstr "%1 ist inaktiv"
+msgstr "%1 ist inaktiv."
 
 #: src/configure.cpp:141
 msgid "You need to select at least one interface to monitor."
@@ -108,15 +109,15 @@ msgstr "Pakete"
 
 #: src/uic_statisticsbase.cc:169
 msgid "Ok"
-msgstr "OK"
+msgstr "&OK"
 
 #: src/uic_configurebase.cc:244
 msgid "Configure KNetStats"
-msgstr "KNetStats konfigurieren"
+msgstr "KNetStats einrichten"
 
 #: src/uic_configurebase.cc:245
 msgid "O&k"
-msgstr "O&K"
+msgstr "&OK"
 
 #: src/uic_configurebase.cc:246
 #, fuzzy
@@ -134,11 +135,11 @@ msgstr "Aussehen"
 
 #: src/uic_configurebase.cc:249
 msgid "Theme:"
-msgstr "Thema:"
+msgstr "Symbolsatz:"
 
 #: src/uic_configurebase.cc:251
 msgid "Classic"
-msgstr ""
+msgstr "Klassisch"
 
 #: src/uic_configurebase.cc:252
 msgid "Modem"
@@ -182,7 +183,7 @@ msgstr "Einstellungen"
 
 #: src/uic_configurebase.cc:268
 msgid "Icon (Activity)"
-msgstr "Icon (Aktivität)"
+msgstr "Symbol (Aktivität)"
 
 #: src/uic_configurebase.cc:269
 msgid "Text (Speed)"
@@ -201,38 +202,6 @@ msgid "ms"
 msgstr "ms"
 
 #: src/uic_configurebase.cc:273
-#, fuzzy
 msgid "To monitor this &interface"
-msgstr "Um diese &Schnittstelle zu beobachten"
+msgstr "Diese &Schnittstelle beobachten"
 
-#, fuzzy
-#~ msgid "Alt+Y"
-#~ msgstr "Alt+A"
-
-#, fuzzy
-#~ msgid "Alt+N"
-#~ msgstr "Alt+A"
-
-#~ msgid "Kirghiz translation"
-#~ msgstr "kirgiesische Übersetzung"
-
-#~ msgid "Italian translation"
-#~ msgstr "italienische Übersetzung"
-
-#~ msgid "Spanish translation"
-#~ msgstr "spansiche Übersetzung"
-
-#~ msgid "Deutsch translation"
-#~ msgstr "deutsche Übersetzung"
-
-#~ msgid "Russian translation"
-#~ msgstr "russische Übersetzung"
-
-#~ msgid "Polish translation"
-#~ msgstr "polnische Übersetzung"
-
-#~ msgid "Alt+C"
-#~ msgstr "Alt+B"
-
-#~ msgid "Monitor"
-#~ msgstr "Beobachtung"
