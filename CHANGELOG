@@ -1,3 +1,11 @@
+v1.3
+
+- New configuration dialog.
+- Support to multiple interfaces.
+- Is possible change the colors in the text mode view.
+- Is possible change the icon theme of in icon mode.
+- Added smooth speed meter.
+
 v1.2.1
 - Added Russian translation (Edward Romantsov).
 - Added Polish translation (Wiktor Wandachowicz).
