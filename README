@@ -1,4 +1,5 @@
-To install:
+INSTALATION
+===========
 
 type:
 ./configure
@@ -7,12 +8,29 @@ make install
 
 Note.: The compilation is qmake based, not automake/autoconf based.
 
-To run, type:
+If you use Fedora or Suse and see a error message like
+
+"*** No rule to make target `/usr/qt/3/mkspecs/linux-g++/qmake.conf', needed by `Makefile'. Stop"
+
+Copy the file "/usr/lib/qt3/mkspecs/linux-g++/qmake.conf" to "/usr/qt/3/mkspecs/linux-g++/" and try again
+
+
+RUNING
+======
+
+To run knetstats, type:
 knetstats
 
+
+CONTACT
+=======
 Any doubts or suggestions, hugo_pl@users.sourceforge.net
 
-To uninstall:
+For more info. visit: http://knetstats.sf.net
+
+
+UNINSTALL
+=========
 
 Type:
 rm -f /usr/bin/knetstats

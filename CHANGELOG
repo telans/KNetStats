@@ -1,6 +1,10 @@
+v1.1.2
+
+- Build system now uses kde-config instead $KDEDIR env. variable. This will solve problems when compiling KNetstats on some distros (Suse 9.1, Fedora).
+
 v1.1.1
 
-- Clinking on trayicon show/hide statistics window (suggestion by Fredy Yanardi).
+- Clicking on trayicon show/hide statistics window (suggestion by Fredy Yanardi).
 - All dialogs now show the KNetStats icon on windows decoration.
 - It's possible to change the font used in textmode (suggestion by Vik).
 

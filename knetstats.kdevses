@@ -1,10 +1,16 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <!DOCTYPE KDevPrjSession>
 <KDevPrjSession>
- <DocsAndViews NumberOfDocuments="1" >
+ <DocsAndViews NumberOfDocuments="3" >
   <Doc0 NumberOfViews="1" URL="file:/home/hugo/src/knetstats/src/main.cpp" >
-   <View0 line="14" Type="Source" />
+   <View0 Type="Source" />
   </Doc0>
+  <Doc1 NumberOfViews="1" URL="file:/home/hugo/src/knetstats/CHANGELOG" >
+   <View0 Type="Source" />
+  </Doc1>
+  <Doc2 NumberOfViews="1" URL="file:/home/hugo/src/knetstats/README" >
+   <View0 line="12" Type="Source" />
+  </Doc2>
  </DocsAndViews>
  <pluginList/>
 </KDevPrjSession>
