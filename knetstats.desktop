@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=KNetStats
+GenericName=Network monitor (LED)
+Comment=Netwrok monitor
+Exec=knetstats
+Icon=/usr/share/apps/knetstats/pics/knetstats.png
+Terminal=false
+Type=Application
+Categories=Application;Network;
+StartupNotify=true
+Categories=KDE;Application;Network;
+

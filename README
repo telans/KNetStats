@@ -1,0 +1,24 @@
+To install:
+
+type:
+./configure
+make
+make install
+
+Note.: The compilation is qmake based, not automake/autoconf based.
+
+To run, type:
+knetstats
+
+Any doubts or suggestions, hugo_pl@users.sourceforge.net
+
+To uninstall:
+
+Type:
+rm -f /usr/bin/knetstats
+rm -rdf /usr/share/apps/knetstats/*
+rm -f /usr/share/applications/knetstats.desktop
+rm -f $HOME/.kde/share/config/knetstats.rc
+
+--
+Hugo P.L.
