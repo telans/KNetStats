@@ -1,27 +1,24 @@
-# Russian KOI8-R translation of KNetStats -
-# - KDE Network Statistics Applet.
-# Copyright (C) 1995-2005 xUnion
-# This file is distributed under BSD license.
-# xUnion <xUnion@ukr.net>, 2005.
-# Russian translation of any projects
-# of any complication...
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: KNetStats 1.3\n"
+"Project-Id-Version: KNetStats 1.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-19 19:27+0000\n"
-"PO-Revision-Date: 2005-02-21 20:25GMT+02:00\n"
-"Last-Translator: Edward Romantsov <xUnion@ukr.net>\n"
-"Language-Team: xUnion <xUnion@ukr.net>\n"
+"PO-Revision-Date: 2005-02-21 20:56+0000\n"
+"Last-Translator: Guillaume Savaton <guillaume.savaton@free.fr>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=KOI8-R\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: src/statistics.cpp:30
 msgid "Statistics for %1"
-msgstr "Статистика для интерфейса %1"
+msgstr "Statistiques pour %1"
 
 #: src/main.cpp:11 src/statisticsbase.cc:158
 msgid "KNetStats"
@@ -29,115 +26,115 @@ msgstr "KNetStats"
 
 #: src/main.cpp:17
 msgid "A network device monitor."
-msgstr "Монитор сетевых интерфейсов."
+msgstr "Un moniteur de réseau."
 
 #: src/main.cpp:23
 msgid "_: NAME OF TRANSLATORS"
-msgstr "_: имя переводчика Edward Romantsov"
+msgstr "Guillaume Savaton"
 
 #: src/main.cpp:23
 msgid "_: EMAIL OF TRANSLATORS"
-msgstr "_: адрес электронной почты переводчика xunion@ukr.net"
+msgstr "guillaume.savaton@free.fr"
 
 #: src/main.cpp:25
 msgid "Icon themes"
-msgstr "Темы"
+msgstr "Thèmes des icônes"
 
 #: src/main.cpp:28
 msgid "Kirghiz translation"
-msgstr "Киргизский"
+msgstr "Traduction kirghize"
 
 #: src/main.cpp:29
 msgid "Italian translation"
-msgstr "Итальянский"
+msgstr "Traduction italienne"
 
 #: src/main.cpp:30
 msgid "Spanish translation"
-msgstr "Испанский"
+msgstr "Traduction espagnole"
 
 #: src/main.cpp:31
 msgid "Deutsch translation"
-msgstr "Немецкий"
+msgstr "Traduction allemande"
 
 #: src/main.cpp:32
 msgid "Russian translation"
-msgstr "Русский"
+msgstr "Traduction russe"
 
 #: src/main.cpp:33
 msgid "Polish translation"
-msgstr "Польский"
+msgstr "Traduction polonaise"
 
 #: src/knetstats.cpp:57
 msgid "&Help"
-msgstr "&Помощь"
+msgstr "&Aide"
 
 #: src/knetstats.cpp:143
 msgid ""
 "You don't have any network interface.\n"
 "KNetStats will quit now."
 msgstr ""
-"Сетевые интерфейсы отсутствуют.\n"
-"Апплет KNetStats по-понятиям обязан завершить свою работу."
+"Vous n'avez aucune interface réseau.\n"
+"KNetStats va se terminer."
 
 #: src/knetstatsview.cpp:81
 msgid "Monitoring %1"
-msgstr "Наблюдение %1"
+msgstr "Surveillance de %1"
 
 #: src/knetstatsview.cpp:130
 msgid "Error opening /proc/net/dev!"
-msgstr "Произошла ошибка при открытии файла устройств /proc/net/dev!"
+msgstr "Erreur au cours de l'ouverture de /proc/net/dev !"
 
 #: src/knetstatsview.cpp:198
 msgid "%1 is active"
-msgstr "%1 в активном состоянии"
+msgstr "%1 est actif"
 
 #: src/knetstatsview.cpp:218
 msgid "%1 is inactive"
-msgstr "%1 в неактивном состоянии"
+msgstr "%1 est inactif"
 
 #: src/configure.cpp:142
 msgid "You need select at least one interface to monitor."
-msgstr "Вам необходимо выбрать хотя бы один интерфейс для наблюдения."
+msgstr "Vous devez sélectionner au moins une interface à surveiller"
 
 #: src/statisticsbase.cc:159
 msgid "Bytes"
-msgstr "Байт(а)"
+msgstr "Octets"
 
 #: src/statisticsbase.cc:160 src/statisticsbase.cc:165
 msgid "Received:"
-msgstr "Получено:"
+msgstr "Reçus :"
 
 #: src/statisticsbase.cc:161 src/statisticsbase.cc:166
 msgid "Transmited:"
-msgstr "Отправлено:"
+msgstr "Envoyés :"
 
 #: src/statisticsbase.cc:162 src/statisticsbase.cc:167
 msgid "Upload speed:"
-msgstr "Исходящая скорость:"
+msgstr "Vitesse d'émission :"
 
 #: src/statisticsbase.cc:163 src/statisticsbase.cc:168
 msgid "Download speed:"
-msgstr "Скорость загрузки:"
+msgstr "Vitesse de réception :"
 
 #: src/statisticsbase.cc:164
 msgid "Packets"
-msgstr "Пакетов"
+msgstr "Paquets"
 
 #: src/statisticsbase.cc:169
 msgid "Ok"
-msgstr "О.К."
+msgstr "Ok"
 
 #: src/configurebase.cc:246
 msgid "Configure KNetStats"
-msgstr "Настройки KNetStats"
+msgstr "Configurer KNetStats"
 
 #: src/configurebase.cc:247
 msgid "O&k"
-msgstr "О.К."
+msgstr "O&k"
 
 #: src/configurebase.cc:248
 msgid "&Apply"
-msgstr "Применить"
+msgstr "&Appliquer"
 
 #: src/configurebase.cc:249
 msgid "Alt+A"
@@ -145,7 +142,7 @@ msgstr "Alt+A"
 
 #: src/configurebase.cc:250
 msgid "&Cancel"
-msgstr "Отмена"
+msgstr "A&nnuler"
 
 #: src/configurebase.cc:251
 msgid "Alt+C"
@@ -153,27 +150,27 @@ msgstr "Alt+C"
 
 #: src/configurebase.cc:252
 msgid "Appearance"
-msgstr "Вид"
+msgstr "Apparence"
 
 #: src/configurebase.cc:253
 msgid "Theme:"
-msgstr "Тема:"
+msgstr "Thème :"
 
 #: src/configurebase.cc:255
 msgid "Monitor"
-msgstr "Наблюдение"
+msgstr "Moniteur"
 
 #: src/configurebase.cc:256
 msgid "Modem"
-msgstr "Модем"
+msgstr "Modem"
 
 #: src/configurebase.cc:257
 msgid "Network"
-msgstr "Сеть"
+msgstr "Réseau"
 
 #: src/configurebase.cc:258
 msgid "Wireless"
-msgstr "Безпроводная сеть"
+msgstr "Sans fil"
 
 #: src/configurebase.cc:259
 msgid "Kppp"
@@ -181,57 +178,60 @@ msgstr "Kppp"
 
 #: src/configurebase.cc:261
 msgid "Download color:"
-msgstr "Индикатор входящих пакетов:"
+msgstr "Couleur en réception :"
 
 #: src/configurebase.cc:263
 msgid "Upload color:"
-msgstr "Индикатор исходящих пакетов:"
+msgstr "Couleur en émission :"
 
 #: src/configurebase.cc:265
 msgid "Medium color:"
-msgstr "Нормально:"
+msgstr "Couleur intermédiaire :"
 
 #: src/configurebase.cc:267
 msgid "Lower color:"
-msgstr "Медленно:"
+msgstr "Couleur basse :"
 
 #: src/configurebase.cc:269
 msgid "High color:"
-msgstr "Быстро:"
+msgstr "Couleur haute :"
 
 #: src/configurebase.cc:270
 msgid "Configuration"
-msgstr "Настройки"
+msgstr "Configuration"
 
 #: src/configurebase.cc:272
 msgid "Icon (Activity)"
-msgstr "Иконка (Активность)"
+msgstr "Icône (Activité)"
 
 #: src/configurebase.cc:273
 msgid "Text (Speed)"
-msgstr "Текст (Скорость)"
+msgstr "Texte (Vitesse)"
 
 #: src/configurebase.cc:274
 msgid "View mode:"
-msgstr "Отображение:"
+msgstr "Mode de visualisation :"
 
 #: src/configurebase.cc:275
 msgid "Update interval:"
-msgstr "Интервал обновления:"
+msgstr "Intervalle de mise à jour :"
 
 #: src/configurebase.cc:276
 msgid "ms"
-msgstr "мс"
+msgstr "ms"
 
 #: src/configurebase.cc:277
 msgid "To monitor this &interface"
-msgstr "Наблюдение за интерфейсом &interface"
+msgstr "Surveiller cette &interface"
 
 #~ msgid "&Statistics"
-#~ msgstr "&Статистика"
+#~ msgstr "&Statistiques"
 
 #~ msgid "Now monitoring %1"
-#~ msgstr "Сейчас наблюдается интерфейс %1"
+#~ msgstr "Surveillance de %1"
+
+#~ msgid "StatisticsBase"
+#~ msgstr "StatisticsBase"
 
 #~ msgid "Network Interface:"
-#~ msgstr "Сетевой Интерфейс:"
+#~ msgstr "Interface réseau :"
