@@ -38,10 +38,11 @@
 #include <kaboutapplication.h>
 #include <kpopupmenu.h>
 #include <kiconloader.h>
+#include <kpushbutton.h>
 // StdC++ includes
 #include <algorithm>
 
-KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true)
+KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0)
 {
 	setIcon(kapp->icon());
 
@@ -131,25 +132,52 @@ QStringList KNetStats::searchInterfaces()
 
 bool KNetStats::configure()
 {
-	// Procura interfaces de rede
-	QStringList ifs = KNetStats::searchInterfaces();
-	ifs += kapp->config()->readListEntry("AllViews");
-	ifs.sort();
-	ifs.erase( std::unique(ifs.begin(), ifs.end()), ifs.end() );
-	kapp->config()->writeEntry("AllViews", ifs);
-
-	if (!ifs.size())
+	if (mConfigure)
+		mConfigure->show();
+	else
 	{
-		KMessageBox::error(this, i18n("You don't have any network interface.\nKNetStats will quit now."));
-		return false;
+		// Procura interfaces de rede
+		QStringList ifs = KNetStats::searchInterfaces();
+		ifs += kapp->config()->readListEntry("AllViews");
+		ifs.sort();
+		ifs.erase( std::unique(ifs.begin(), ifs.end()), ifs.end() );
+		kapp->config()->writeEntry("AllViews", ifs);
+
+		if (!ifs.size())
+		{
+			KMessageBox::error(this, i18n("You don't have any network interface.\nKNetStats will quit now."));
+			return false;
+		}
+
+		mConfigure = new Configure(this, ifs);
+		connect(mConfigure->mOk, SIGNAL(clicked()), this, SLOT(configOk()));
+		connect(mConfigure->mApply, SIGNAL(clicked()), this, SLOT(configApply()));
+		connect(mConfigure->mCancel, SIGNAL(clicked()), this, SLOT(configCancel()));
+		mConfigure->show();
 	}
-
-	Configure dlg(this, ifs);
-	int res = dlg.exec();
-
-	if (res == QDialog::Accepted )
-		applyConfig( dlg.currentConfig() );
 	return true;
+}
+
+void KNetStats::configOk()
+{
+	if (mConfigure->saveConfig())
+	{
+		applyConfig( mConfigure->currentConfig() );
+		delete mConfigure;
+		mConfigure = 0;
+	}
+}
+
+void KNetStats::configApply()
+{
+	if (mConfigure->saveConfig())
+		applyConfig( mConfigure->currentConfig() );
+}
+
+void KNetStats::configCancel()
+{
+	delete mConfigure;
+	mConfigure = 0;
 }
 
 void KNetStats::applyConfig(const ViewsMap& map)

@@ -64,14 +64,11 @@ public:
 	{
 		return mConfig;
 	}
+	bool saveConfig();
 private:
 	QString mCurrentItem;
 	ViewsMap mConfig;
 
-	bool saveConfig();
-public slots:
-	void accept();
-	void apply();
 protected slots:
 	void changeInterface(QListBoxItem* item);
 	void changeTheme(int theme);

@@ -77,7 +77,6 @@ Configure::Configure(KNetStats* parent, const QStringList& ifs) : ConfigureBase(
 	mInterfaces->setCurrentItem(0);
 	changeInterface(mInterfaces->selectedItem());
 
-	connect(mApply, SIGNAL(clicked()), this, SLOT(apply()));
 	connect(mInterfaces, SIGNAL(selectionChanged(QListBoxItem*)), this, SLOT(changeInterface(QListBoxItem*)));
 	connect(mTheme, SIGNAL(activated(int)), this, SLOT(changeTheme(int)));
 }
@@ -164,18 +163,6 @@ bool Configure::saveConfig()
 	}
 	cfg->writeEntry("CurrentViews", views);
 	return true;
-}
-
-void Configure::accept()
-{
-	if (saveConfig())
-		done(QDialog::Accepted);
-}
-
-void Configure::apply()
-{
-	if (saveConfig())
-		static_cast<KNetStats*>(parent())->applyConfig(mConfig);
 }
 
 void Configure::changeTheme(int theme)

@@ -56,12 +56,17 @@ public:
 public slots:
 	/// Display configure the dialog box
 	bool configure();
+	void configOk();
+	void configApply();
+	void configCancel();
+
 	/// Diaplay the about box
 	void about();
 
 private:
 	bool mAllOk;
 	KPopupMenu* mContextMenu; // help menu usado por todos os tray icons
+	Configure* mConfigure;
 	KActionCollection* mActionCollection;
 	typedef QMap<QString, KNetStatsView*> TrayIconMap;
 	TrayIconMap mView;

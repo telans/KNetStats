@@ -600,18 +600,6 @@
 </widget>
 <connections>
     <connection>
-        <sender>mOk</sender>
-        <signal>clicked()</signal>
-        <receiver>ConfigureBase</receiver>
-        <slot>accept()</slot>
-    </connection>
-    <connection>
-        <sender>mCancel</sender>
-        <signal>clicked()</signal>
-        <receiver>ConfigureBase</receiver>
-        <slot>reject()</slot>
-    </connection>
-    <connection>
         <sender>mViewMode</sender>
         <signal>activated(int)</signal>
         <receiver>mWdgStack</receiver>
