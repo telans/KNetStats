@@ -1,0 +1,121 @@
+# Italian translation of KNetStats.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Roberto Leandrini <anaconda@ditalinux.it>, 2004.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-18 15:46+0000\n"
+"PO-Revision-Date: 2004-12-26 19:35+0200\n"
+"Last-Translator: Roberto Leandrini <anaconda@ditalinux.it>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/statistics.cpp:32
+msgid "Statistics for %1"
+msgstr "Statistiche per %1"
+
+#: src/main.cpp:13
+msgid "KNetStats"
+msgstr "KNetStats"
+
+#: src/main.cpp:15
+msgid "A network device monitor."
+msgstr "Un monitor per dispositivi di rete."
+
+#: src/main.cpp:24
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Roberto Leandrini"
+
+#: src/main.cpp:24
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "anaconda@ditalinux.it"
+
+#: src/knetstats.cpp:78
+msgid "&Statistics"
+msgstr "&Statistiche"
+
+#: src/knetstats.cpp:82
+msgid "&Help"
+msgstr "&Aiuto"
+
+#: src/knetstats.cpp:90 src/knetstats.cpp:289
+msgid "Monitoring "
+msgstr "Monitoring "
+
+#: src/knetstats.cpp:214
+msgid "%1 is active"
+msgstr "%1 è attiva"
+
+#: src/knetstats.cpp:228
+msgid "%1 is inactive"
+msgstr "%1 è inattiva"
+
+#: src/knetstats.cpp:290
+msgid "Now monitoring %1"
+msgstr "Ora in monitor %1"
+
+#: src/.ui/statisticsbase.cpp:157
+msgid "StatisticsBase"
+msgstr "StatisticsBase"
+
+#: src/.ui/statisticsbase.cpp:158
+msgid "Bytes"
+msgstr "Bytes"
+
+#: src/.ui/statisticsbase.cpp:159 src/.ui/statisticsbase.cpp:164
+msgid "Received:"
+msgstr "Ricevuti:"
+
+#: src/.ui/statisticsbase.cpp:160 src/.ui/statisticsbase.cpp:165
+msgid "Transmited:"
+msgstr "Trasmessi:"
+
+#: src/.ui/statisticsbase.cpp:161 src/.ui/statisticsbase.cpp:166
+msgid "Upload speed:"
+msgstr "Velocità di upload:"
+
+#: src/.ui/statisticsbase.cpp:162 src/.ui/statisticsbase.cpp:167
+msgid "Download speed:"
+msgstr "Velocità di download:"
+
+#: src/.ui/statisticsbase.cpp:163
+msgid "Packets"
+msgstr "Pacchetti"
+
+#: src/.ui/statisticsbase.cpp:168 src/.ui/configurebase.cpp:112
+msgid "Ok"
+msgstr "Ok"
+
+#: src/.ui/configurebase.cpp:106
+msgid "Configure"
+msgstr "Configurazione"
+
+#: src/.ui/configurebase.cpp:107
+msgid "Update interval (in miliseconds):"
+msgstr "Intervallo di aggiornamento (in millisecondi)"
+
+#: src/.ui/configurebase.cpp:108
+msgid "Network Interface:"
+msgstr "Interfaccia di rete:"
+
+#: src/.ui/configurebase.cpp:110
+msgid "Icon (Activity)"
+msgstr "Icona (Attività)"
+
+#: src/.ui/configurebase.cpp:111
+msgid "Text (Speed)"
+msgstr "Testo (Velocità)"
+
+#: src/.ui/configurebase.cpp:113
+msgid "Cancel"
+msgstr "Annulla"
+
+#: src/.ui/configurebase.cpp:114
+msgid "View mode:"
+msgstr "Visualizza:"
