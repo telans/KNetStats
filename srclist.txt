@@ -3,5 +3,5 @@ src/main.cpp
 src/knetstats.cpp
 src/knetstatsview.cpp
 src/configure.cpp
-src/statisticsbase.cc
-src/configurebase.cc
+src/uic_statisticsbase.cc
+src/uic_configurebase.cc

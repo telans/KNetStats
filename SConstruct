@@ -86,6 +86,7 @@ env.Po('po/ky_KG.mo','po/ky_KG.po');
 env.Po('po/pl.mo','po/pl.po');
 env.Po('po/pt_BR.mo','po/pt_BR.po');
 env.Po('po/ru_RU.mo','po/ru_RU.po');
+env.Po('po/fr.mo','po/fr.po');
 env.Program('bin/knetstats', srcList)
 
 # Installation
@@ -102,6 +103,7 @@ env.Alias( 'install', env.InstallAs(customInstallPath+'/usr/share/locale/ky_KG/L
 env.Alias( 'install', env.InstallAs(customInstallPath+'/usr/share/locale/pl/LC_MESSAGES/knetstats.mo', 'po/pl.mo'));
 env.Alias( 'install', env.InstallAs(customInstallPath+'/usr/share/locale/pt_BR/LC_MESSAGES/knetstats.mo', 'po/pt_BR.mo'));
 env.Alias( 'install', env.InstallAs(customInstallPath+'/usr/share/locale/ru_RU/LC_MESSAGES/knetstats.mo', 'po/ru_RU.mo'));
+env.Alias( 'install', env.InstallAs(customInstallPath+'/usr/share/locale/fr/LC_MESSAGES/knetstats.mo', 'po/fr.mo'));
 
 env.Help("\nTo compile KNetStats type:\n"
 	"  scons\n"

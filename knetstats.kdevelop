@@ -13,17 +13,26 @@
     <absoluteprojectpath>false</absoluteprojectpath>
     <description/>
     <ignoreparts>
-      <part>KDevcopyto</part>
-      <part>KDevCTags</part>
-      <part>KDevDebugger</part>
-      <part>KDevFileGroups</part>
-      <part>KDevClearCase</part>
-      <part>CvsService</part>
-      <part>KDevPerforce</part>
-      <part>KDevCTags2</part>
-      <part>KDevQuickOpen</part>
-      <part>KDevsubversion</part>
-      <part>KDevdistpart</part>
+      <part>kdevtools</part>
+      <part>kdevdocumentation</part>
+      <part>kdevtexttools</part>
+      <part>kdevabbrev</part>
+      <part>kdevdebugger</part>
+      <part>kdevgrepview</part>
+      <part>kdevvalgrind</part>
+      <part>kdevfilegroups</part>
+      <part>kdevctags2</part>
+      <part>kdevkonsoleview</part>
+      <part>kdevfilelist</part>
+      <part>kdevbookmarks</part>
+      <part>kdevreplace</part>
+      <part>kdevsnippet</part>
+      <part>kdevquickopen</part>
+      <part>kdevscripting</part>
+      <part>kdevfileselector</part>
+      <part>kdevfilter</part>
+      <part>kdevdoxygen</part>
+      <part>kdevdistpart</part>
     </ignoreparts>
     <secondaryLanguages/>
   </general>
