@@ -22,6 +22,9 @@ int main( int argc, char** argv )
 						  "hugo_pl@users.sourceforge.net");			// bug email address
 	aboutData.setTranslator(I18N_NOOP("_: NAME OF TRANSLATORS"), I18N_NOOP("_: EMAIL OF TRANSLATORS"));
 	aboutData.addAuthor( "Hugo Parente Lima", 0, "hugo_pl@users.sourceforge.net" );
+
+	// Credits
+	aboutData.addCredit( "Thomas Windheuser", I18N_NOOP("SConstruct help and Debian packages"), 0);
 	aboutData.addCredit( "KNemo", I18N_NOOP("Icon themes"), 0,
 						"http://kde-apps.org/content/show.php?content=12956" );
 	// translators
