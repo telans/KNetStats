@@ -1,3 +1,10 @@
+v1.1.1
+
+- Clinking on trayicon show/hide statistics window (suggestion by Fredy Yanardi)
+- All dialogs now show the KNetStats on windows decoration.
+- It's possible to change the font used in textmode (suggestion by Volker)
+
+
 v1.1
 
 - Bug Fix: Not saving UpdateInterval when the network interface is not changed.
