@@ -15,8 +15,8 @@ def KDELibs( env, str ):
 #check if there is a different installation path as the default one
 #(at the moment only used for building debian package)
 customInstallPath = '';
-if os.environ.has_key('DESTDIR') : 
-	customInstallPath = os.environ['DESTDIR']; 
+if os.environ.has_key('DESTDIR') :
+	customInstallPath = os.environ['DESTDIR'];
 	print "Custom install path set to: "+customInstallPath+"\n";
 
 
@@ -27,6 +27,9 @@ env = Environment(
 	CPPFLAGS = ['-O2', '-Wall', '-pipe', '-fomit-frame-pointer'],
 	platform = 'posix'
 );
+
+# Avoid spreading .sconsign files everywhere
+env.SConsignFile('scons_signatures')
 
 #under debian, we have to set the plugindirectories, so that QT's uic will run.
 #we will test, if the current linux distribution is "Debian"
@@ -88,7 +91,6 @@ env.Alias( 'install', env.Install(customInstallPath+'/usr/bin', 'bin/knetstats')
 env.Alias( 'install', env.Install(customInstallPath+'/usr/share/applications/', 'knetstats.desktop') );
 env.Alias( 'install', env.Install(customInstallPath+'/usr/share/doc/kde/HTML/en/knetstats/', 'doc/index.docbook') );
 env.Alias( 'install', env.Install(customInstallPath+'/usr/share/apps/knetstats/pics/',imageList) );
-###env.Alias( 'install', env.Install(customInstallPath+'/usr/share/apps/knetstats/pics/', Split('src/pics/icon_both.png  src/pics/icon_configure.png  src/pics/icon_error.png  src/pics/icon_none.png  src/pics/icon_rx.png  src/pics/icon_tx.png  src/pics/knetstats.png')) );
 
 # i18n installation
 env.Alias( 'install', env.InstallAs(customInstallPath+'/usr/share/locale/de/LC_MESSAGES/knetstats.mo', 'po/de.mo'));
