@@ -23,13 +23,13 @@
 #include "statisticsbase.h"
 #include <qstring.h>
 
-class KNetStats;
+class KNetStatsView;
 
 class Statistics : public StatisticsBase
 {
 	Q_OBJECT
 public:
-	Statistics( KNetStats *parent = 0, const char *name = 0 );
+	Statistics( KNetStatsView* parent = 0, const char *name = 0 );
 
 	/**
 	*	Formats a numberic byte representation

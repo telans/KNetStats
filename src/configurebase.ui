@@ -8,12 +8,23 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>277</width>
-            <height>165</height>
+            <width>472</width>
+            <height>353</height>
         </rect>
+    </property>
+    <property name="sizePolicy">
+        <sizepolicy>
+            <hsizetype>4</hsizetype>
+            <vsizetype>4</vsizetype>
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+        </sizepolicy>
     </property>
     <property name="caption">
         <string>Configure</string>
+    </property>
+    <property name="sizeGripEnabled">
+        <bool>true</bool>
     </property>
     <property name="modal">
         <bool>true</bool>
@@ -22,66 +33,21 @@
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
-        <property name="resizeMode">
-            <enum>Fixed</enum>
-        </property>
-        <widget class="QLabel" row="1" column="0">
+        <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>mLabel2</cstring>
+                <cstring>textLabel1</cstring>
             </property>
             <property name="text">
-                <string>Update interval (in miliseconds):</string>
+                <string>Choice which networkl interfaces do you want to monitor.</string>
+            </property>
+            <property name="textFormat">
+                <enum>PlainText</enum>
             </property>
             <property name="alignment">
                 <set>WordBreak|AlignVCenter</set>
             </property>
         </widget>
-        <widget class="QLabel" row="0" column="0">
-            <property name="name">
-                <cstring>mLabel1</cstring>
-            </property>
-            <property name="text">
-                <string>Network Interface:</string>
-            </property>
-            <property name="alignment">
-                <set>WordBreak|AlignVCenter</set>
-            </property>
-        </widget>
-        <widget class="KIntNumInput" row="1" column="1">
-            <property name="name">
-                <cstring>mUpdateInterval</cstring>
-            </property>
-            <property name="value">
-                <number>300</number>
-            </property>
-            <property name="minValue">
-                <number>100</number>
-            </property>
-            <property name="maxValue">
-                <number>2000</number>
-            </property>
-        </widget>
-        <widget class="KComboBox" row="0" column="1">
-            <property name="name">
-                <cstring>mInterface</cstring>
-            </property>
-        </widget>
-        <widget class="KComboBox" row="2" column="1">
-            <item>
-                <property name="text">
-                    <string>Icon (Activity)</string>
-                </property>
-            </item>
-            <item>
-                <property name="text">
-                    <string>Text (Speed)</string>
-                </property>
-            </item>
-            <property name="name">
-                <cstring>mViewMode</cstring>
-            </property>
-        </widget>
-        <widget class="QLayoutWidget" row="4" column="0" rowspan="1" colspan="2">
+        <widget class="QLayoutWidget" row="3" column="0" rowspan="1" colspan="2">
             <property name="name">
                 <cstring>mLayout</cstring>
             </property>
@@ -127,43 +93,314 @@
                 </widget>
             </hbox>
         </widget>
-        <widget class="QLabel" row="2" column="0">
+        <widget class="QGroupBox" row="2" column="1">
             <property name="name">
-                <cstring>mLabel3</cstring>
+                <cstring>mAppearanceGroup</cstring>
             </property>
-            <property name="text">
-                <string>View mode:</string>
+            <property name="title">
+                <string>Appearance</string>
             </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QWidgetStack" row="0" column="0">
+                    <property name="name">
+                        <cstring>mWdgStack</cstring>
+                    </property>
+                    <widget class="QWidget">
+                        <property name="name">
+                            <cstring>mIconPage</cstring>
+                        </property>
+                        <attribute name="id">
+                            <number>0</number>
+                        </attribute>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <property name="margin">
+                                <number>0</number>
+                            </property>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>mLabel4</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Click on any icon to change then.</string>
+                                </property>
+                            </widget>
+                            <widget class="QListBox">
+                                <item>
+                                    <property name="text">
+                                        <string>Upload</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>Download</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>Both</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>None</string>
+                                    </property>
+                                </item>
+                                <item>
+                                    <property name="text">
+                                        <string>Error</string>
+                                    </property>
+                                </item>
+                                <property name="name">
+                                    <cstring>mIconList</cstring>
+                                </property>
+                                <property name="columnMode">
+                                    <enum>FitToWidth</enum>
+                                </property>
+                            </widget>
+                        </vbox>
+                    </widget>
+                    <widget class="QWidget">
+                        <property name="name">
+                            <cstring>mTextPage</cstring>
+                        </property>
+                        <attribute name="id">
+                            <number>1</number>
+                        </attribute>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <property name="margin">
+                                <number>0</number>
+                            </property>
+                            <widget class="KColorButton" row="0" column="1">
+                                <property name="name">
+                                    <cstring>mTxtUplColor</cstring>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="0">
+                                <property name="name">
+                                    <cstring>mLabel5</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Download color:</string>
+                                </property>
+                            </widget>
+                            <widget class="KColorButton" row="1" column="1">
+                                <property name="name">
+                                    <cstring>mTxtDldColor</cstring>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="KFontRequester" row="2" column="0" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>mTxtFont</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="0" column="0">
+                                <property name="name">
+                                    <cstring>mLabel6</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Upload color:</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="QWidget">
+                        <property name="name">
+                            <cstring>mBarsPage</cstring>
+                        </property>
+                        <attribute name="id">
+                            <number>2</number>
+                        </attribute>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <property name="margin">
+                                <number>0</number>
+                            </property>
+                            <widget class="KColorButton" row="0" column="1">
+                                <property name="name">
+                                    <cstring>mBarHighColor</cstring>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="0">
+                                <property name="name">
+                                    <cstring>mLabel8</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Medium color:</string>
+                                </property>
+                            </widget>
+                            <widget class="KColorButton" row="1" column="1">
+                                <property name="name">
+                                    <cstring>mBarMidColor</cstring>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="2" column="0">
+                                <property name="name">
+                                    <cstring>mLabel9</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Lower color:</string>
+                                </property>
+                            </widget>
+                            <widget class="KColorButton" row="2" column="1">
+                                <property name="name">
+                                    <cstring>mBarLowColor</cstring>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="0" column="0">
+                                <property name="name">
+                                    <cstring>mLabel7</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>High color:</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                </widget>
+            </grid>
         </widget>
-        <widget class="KFontRequester" row="3" column="0" rowspan="1" colspan="2">
+        <widget class="QGroupBox" row="1" column="1">
             <property name="name">
-                <cstring>mFont</cstring>
+                <cstring>mConfigurationGroup</cstring>
+            </property>
+            <property name="title">
+                <string>Configuration</string>
+            </property>
+            <grid>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="KComboBox" row="2" column="1">
+                    <item>
+                        <property name="text">
+                            <string>Icon (Activity)</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Text (Speed)</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Bars (Loading)</string>
+                        </property>
+                    </item>
+                    <property name="name">
+                        <cstring>mViewMode</cstring>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="2" column="0">
+                    <property name="name">
+                        <cstring>mLabel3</cstring>
+                    </property>
+                    <property name="text">
+                        <string>View mode:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel" row="1" column="0">
+                    <property name="name">
+                        <cstring>mLabel2</cstring>
+                    </property>
+                    <property name="text">
+                        <string>Update interval:</string>
+                    </property>
+                    <property name="alignment">
+                        <set>WordBreak|AlignVCenter</set>
+                    </property>
+                </widget>
+                <widget class="KIntNumInput" row="1" column="1">
+                    <property name="name">
+                        <cstring>mUpdateInterval</cstring>
+                    </property>
+                    <property name="value">
+                        <number>300</number>
+                    </property>
+                    <property name="minValue">
+                        <number>100</number>
+                    </property>
+                    <property name="maxValue">
+                        <number>2000</number>
+                    </property>
+                    <property name="suffix">
+                        <string>ms</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox" row="0" column="0" rowspan="1" colspan="2">
+                    <property name="name">
+                        <cstring>mMonitoring</cstring>
+                    </property>
+                    <property name="text">
+                        <string>To monitor this interface</string>
+                    </property>
+                </widget>
+            </grid>
+        </widget>
+        <widget class="QListBox" row="1" column="0" rowspan="2" colspan="1">
+            <property name="name">
+                <cstring>mInterfaces</cstring>
             </property>
         </widget>
     </grid>
 </widget>
 <connections>
     <connection>
-        <sender>mOk</sender>
-        <signal>clicked()</signal>
-        <receiver>ConfigureBase</receiver>
-        <slot>accept()</slot>
-    </connection>
-    <connection>
         <sender>mCancel</sender>
         <signal>clicked()</signal>
         <receiver>ConfigureBase</receiver>
         <slot>close()</slot>
     </connection>
+    <connection>
+        <sender>mViewMode</sender>
+        <signal>activated(int)</signal>
+        <receiver>mWdgStack</receiver>
+        <slot>raiseWidget(int)</slot>
+    </connection>
+    <connection>
+        <sender>mOk</sender>
+        <signal>clicked()</signal>
+        <receiver>ConfigureBase</receiver>
+        <slot>accept()</slot>
+    </connection>
 </connections>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
-    <includehint>knuminput.h</includehint>
-    <includehint>knuminput.h</includehint>
-    <includehint>kcombobox.h</includehint>
-    <includehint>kcombobox.h</includehint>
     <includehint>kpushbutton.h</includehint>
     <includehint>kpushbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
     <includehint>kfontrequester.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcolorbutton.h</includehint>
+    <includehint>kcombobox.h</includehint>
+    <includehint>knuminput.h</includehint>
+    <includehint>knuminput.h</includehint>
 </includehints>
 </UI>

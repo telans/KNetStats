@@ -11,7 +11,7 @@
 
 static const char *appName = "knetstats";
 const char *programName = I18N_NOOP( "KNetStats" );
-static const char *version = "v1.2";
+static const char *version = "v1.3";
 static const char *description = I18N_NOOP( "A network device monitor." );
 static int licenseType = KAboutData::License_GPL;
 static const char *copyRightStatement = "(C) 2004 Hugo Parente Lima";
@@ -26,9 +26,9 @@ int main( int argc, char** argv )
 
 	KCmdLineArgs::init( argc, argv, &aboutData );
 
+	KApplication::disableAutoDcopRegistration();
 	KApplication app;
 	KNetStats knetstats;
-	knetstats.show();
 	return app.exec();
 }
 

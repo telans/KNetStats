@@ -17,29 +17,70 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
 #ifndef CONFIGURE_H
 #define CONFIGURE_H
 
 #include "configurebase.h"
 #include <qstring.h>
+#include <qmap.h>
+#include <qfont.h>
+#include <qcolor.h>
+#include <qpixmap.h>
+
+static const int ICONSIZE = 22;
 
 class KNetStats;
+class QListBoxItem;
+
+enum ViewMode {
+	Icon, Text, Bars
+};
+
+struct ViewOpts
+{
+	// general
+	int mUpdateInterval;
+	ViewMode mViewMode;
+	bool mMonitoring;
+	// txt view
+	QFont mTxtFont;
+	QColor mTxtUplColor;
+	QColor mTxtDldColor;
+	// icon view
+	QString mPathRx;
+	QString mPathTx;
+	QString mPathBoth;
+	QString mPathNone;
+	QString mPathError;
+	QPixmap mIconRx;
+	QPixmap mIconTx;
+	QPixmap mIconBoth;
+	QPixmap mIconNone;
+	QPixmap mIconError;
+};
+
+typedef QMap<QString, ViewOpts> ViewsMap;
 
 class Configure : public ConfigureBase
 {
-Q_OBJECT
+	Q_OBJECT
 public:
-    Configure(KNetStats *parent = 0, const char *name = 0);
+	Configure(KNetStats* parent);
 
-	enum ViewMode {
-		TextMode,
-		IconMode
-	};
-
-	unsigned int updateInterval() const;
-	const QString interface() const;
-	ViewMode viewMode() const;
-	const QFont font() const;
+	const ViewsMap& currentConfig()
+	{
+		return mConfig;
+	}
+private:
+	QString mCurrentItem;
+	ViewsMap mConfig;
+public slots:
+	void accept();
+protected slots:
+	void changeInterface(QListBoxItem* item);
+	void changeIcon(int id);
+	void monitoringToggled(bool on);
 
 };
 

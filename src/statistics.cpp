@@ -19,18 +19,15 @@
 ***************************************************************************/
 #include "statistics.h"
 
-#include "knetstats.h"
+#include "knetstatsview.h"
 #include <klocale.h>
 #include <qtimer.h>
 #include <kapplication.h>
 
-extern QPixmap* appIcon;
-
-Statistics::Statistics( KNetStats* parent, const char *name )
+Statistics::Statistics( KNetStatsView* parent, const char *name )
 		: StatisticsBase( parent, name )
 {
 	setCaption( i18n( "Statistics for %1" ).arg( parent->interface() ) );
-	setIcon(*appIcon);
 	update();
 
 	mTimer = new QTimer( this );
@@ -39,20 +36,22 @@ Statistics::Statistics( KNetStats* parent, const char *name )
 
 void Statistics::update()
 {
-	mBRx->setText( byteFormat( static_cast<KNetStats*>( parent() )->totalBytesRx() ) );
-	mBTx->setText( byteFormat( static_cast<KNetStats*>( parent() )->totalBytesTx() ) );
-	mByteSpeedRx->setText( byteFormat( static_cast<KNetStats*>( parent() )->byteSpeedRx(), 1, " B" )+"/s" );
-	mByteSpeedTx->setText( byteFormat( static_cast<KNetStats*>( parent() )->byteSpeedTx(), 1, " B" )+"/s" );
+	KNetStatsView* parent = static_cast<KNetStatsView*>( this->parent() );
+	mBRx->setText( byteFormat( parent->totalBytesRx() ) );
+	mBTx->setText( byteFormat( parent->totalBytesTx() ) );
+	mByteSpeedRx->setText( byteFormat( parent->byteSpeedRx(), 1, " B" )+"/s" );
+	mByteSpeedTx->setText( byteFormat( parent->byteSpeedTx(), 1, " B" )+"/s" );
 
-	mPRx->setText( QString::number( static_cast<KNetStats*>( parent() )->totalPktRx() ) );
-	mPTx->setText( QString::number( static_cast<KNetStats*>( parent() )->totalPktTx() ) );
-	mPktSpeedRx->setText( QString::number( static_cast<KNetStats*>( parent() )->pktSpeedRx(), 'f', 1 )+"pkts/s" );
-	mPktSpeedTx->setText( QString::number( static_cast<KNetStats*>( parent() )->pktSpeedTx(), 'f', 1 )+"pkts/s" );
+	mPRx->setText( QString::number( parent->totalPktRx() ) );
+	mPTx->setText( QString::number( parent->totalPktTx() ) );
+	mPktSpeedRx->setText( QString::number( parent->pktSpeedRx(), 'f', 1 )+"pkts/s" );
+	mPktSpeedTx->setText( QString::number( parent->pktSpeedTx(), 'f', 1 )+"pkts/s" );
 }
 
 void Statistics::show()
 {
-	mTimer->start( static_cast<KNetStats*>(parent())->updateInterval() );
+
+	mTimer->start( static_cast<KNetStatsView*>(parent())->updateInterval() );
 	StatisticsBase::show();
 }
 

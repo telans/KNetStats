@@ -13,7 +13,7 @@ def KDELibs( env, str ):
 
 env = Environment(
 				tools = ['default','qt'],
-				LIBS = ['dl', 'kdecore', 'kdeui'],
+				LIBS = ['dl', 'kdecore', 'kdeui', 'kio'],
 				CPPFLAGS = ['-O2', '-Wall', '-pipe', '-fomit-frame-pointer'],
 				plataform = 'posix'
 			);
@@ -21,7 +21,7 @@ env.ParseConfig('kde-config --prefix', KDEPrefix );
 env.ParseConfig('kde-config --expandvars --install lib', KDELibs );
 env['CPPPATH'] += [env['KDE_PREFIX']+'/include/', env['KDE_PREFIX']+'/include/kde' ];
 
-SrcList = [ 'src/configurebase.ui', 'src/statisticsbase.ui', 'src/main.cpp', 'src/knetstats.cpp', 'src/statistics.cpp', 'src/configure.cpp' ]
+SrcList = [ 'src/configurebase.ui', 'src/statisticsbase.ui', 'src/main.cpp', 'src/knetstats.cpp', 'src/knetstatsview.cpp', 'src/statistics.cpp', 'src/configure.cpp' ]
 
 env.Program('bin/knetstats', SrcList)
 
