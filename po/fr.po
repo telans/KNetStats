@@ -46,7 +46,7 @@ msgstr "Thèmes des icônes"
 
 #: src/main.cpp:31
 msgid "KNetStats translation to other languages"
-msgstr ""
+msgstr "Traduction de KNetStats à d'autres langues"
 
 #: src/knetstats.cpp:58
 msgid "&Help"
@@ -117,12 +117,10 @@ msgid "O&k"
 msgstr "O&k"
 
 #: src/uic_configurebase.cc:246
-#, fuzzy
 msgid "Appl&y"
 msgstr "&Appliquer"
 
 #: src/uic_configurebase.cc:247
-#, fuzzy
 msgid "Ca&ncel"
 msgstr "A&nnuler"
 
@@ -132,11 +130,11 @@ msgstr "Apparence"
 
 #: src/uic_configurebase.cc:249
 msgid "Theme:"
-msgstr "Thème :"
+msgstr "Thème:"
 
 #: src/uic_configurebase.cc:251
 msgid "Classic"
-msgstr ""
+msgstr "Classique"
 
 #: src/uic_configurebase.cc:252
 msgid "Modem"
@@ -199,17 +197,8 @@ msgid "ms"
 msgstr "ms"
 
 #: src/uic_configurebase.cc:273
-#, fuzzy
 msgid "To monitor this &interface"
 msgstr "Surveiller cette &interface"
-
-#, fuzzy
-#~ msgid "Alt+Y"
-#~ msgstr "Alt+A"
-
-#, fuzzy
-#~ msgid "Alt+N"
-#~ msgstr "Alt+A"
 
 #~ msgid "Kirghiz translation"
 #~ msgstr "Traduction kirghize"
@@ -228,9 +217,6 @@ msgstr "Surveiller cette &interface"
 
 #~ msgid "Polish translation"
 #~ msgstr "Traduction polonaise"
-
-#~ msgid "Alt+C"
-#~ msgstr "Alt+C"
 
 #~ msgid "Monitor"
 #~ msgstr "Moniteur"

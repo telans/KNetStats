@@ -120,12 +120,10 @@ msgid "O&k"
 msgstr "&OK"
 
 #: src/uic_configurebase.cc:246
-#, fuzzy
 msgid "Appl&y"
 msgstr "&Anwenden"
 
 #: src/uic_configurebase.cc:247
-#, fuzzy
 msgid "Ca&ncel"
 msgstr "A&bbrechen"
 
