@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>451</width>
-            <height>167</height>
+            <width>383</width>
+            <height>158</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -214,7 +214,7 @@
                         <cstring>mOk</cstring>
                     </property>
                     <property name="text">
-                        <string>Ok</string>
+                        <string>O&amp;k</string>
                     </property>
                     <property name="autoDefault">
                         <bool>true</bool>
