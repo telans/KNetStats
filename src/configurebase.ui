@@ -7,9 +7,9 @@
     <property name="geometry">
         <rect>
             <x>0</x>
-            <y>0</y>
+            <y>6</y>
             <width>392</width>
-            <height>295</height>
+            <height>282</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -71,10 +71,10 @@
                         <cstring>mApply</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Apply</string>
+                        <string>Appl&amp;y</string>
                     </property>
                     <property name="accel">
-                        <string>Alt+A</string>
+                        <string>Alt+Y</string>
                     </property>
                 </widget>
                 <widget class="KPushButton">
@@ -82,10 +82,10 @@
                         <cstring>mCancel</cstring>
                     </property>
                     <property name="text">
-                        <string>&amp;Cancel</string>
+                        <string>Ca&amp;ncel</string>
                     </property>
                     <property name="accel">
-                        <string>Alt+C</string>
+                        <string>Alt+N</string>
                     </property>
                 </widget>
             </hbox>
@@ -143,7 +143,7 @@
                                     <widget class="QComboBox">
                                         <item>
                                             <property name="text">
-                                                <string>Monitor</string>
+                                                <string>Classic</string>
                                             </property>
                                         </item>
                                         <item>

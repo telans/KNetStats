@@ -178,6 +178,9 @@ void KNetStats::configCancel()
 {
 	delete mConfigure;
 	mConfigure = 0;
+
+	if (!mView.size())
+		kapp->quit();
 }
 
 void KNetStats::applyConfig(const ViewsMap& map)

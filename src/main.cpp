@@ -24,16 +24,11 @@ int main( int argc, char** argv )
 	aboutData.addAuthor( "Hugo Parente Lima", 0, "hugo_pl@users.sourceforge.net" );
 
 	// Credits
-	aboutData.addCredit( "Thomas Windheuser", I18N_NOOP("SConstruct help and Debian packages"), 0);
+	aboutData.addCredit( "Thomas Windheuser", I18N_NOOP("SConstruct help, Debian packages, etc."), 0);
 	aboutData.addCredit( "KNemo", I18N_NOOP("Icon themes"), 0,
 						"http://kde-apps.org/content/show.php?content=12956" );
 	// translators
-	aboutData.addCredit( "Ilyas Bakirov", I18N_NOOP("Kirghiz translation"), 0);
-	aboutData.addCredit( "Roberto Leandrini", I18N_NOOP("Italian translation"), 0);
-	aboutData.addCredit( "Carlos Ortiz", I18N_NOOP("Spanish translation"), 0);
-	aboutData.addCredit( "Henrik Gebauer", I18N_NOOP("Deutsch translation"), 0);
-	aboutData.addCredit( "Edward Romantsov", I18N_NOOP("Russian translation"), 0);
-	aboutData.addCredit( "Wiktor Wandachowicz", I18N_NOOP("Polish translation"), 0);
+	aboutData.addCredit( "Ilyas Bakirov, Roberto Leandrini, Carlos Ortiz, Henrik Gebauer, Edward Romantsov, Wiktor Wandachowicz, Guillaume Savaton", I18N_NOOP("KNetStats translation to other languages"), 0);
 
 	KCmdLineArgs::init( argc, argv, &aboutData );
 

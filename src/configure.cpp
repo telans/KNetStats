@@ -138,7 +138,7 @@ bool Configure::saveConfig()
 
 	if (!ok)
 	{
-		KMessageBox::error(this, i18n("You need select at least one interface to monitor."));
+		KMessageBox::error(this, i18n("You need to select at least one interface to monitor."));
 		return false;
 	}
 
