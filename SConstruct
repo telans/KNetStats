@@ -34,6 +34,7 @@ env.Alias( 'install', env.Install('/usr/share/apps/knetstats/pics/', Split('src/
 env.Alias( 'install', env.InstallAs('/usr/share/locale/pt_BR/LC_MESSAGES/knetstats.mo', 'po/pt_BR.mo'));
 env.Alias( 'install', env.InstallAs('/usr/share/locale/ky_KG/LC_MESSAGES/knetstats.mo', 'po/ky_KG.mo'));
 env.Alias( 'install', env.InstallAs('/usr/share/locale/it/LC_MESSAGES/knetstats.mo', 'po/it.mo'));
+env.Alias( 'install', env.InstallAs('/usr/share/locale/de/LC_MESSAGES/knetstats.mo', 'po/de.mo'));
 
 env.Help(	"\nTo compile KNetStats type:\n"
 			"  scons\n"
