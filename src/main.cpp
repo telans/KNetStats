@@ -21,6 +21,7 @@ int main( int argc, char** argv )
 	KAboutData aboutData( appName, programName,
 	                      version, description, licenseType,
 	                      copyRightStatement );
+	aboutData.setTranslator(I18N_NOOP("_: NAME OF TRANSLATORS"), I18N_NOOP("_: EMAIL OF TRANSLATORS"));
 	aboutData.addAuthor( "Hugo Parente Lima", 0, "hugo_pl@users.sourceforge.net" );
 
 	KCmdLineArgs::init( argc, argv, &aboutData );

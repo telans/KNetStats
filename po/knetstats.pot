@@ -1,0 +1,121 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-18 15:46+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/statistics.cpp:32
+msgid "Statistics for %1"
+msgstr ""
+
+#: src/main.cpp:13
+msgid "KNetStats"
+msgstr ""
+
+#: src/main.cpp:15
+msgid "A network device monitor."
+msgstr ""
+
+#: src/main.cpp:24
+msgid "_: NAME OF TRANSLATORS"
+msgstr ""
+
+#: src/main.cpp:24
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr ""
+
+#: src/knetstats.cpp:78
+msgid "&Statistics"
+msgstr ""
+
+#: src/knetstats.cpp:82
+msgid "&Help"
+msgstr ""
+
+#: src/knetstats.cpp:90 src/knetstats.cpp:289
+msgid "Monitoring "
+msgstr ""
+
+#: src/knetstats.cpp:214
+msgid "%1 is active"
+msgstr ""
+
+#: src/knetstats.cpp:228
+msgid "%1 is inactive"
+msgstr ""
+
+#: src/knetstats.cpp:290
+msgid "Now monitoring %1"
+msgstr ""
+
+#: src/.ui/statisticsbase.cpp:157
+msgid "StatisticsBase"
+msgstr ""
+
+#: src/.ui/statisticsbase.cpp:158
+msgid "Bytes"
+msgstr ""
+
+#: src/.ui/statisticsbase.cpp:159 src/.ui/statisticsbase.cpp:164
+msgid "Received:"
+msgstr ""
+
+#: src/.ui/statisticsbase.cpp:160 src/.ui/statisticsbase.cpp:165
+msgid "Transmited:"
+msgstr ""
+
+#: src/.ui/statisticsbase.cpp:161 src/.ui/statisticsbase.cpp:166
+msgid "Upload speed:"
+msgstr ""
+
+#: src/.ui/statisticsbase.cpp:162 src/.ui/statisticsbase.cpp:167
+msgid "Download speed:"
+msgstr ""
+
+#: src/.ui/statisticsbase.cpp:163
+msgid "Packets"
+msgstr ""
+
+#: src/.ui/statisticsbase.cpp:168 src/.ui/configurebase.cpp:112
+msgid "Ok"
+msgstr ""
+
+#: src/.ui/configurebase.cpp:106
+msgid "Configure"
+msgstr ""
+
+#: src/.ui/configurebase.cpp:107
+msgid "Update interval (in miliseconds):"
+msgstr ""
+
+#: src/.ui/configurebase.cpp:108
+msgid "Network Interface:"
+msgstr ""
+
+#: src/.ui/configurebase.cpp:110
+msgid "Icon (Activity)"
+msgstr ""
+
+#: src/.ui/configurebase.cpp:111
+msgid "Text (Speed)"
+msgstr ""
+
+#: src/.ui/configurebase.cpp:113
+msgid "Cancel"
+msgstr ""
+
+#: src/.ui/configurebase.cpp:114
+msgid "View mode:"
+msgstr ""

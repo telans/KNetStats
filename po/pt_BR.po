@@ -1,0 +1,128 @@
+# translation of pt_BR.po to 
+# translation of pt_BR.po to
+# translation of pt_BR.po to
+# translation of pt_BR.po to
+# Portuguese translations for PACKAGE package.
+# Copyright (C) 2004 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Hugo Parente Lima <hugo_pl@users.sourceforge.net>, 2004.
+# Hugo Parente Lima <hugo_pl@click21.com.br>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pt_BR\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-18 15:46+0000\n"
+"PO-Revision-Date: 2004-12-18 15:51+0000\n"
+"Last-Translator: Hugo Parente Lima <hugo_pl@click21.com.br>\n"
+"Language-Team:  <pt@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: KBabel 1.9\n"
+
+#: src/statistics.cpp:32
+msgid "Statistics for %1"
+msgstr "Estatísticas de %1"
+
+#: src/main.cpp:13
+msgid "KNetStats"
+msgstr "KNetStats"
+
+#: src/main.cpp:15
+msgid "A network device monitor."
+msgstr "Um monitor de rede"
+
+#: src/main.cpp:24
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Hugo Parente Lima"
+
+#: src/main.cpp:24
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "hugo_pl@users.sourceforge.net"
+
+#: src/knetstats.cpp:78
+msgid "&Statistics"
+msgstr "&Estatísticas"
+
+#: src/knetstats.cpp:82
+msgid "&Help"
+msgstr "&Ajuda"
+
+#: src/knetstats.cpp:90 src/knetstats.cpp:289
+msgid "Monitoring "
+msgstr "Monitorando "
+
+#: src/knetstats.cpp:214
+msgid "%1 is active"
+msgstr "%1 esta ativo"
+
+#: src/knetstats.cpp:228
+msgid "%1 is inactive"
+msgstr "%1 esta inativo"
+
+#: src/knetstats.cpp:290
+msgid "Now monitoring %1"
+msgstr "Monitorando %1"
+
+#: src/.ui/statisticsbase.cpp:157
+msgid "StatisticsBase"
+msgstr "StatisticsBase"
+
+#: src/.ui/statisticsbase.cpp:158
+msgid "Bytes"
+msgstr "Bytes"
+
+#: src/.ui/statisticsbase.cpp:159 src/.ui/statisticsbase.cpp:164
+msgid "Received:"
+msgstr "Recebidos:"
+
+#: src/.ui/statisticsbase.cpp:160 src/.ui/statisticsbase.cpp:165
+msgid "Transmited:"
+msgstr "Transmitidos:"
+
+#: src/.ui/statisticsbase.cpp:161 src/.ui/statisticsbase.cpp:166
+msgid "Upload speed:"
+msgstr "Upload:"
+
+#: src/.ui/statisticsbase.cpp:162 src/.ui/statisticsbase.cpp:167
+msgid "Download speed:"
+msgstr "Download:"
+
+#: src/.ui/statisticsbase.cpp:163
+msgid "Packets"
+msgstr "Pacotes"
+
+#: src/.ui/statisticsbase.cpp:168 src/.ui/configurebase.cpp:112
+msgid "Ok"
+msgstr "Ok"
+
+#: src/.ui/configurebase.cpp:106
+msgid "Configure"
+msgstr "Configurar"
+
+#: src/.ui/configurebase.cpp:107
+msgid "Update interval (in miliseconds):"
+msgstr "Intervalo de atualização"
+
+#: src/.ui/configurebase.cpp:108
+msgid "Network Interface:"
+msgstr "Interface de rede:"
+
+#: src/.ui/configurebase.cpp:110
+msgid "Icon (Activity)"
+msgstr "Ícone (Atividade)"
+
+#: src/.ui/configurebase.cpp:111
+msgid "Text (Speed)"
+msgstr "Texto (Velocidade)"
+
+#: src/.ui/configurebase.cpp:113
+msgid "Cancel"
+msgstr "Cancelar"
+
+#: src/.ui/configurebase.cpp:114
+msgid "View mode:"
+msgstr "Modo:"
+

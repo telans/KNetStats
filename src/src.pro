@@ -1,7 +1,7 @@
 # Arquivo gerado pelo gerenciador qmake do kdevelop.
 # -------------------------------------------
-# Subdiretório relativo ao diretório principal do projeto: ./src
-# Alvo é um aplicativo:  ../bin/knetstats
+# Subdiretï¿½io relativo ao diretï¿½io principal do projeto: ./src
+# Alvo ï¿½um aplicativo:  ../bin/knetstats
 
 INSTALLS += images \
             docs \
@@ -10,6 +10,8 @@ INSTALLS += images \
 KDEPREFIX = $$system(kde-config --prefix)
 
 target.path = /usr/bin
+target.extra = msgfmt -o /usr/share/locale/pt_BR/LC_MESSAGES po/pt_BR.po
+
 desktop.files += ../knetstats.desktop
 desktop.path = /usr/share/applications/
 docs.files += ../doc/*
