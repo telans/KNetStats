@@ -1,3 +1,10 @@
+v1.2
+
+- Added Brazilian portuguese translation (me).
+- Added Kirghiz translation (Ilyas Bakirov).
+- Bug Fix: When network interface in changed, the Statistics window caption is changed too.
+- Bug Fix: Statistics window now correctly format Download/Upload Speed.
+
 v1.1.2
 
 - Build system now uses kde-config instead $KDEDIR env. variable. This will solve problems when compiling KNetstats on some distros (Suse 9.1, Fedora).
