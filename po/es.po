@@ -2,12 +2,11 @@
 # Copyright (C) 2004 Hugo Parente Lima
 # This file is distributed under the same license as the KNetStats package.
 # Carlos "Chrono" Ortiz <chrono.dark@gmail.com>, 2004.
-
 msgid ""
 msgstr ""
 "Project-Id-Version: KNetStats 1.2\n"
-"Report-Msgid-Bugs-To: hugo_pl@users.sourceforge.net\n"
-"POT-Creation-Date: 2004-12-18 15:46+0000\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-03-02 17:44+0000\n"
 "PO-Revision-Date: 2004-12-28 15:46+0000\n"
 "Last-Translator: Carlos \"Chrono\" Ortiz <chrono.dark@gmail.com>\n"
 "Language-Team: es_LA <LL@li.org>\n"
@@ -15,106 +14,208 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/statistics.cpp:32
+#: src/statistics.cpp:30
 msgid "Statistics for %1"
 msgstr "Estadisticas de %1"
 
-#: src/main.cpp:13
+#: src/main.cpp:11 src/uic_statisticsbase.cc:158
 msgid "KNetStats"
 msgstr "KNetStats"
 
-#: src/main.cpp:15
+#: src/main.cpp:17
 msgid "A network device monitor."
 msgstr "Monitor de Red "
 
-#: src/main.cpp:24
+#: src/main.cpp:23
 msgid "_: NAME OF TRANSLATORS"
 msgstr "Carlos \"Chrono\" Ortiz"
 
-#: src/main.cpp:24
+#: src/main.cpp:23
 msgid "_: EMAIL OF TRANSLATORS"
 msgstr "chrono.dark@gmail.com"
 
-#: src/knetstats.cpp:78
-msgid "&Statistics"
-msgstr "&Estadísticas"
+#: src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
+msgstr ""
 
-#: src/knetstats.cpp:82
+#: src/main.cpp:28
+msgid "Icon themes"
+msgstr ""
+
+#: src/main.cpp:31
+msgid "KNetStats translation to other languages"
+msgstr ""
+
+#: src/knetstats.cpp:58
 msgid "&Help"
 msgstr "&Ayuda"
 
-#: src/knetstats.cpp:90 src/knetstats.cpp:289
-msgid "Monitoring "
+#: src/knetstats.cpp:148
+msgid ""
+"You don't have any network interface.\n"
+"KNetStats will quit now."
+msgstr ""
+
+#: src/knetstatsview.cpp:81
+#, fuzzy
+msgid "Monitoring %1"
 msgstr "Monitoreo"
 
-#: src/knetstats.cpp:214
+#: src/knetstatsview.cpp:130
+msgid "Error opening /proc/net/dev!"
+msgstr ""
+
+#: src/knetstatsview.cpp:198
 msgid "%1 is active"
 msgstr "%1 esta activado"
 
-#: src/knetstats.cpp:228
+#: src/knetstatsview.cpp:218
 msgid "%1 is inactive"
 msgstr "%1 esta inactivado"
 
-#: src/knetstats.cpp:290
-msgid "Now monitoring %1"
-msgstr "Registrando datos de %1"
+#: src/configure.cpp:141
+msgid "You need to select at least one interface to monitor."
+msgstr ""
 
-#: src/.ui/statisticsbase.cpp:157
-msgid "StatisticsBase"
-msgstr "StatisticsBase"
-
-#: src/.ui/statisticsbase.cpp:158
+#: src/uic_statisticsbase.cc:159
 msgid "Bytes"
 msgstr "Bytes"
 
-#: src/.ui/statisticsbase.cpp:159 src/.ui/statisticsbase.cpp:164
+#: src/uic_statisticsbase.cc:160 src/uic_statisticsbase.cc:165
 msgid "Received:"
 msgstr "Recibidos:"
 
-#: src/.ui/statisticsbase.cpp:160 src/.ui/statisticsbase.cpp:165
+#: src/uic_statisticsbase.cc:161 src/uic_statisticsbase.cc:166
 msgid "Transmited:"
 msgstr "Enviados:"
 
-#: src/.ui/statisticsbase.cpp:161 src/.ui/statisticsbase.cpp:166
+#: src/uic_statisticsbase.cc:162 src/uic_statisticsbase.cc:167
 msgid "Upload speed:"
 msgstr "Velocidad de Subida:"
 
-#: src/.ui/statisticsbase.cpp:162 src/.ui/statisticsbase.cpp:167
+#: src/uic_statisticsbase.cc:163 src/uic_statisticsbase.cc:168
 msgid "Download speed:"
 msgstr "Velocidad de Descarga:"
 
-#: src/.ui/statisticsbase.cpp:163
+#: src/uic_statisticsbase.cc:164
 msgid "Packets"
 msgstr "Paquetes"
 
-#: src/.ui/statisticsbase.cpp:168 src/.ui/configurebase.cpp:112
+#: src/uic_statisticsbase.cc:169
 msgid "Ok"
 msgstr "Ok"
 
-#: src/.ui/configurebase.cpp:106
-msgid "Configure"
+#: src/uic_configurebase.cc:244
+#, fuzzy
+msgid "Configure KNetStats"
+msgstr "KNetStats"
+
+#: src/uic_configurebase.cc:245
+#, fuzzy
+msgid "O&k"
+msgstr "Ok"
+
+#: src/uic_configurebase.cc:246
+msgid "Appl&y"
+msgstr ""
+
+#: src/uic_configurebase.cc:247
+#, fuzzy
+msgid "Ca&ncel"
+msgstr "Cancelar"
+
+#: src/uic_configurebase.cc:248
+msgid "Appearance"
+msgstr ""
+
+#: src/uic_configurebase.cc:249
+msgid "Theme:"
+msgstr ""
+
+#: src/uic_configurebase.cc:251
+msgid "Classic"
+msgstr ""
+
+#: src/uic_configurebase.cc:252
+msgid "Modem"
+msgstr ""
+
+#: src/uic_configurebase.cc:253
+msgid "Network"
+msgstr ""
+
+#: src/uic_configurebase.cc:254
+msgid "Wireless"
+msgstr ""
+
+#: src/uic_configurebase.cc:255
+msgid "Kppp"
+msgstr ""
+
+#: src/uic_configurebase.cc:257
+#, fuzzy
+msgid "Download color:"
+msgstr "Velocidad de Descarga:"
+
+#: src/uic_configurebase.cc:259
+#, fuzzy
+msgid "Upload color:"
+msgstr "Velocidad de Subida:"
+
+#: src/uic_configurebase.cc:261
+msgid "Medium color:"
+msgstr ""
+
+#: src/uic_configurebase.cc:263
+msgid "Lower color:"
+msgstr ""
+
+#: src/uic_configurebase.cc:265
+msgid "High color:"
+msgstr ""
+
+#: src/uic_configurebase.cc:266
+#, fuzzy
+msgid "Configuration"
 msgstr "Configuración"
 
-#: src/.ui/configurebase.cpp:107
-msgid "Update interval (in miliseconds):"
-msgstr "Tiempo de Verificado (en Milisegundos):"
-
-#: src/.ui/configurebase.cpp:108
-msgid "Network Interface:"
-msgstr "Tipo de Red:"
-
-#: src/.ui/configurebase.cpp:110
+#: src/uic_configurebase.cc:268
 msgid "Icon (Activity)"
 msgstr "Icono(Actividad)"
 
-#: src/.ui/configurebase.cpp:111
+#: src/uic_configurebase.cc:269
 msgid "Text (Speed)"
 msgstr "Texto(Velocidad)"
 
-#: src/.ui/configurebase.cpp:113
-msgid "Cancel"
-msgstr "Cancelar"
-
-#: src/.ui/configurebase.cpp:114
+#: src/uic_configurebase.cc:270
 msgid "View mode:"
 msgstr "Modo de Despliegue:"
+
+#: src/uic_configurebase.cc:271
+#, fuzzy
+msgid "Update interval:"
+msgstr "Tiempo de Verificado (en Milisegundos):"
+
+#: src/uic_configurebase.cc:272
+msgid "ms"
+msgstr ""
+
+#: src/uic_configurebase.cc:273
+msgid "To monitor this &interface"
+msgstr ""
+
+#, fuzzy
+#~ msgid "Monitor"
+#~ msgstr "Monitoreo"
+
+#~ msgid "&Statistics"
+#~ msgstr "&Estadísticas"
+
+#~ msgid "Now monitoring %1"
+#~ msgstr "Registrando datos de %1"
+
+#~ msgid "StatisticsBase"
+#~ msgstr "StatisticsBase"
+
+#~ msgid "Network Interface:"
+#~ msgstr "Tipo de Red:"

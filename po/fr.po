@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KNetStats 1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-19 19:27+0000\n"
+"POT-Creation-Date: 2005-03-02 17:44+0000\n"
 "PO-Revision-Date: 2005-02-21 20:56+0000\n"
 "Last-Translator: Guillaume Savaton <guillaume.savaton@free.fr>\n"
 "Language-Team: \n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Statistics for %1"
 msgstr "Statistiques pour %1"
 
-#: src/main.cpp:11 src/statisticsbase.cc:158
+#: src/main.cpp:11 src/uic_statisticsbase.cc:158
 msgid "KNetStats"
 msgstr "KNetStats"
 
@@ -36,39 +36,23 @@ msgstr "Guillaume Savaton"
 msgid "_: EMAIL OF TRANSLATORS"
 msgstr "guillaume.savaton@free.fr"
 
-#: src/main.cpp:25
+#: src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
+msgstr ""
+
+#: src/main.cpp:28
 msgid "Icon themes"
 msgstr "Thèmes des icônes"
 
-#: src/main.cpp:28
-msgid "Kirghiz translation"
-msgstr "Traduction kirghize"
-
-#: src/main.cpp:29
-msgid "Italian translation"
-msgstr "Traduction italienne"
-
-#: src/main.cpp:30
-msgid "Spanish translation"
-msgstr "Traduction espagnole"
-
 #: src/main.cpp:31
-msgid "Deutsch translation"
-msgstr "Traduction allemande"
+msgid "KNetStats translation to other languages"
+msgstr ""
 
-#: src/main.cpp:32
-msgid "Russian translation"
-msgstr "Traduction russe"
-
-#: src/main.cpp:33
-msgid "Polish translation"
-msgstr "Traduction polonaise"
-
-#: src/knetstats.cpp:57
+#: src/knetstats.cpp:58
 msgid "&Help"
 msgstr "&Aide"
 
-#: src/knetstats.cpp:143
+#: src/knetstats.cpp:148
 msgid ""
 "You don't have any network interface.\n"
 "KNetStats will quit now."
@@ -92,137 +76,164 @@ msgstr "%1 est actif"
 msgid "%1 is inactive"
 msgstr "%1 est inactif"
 
-#: src/configure.cpp:142
+#: src/configure.cpp:141
 msgid "You need to select at least one interface to monitor."
 msgstr "Vous devez sélectionner au moins une interface à surveiller"
 
-#: src/statisticsbase.cc:159
+#: src/uic_statisticsbase.cc:159
 msgid "Bytes"
 msgstr "Octets"
 
-#: src/statisticsbase.cc:160 src/statisticsbase.cc:165
+#: src/uic_statisticsbase.cc:160 src/uic_statisticsbase.cc:165
 msgid "Received:"
 msgstr "Reçus :"
 
-#: src/statisticsbase.cc:161 src/statisticsbase.cc:166
+#: src/uic_statisticsbase.cc:161 src/uic_statisticsbase.cc:166
 msgid "Transmited:"
 msgstr "Envoyés :"
 
-#: src/statisticsbase.cc:162 src/statisticsbase.cc:167
+#: src/uic_statisticsbase.cc:162 src/uic_statisticsbase.cc:167
 msgid "Upload speed:"
 msgstr "Vitesse d'émission :"
 
-#: src/statisticsbase.cc:163 src/statisticsbase.cc:168
+#: src/uic_statisticsbase.cc:163 src/uic_statisticsbase.cc:168
 msgid "Download speed:"
 msgstr "Vitesse de réception :"
 
-#: src/statisticsbase.cc:164
+#: src/uic_statisticsbase.cc:164
 msgid "Packets"
 msgstr "Paquets"
 
-#: src/statisticsbase.cc:169
+#: src/uic_statisticsbase.cc:169
 msgid "Ok"
 msgstr "Ok"
 
-#: src/configurebase.cc:246
+#: src/uic_configurebase.cc:244
 msgid "Configure KNetStats"
 msgstr "Configurer KNetStats"
 
-#: src/configurebase.cc:247
+#: src/uic_configurebase.cc:245
 msgid "O&k"
 msgstr "O&k"
 
-#: src/configurebase.cc:248
-msgid "&Apply"
+#: src/uic_configurebase.cc:246
+#, fuzzy
+msgid "Appl&y"
 msgstr "&Appliquer"
 
-#: src/configurebase.cc:249
-msgid "Alt+A"
-msgstr "Alt+A"
-
-#: src/configurebase.cc:250
-msgid "&Cancel"
+#: src/uic_configurebase.cc:247
+#, fuzzy
+msgid "Ca&ncel"
 msgstr "A&nnuler"
 
-#: src/configurebase.cc:251
-msgid "Alt+C"
-msgstr "Alt+C"
-
-#: src/configurebase.cc:252
+#: src/uic_configurebase.cc:248
 msgid "Appearance"
 msgstr "Apparence"
 
-#: src/configurebase.cc:253
+#: src/uic_configurebase.cc:249
 msgid "Theme:"
 msgstr "Thème :"
 
-#: src/configurebase.cc:255
-msgid "Monitor"
-msgstr "Moniteur"
+#: src/uic_configurebase.cc:251
+msgid "Classic"
+msgstr ""
 
-#: src/configurebase.cc:256
+#: src/uic_configurebase.cc:252
 msgid "Modem"
 msgstr "Modem"
 
-#: src/configurebase.cc:257
+#: src/uic_configurebase.cc:253
 msgid "Network"
 msgstr "Réseau"
 
-#: src/configurebase.cc:258
+#: src/uic_configurebase.cc:254
 msgid "Wireless"
 msgstr "Sans fil"
 
-#: src/configurebase.cc:259
+#: src/uic_configurebase.cc:255
 msgid "Kppp"
 msgstr "Kppp"
 
-#: src/configurebase.cc:261
+#: src/uic_configurebase.cc:257
 msgid "Download color:"
 msgstr "Couleur en réception :"
 
-#: src/configurebase.cc:263
+#: src/uic_configurebase.cc:259
 msgid "Upload color:"
 msgstr "Couleur en émission :"
 
-#: src/configurebase.cc:265
+#: src/uic_configurebase.cc:261
 msgid "Medium color:"
 msgstr "Couleur intermédiaire :"
 
-#: src/configurebase.cc:267
+#: src/uic_configurebase.cc:263
 msgid "Lower color:"
 msgstr "Couleur basse :"
 
-#: src/configurebase.cc:269
+#: src/uic_configurebase.cc:265
 msgid "High color:"
 msgstr "Couleur haute :"
 
-#: src/configurebase.cc:270
+#: src/uic_configurebase.cc:266
 msgid "Configuration"
 msgstr "Configuration"
 
-#: src/configurebase.cc:272
+#: src/uic_configurebase.cc:268
 msgid "Icon (Activity)"
 msgstr "Icône (Activité)"
 
-#: src/configurebase.cc:273
+#: src/uic_configurebase.cc:269
 msgid "Text (Speed)"
 msgstr "Texte (Vitesse)"
 
-#: src/configurebase.cc:274
+#: src/uic_configurebase.cc:270
 msgid "View mode:"
 msgstr "Mode de visualisation :"
 
-#: src/configurebase.cc:275
+#: src/uic_configurebase.cc:271
 msgid "Update interval:"
 msgstr "Intervalle de mise à jour :"
 
-#: src/configurebase.cc:276
+#: src/uic_configurebase.cc:272
 msgid "ms"
 msgstr "ms"
 
-#: src/configurebase.cc:277
-msgid "Monitor this &interface"
+#: src/uic_configurebase.cc:273
+#, fuzzy
+msgid "To monitor this &interface"
 msgstr "Surveiller cette &interface"
+
+#, fuzzy
+#~ msgid "Alt+Y"
+#~ msgstr "Alt+A"
+
+#, fuzzy
+#~ msgid "Alt+N"
+#~ msgstr "Alt+A"
+
+#~ msgid "Kirghiz translation"
+#~ msgstr "Traduction kirghize"
+
+#~ msgid "Italian translation"
+#~ msgstr "Traduction italienne"
+
+#~ msgid "Spanish translation"
+#~ msgstr "Traduction espagnole"
+
+#~ msgid "Deutsch translation"
+#~ msgstr "Traduction allemande"
+
+#~ msgid "Russian translation"
+#~ msgstr "Traduction russe"
+
+#~ msgid "Polish translation"
+#~ msgstr "Traduction polonaise"
+
+#~ msgid "Alt+C"
+#~ msgstr "Alt+C"
+
+#~ msgid "Monitor"
+#~ msgstr "Moniteur"
 
 #~ msgid "&Statistics"
 #~ msgstr "&Statistiques"

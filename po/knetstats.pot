@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-19 19:27+0000\n"
+"POT-Creation-Date: 2005-03-02 17:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Statistics for %1"
 msgstr ""
 
-#: src/main.cpp:11 src/statisticsbase.cc:158
+#: src/main.cpp:11 src/uic_statisticsbase.cc:158
 msgid "KNetStats"
 msgstr ""
 
@@ -36,39 +36,23 @@ msgstr ""
 msgid "_: EMAIL OF TRANSLATORS"
 msgstr ""
 
-#: src/main.cpp:25
-msgid "Icon themes"
+#: src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
 msgstr ""
 
 #: src/main.cpp:28
-msgid "Kirghiz translation"
-msgstr ""
-
-#: src/main.cpp:29
-msgid "Italian translation"
-msgstr ""
-
-#: src/main.cpp:30
-msgid "Spanish translation"
+msgid "Icon themes"
 msgstr ""
 
 #: src/main.cpp:31
-msgid "Deutsch translation"
+msgid "KNetStats translation to other languages"
 msgstr ""
 
-#: src/main.cpp:32
-msgid "Russian translation"
-msgstr ""
-
-#: src/main.cpp:33
-msgid "Polish translation"
-msgstr ""
-
-#: src/knetstats.cpp:57
+#: src/knetstats.cpp:58
 msgid "&Help"
 msgstr ""
 
-#: src/knetstats.cpp:143
+#: src/knetstats.cpp:148
 msgid ""
 "You don't have any network interface.\n"
 "KNetStats will quit now."
@@ -90,134 +74,126 @@ msgstr ""
 msgid "%1 is inactive"
 msgstr ""
 
-#: src/configure.cpp:142
+#: src/configure.cpp:141
 msgid "You need to select at least one interface to monitor."
 msgstr ""
 
-#: src/statisticsbase.cc:159
+#: src/uic_statisticsbase.cc:159
 msgid "Bytes"
 msgstr ""
 
-#: src/statisticsbase.cc:160 src/statisticsbase.cc:165
+#: src/uic_statisticsbase.cc:160 src/uic_statisticsbase.cc:165
 msgid "Received:"
 msgstr ""
 
-#: src/statisticsbase.cc:161 src/statisticsbase.cc:166
+#: src/uic_statisticsbase.cc:161 src/uic_statisticsbase.cc:166
 msgid "Transmited:"
 msgstr ""
 
-#: src/statisticsbase.cc:162 src/statisticsbase.cc:167
+#: src/uic_statisticsbase.cc:162 src/uic_statisticsbase.cc:167
 msgid "Upload speed:"
 msgstr ""
 
-#: src/statisticsbase.cc:163 src/statisticsbase.cc:168
+#: src/uic_statisticsbase.cc:163 src/uic_statisticsbase.cc:168
 msgid "Download speed:"
 msgstr ""
 
-#: src/statisticsbase.cc:164
+#: src/uic_statisticsbase.cc:164
 msgid "Packets"
 msgstr ""
 
-#: src/statisticsbase.cc:169
+#: src/uic_statisticsbase.cc:169
 msgid "Ok"
 msgstr ""
 
-#: src/configurebase.cc:246
+#: src/uic_configurebase.cc:244
 msgid "Configure KNetStats"
 msgstr ""
 
-#: src/configurebase.cc:247
+#: src/uic_configurebase.cc:245
 msgid "O&k"
 msgstr ""
 
-#: src/configurebase.cc:248
-msgid "&Apply"
+#: src/uic_configurebase.cc:246
+msgid "Appl&y"
 msgstr ""
 
-#: src/configurebase.cc:249
-msgid "Alt+A"
+#: src/uic_configurebase.cc:247
+msgid "Ca&ncel"
 msgstr ""
 
-#: src/configurebase.cc:250
-msgid "&Cancel"
-msgstr ""
-
-#: src/configurebase.cc:251
-msgid "Alt+C"
-msgstr ""
-
-#: src/configurebase.cc:252
+#: src/uic_configurebase.cc:248
 msgid "Appearance"
 msgstr ""
 
-#: src/configurebase.cc:253
+#: src/uic_configurebase.cc:249
 msgid "Theme:"
 msgstr ""
 
-#: src/configurebase.cc:255
-msgid "Monitor"
+#: src/uic_configurebase.cc:251
+msgid "Classic"
 msgstr ""
 
-#: src/configurebase.cc:256
+#: src/uic_configurebase.cc:252
 msgid "Modem"
 msgstr ""
 
-#: src/configurebase.cc:257
+#: src/uic_configurebase.cc:253
 msgid "Network"
 msgstr ""
 
-#: src/configurebase.cc:258
+#: src/uic_configurebase.cc:254
 msgid "Wireless"
 msgstr ""
 
-#: src/configurebase.cc:259
+#: src/uic_configurebase.cc:255
 msgid "Kppp"
 msgstr ""
 
-#: src/configurebase.cc:261
+#: src/uic_configurebase.cc:257
 msgid "Download color:"
 msgstr ""
 
-#: src/configurebase.cc:263
+#: src/uic_configurebase.cc:259
 msgid "Upload color:"
 msgstr ""
 
-#: src/configurebase.cc:265
+#: src/uic_configurebase.cc:261
 msgid "Medium color:"
 msgstr ""
 
-#: src/configurebase.cc:267
+#: src/uic_configurebase.cc:263
 msgid "Lower color:"
 msgstr ""
 
-#: src/configurebase.cc:269
+#: src/uic_configurebase.cc:265
 msgid "High color:"
 msgstr ""
 
-#: src/configurebase.cc:270
+#: src/uic_configurebase.cc:266
 msgid "Configuration"
 msgstr ""
 
-#: src/configurebase.cc:272
+#: src/uic_configurebase.cc:268
 msgid "Icon (Activity)"
 msgstr ""
 
-#: src/configurebase.cc:273
+#: src/uic_configurebase.cc:269
 msgid "Text (Speed)"
 msgstr ""
 
-#: src/configurebase.cc:274
+#: src/uic_configurebase.cc:270
 msgid "View mode:"
 msgstr ""
 
-#: src/configurebase.cc:275
+#: src/uic_configurebase.cc:271
 msgid "Update interval:"
 msgstr ""
 
-#: src/configurebase.cc:276
+#: src/uic_configurebase.cc:272
 msgid "ms"
 msgstr ""
 
-#: src/configurebase.cc:277
-msgid "Monitor this &interface"
+#: src/uic_configurebase.cc:273
+msgid "To monitor this &interface"
 msgstr ""
