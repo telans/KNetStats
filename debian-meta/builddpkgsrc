@@ -1,0 +1,171 @@
+#!/usr/bin/perl
+
+## this script is intended for building a debian source package.
+
+
+use File::Copy;
+use File::Find;
+use File::Path;
+
+#name of the configfile
+$configFile = "debian-meta.conf";
+
+#patterns of directories, which should be excluded
+@dirExcludes = ();
+
+#patterns of files, which should be excluded
+@fileExcludes = ();
+
+#patterns of filenames (dir+file), which should be excluded
+@filenameExcludes = ();
+
+#name of the program
+$programname = "";
+
+#version of the program
+$programversion = "";
+
+#this is where the sources for the package should be copied
+#this is actually relative to the source-basdir!!! not to the debian-meta dir!!
+$packageDestination = "";
+
+
+#get the base directory of the sources
+($baseDir) = ($ENV{"PWD"} =~ /^(.*)\/debian-meta/);
+
+#open configfile
+open(CONFIGFILE,  $configFile)   or die "Can't open the configfile: $!";
+
+$linecount = 0;
+while (<CONFIGFILE>) {
+	$linecount++;
+	#process every single line in the configfile
+	#get rid of the newline (the regular expression is used on $_)
+	($line) = (/^([^\n\r]*)/);
+	#process only nonempty lines or non-comment lines
+	if ($line !~ /(^\s*$)|(^\s*#)/) {
+		#now we check if there is an assignment statement in the line
+		if ($line =~ /^\s*([a-zA-Z_]\w*)\s*=\s*(\S.*\S|\S)\s*$/) {
+			(my $key,my $value) = ($line =~ /^\s*([a-zA-Z_]\w*)\s*=\s*(\S.*\S|\S)\s*$/);
+			if ($key =~ /^direxclude$/i) {
+				#substitute \ with \\, / with \/ and * with ([^\/]*)
+				$value =~ s/\\/\\\\/g;
+				$value =~ s/\*/\(\[\^\\\/\]\*\)/g;
+				$value =~ s/\./\\\./g;
+				push (@dirExcludes,$value);
+			}elsif ($key =~ /^fileexclude$/i) {
+				#substitute \ with \\, / with \/ and * with ([^\/]*)
+				$value =~ s/\\/\\\\/g;
+				$value =~ s/\*/\(\[\^\\\/\]\*\)/g;
+				$value =~ s/\./\\\./g;
+				push (@fileExcludes,$value);
+			}elsif ($key =~ /^filenameexclude$/i) {
+				#substitute \ with \\, / with \/ and * with ([^\/]*)
+				$value =~ s/\\/\\\\/g;
+				$value =~ s/\*/\(\[\^\\\/\]\*\)/g;
+				$value =~ s/\./\\\./g;
+				push (@filenameExcludes,$value);
+			}elsif ($key =~ /^programname$/i) {
+				$programname = $value;
+			}elsif ($key =~ /^programversion$/i) {
+				$programversion = $value;
+			}elsif ($key =~ /^packagedestination$/i) {
+				$packageDestination = $value;
+			}else {
+				die "Unknown identifier $key in $configFile at line $linecount in: $line\n";
+			}
+		}else{
+			die "Syntax error in $configFile at line $linecount in: $line\n";
+		}
+	}
+}
+close(CONFIGFILE);
+
+if (!$programname) {
+	die "Please insert a programname into $configFile\n";
+}
+
+if (!$programversion) {
+	die "Please insert a programversion into $configFile\n";
+}
+
+if (!$packageDestination) {
+	die "Please insert a packagedestination into $configFile\n";
+}
+
+
+#checks for every file, if it should be copied in the debian source directory and then does the copy
+#this function is called for every file by find() (see below)
+sub processFile {
+	my $filename = $_;
+	my $absoluteName = $File::Find::name;
+	my $relativename = "";
+	($relativename) = ($absoluteName =~ /^$baseDir(.*)$/);
+	my $dir = $File::Find::dir;
+	$dir .= "/";
+	($dir) = ($dir =~ /^$baseDir(.*)$/);
+	
+	#if it is a directory, we have to add the filename to the directory
+	if (-d $absoluteName) {
+		$dir .= $filename."/";
+	}
+	my $exclude = 0;
+	foreach (@dirExcludes) {
+		if ($dir =~ /$_/) {
+			$exclude = 1;
+		}
+	}
+	foreach (@fileExcludes) {
+		if ($relativename =~ /$_/) {
+			$exclude = 1;
+		}
+	}
+	foreach (@filenameExcludes) {
+		if ($filename =~ /$_/) {
+			$exclude = 1;
+		}
+	}
+	if ($exclude) {
+		#print $absoluteName.":\n";
+	}else{
+		#if it is a directory we have to create it
+		if (-d $absoluteName) {
+			my $newDirname = $baseDir."/debian-meta/".$packageDestination.$programname."-".$programversion.$dir;
+			eval { mkpath($newDirname) };
+			if ($@) {
+				print "Couldn't create $newDirname: $@";
+				die;
+			}
+		}else{
+			#copy the file
+			if (system(("cp","-f",$absoluteName,$baseDir."/debian-meta/".$packageDestination.$programname."-".$programversion.$dir.$filename))) {
+				print "Warning: failed to copy $absoluteName. Reason: $!\n";
+				die;
+			}
+		}
+	}
+}
+
+find(\&processFile,$baseDir);
+
+#create a debian dir at the destination
+my $newDirname = $baseDir."/debian-meta/".$packageDestination.$programname."-".$programversion."/debian";
+eval { mkpath($newDirname) };
+if ($@) {
+	print "Couldn't create $newDirname: $@";
+	die;
+}
+#and copy all necessary file to it
+foreach ("compat","copyright","dirs","changelog","control","docs","rules") {
+	if (system("cp","-f",$_,$baseDir."/debian-meta/".$packageDestination.$programname."-".$programversion."/debian/".$_)) {
+		print "Warning: failed to copy $_. Reason: $!\n";
+		die;
+	}
+}
+
+
+#now change into the destination-dir and make a .tar.gz
+#chdir($baseDir."/debian-meta/".$packageDestination);
+#system("tar cfz ".$programname."-".$programversion.".tar.gz ".$programname."-".$programversion);
+chdir($baseDir."/debian-meta");
+

@@ -1,0 +1,13 @@
+Source: knetstats
+Section: main/net
+Priority: optional
+Maintainer: Thomas Windheuser <thomas@0x5c.net>
+Build-Depends: debhelper (>= 4.0.0) ,docbook-to-man, python, scons, gettext, lsb-release
+Standards-Version: 3.6.1
+
+Package: knetstats
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: A system tray icon, which indicates network activity.
+ A small program, which provides a system tray icon. This icon provides two LED's, which begin to blink if there is network traffic.
+

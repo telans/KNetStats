@@ -1,0 +1,14 @@
+knetstats (1.3.0-1) experimental; urgency=low
+
+  * first real Release
+  * Added Debian detection using lsb_release
+
+ -- Thomas Windheuser <thomas@0x5c.net>  Mon, 21 Feb 2005 01:33:00 +0900
+
+knetstats (0.0.1-1) experimental; urgency=low
+
+  * Initial Release.
+  * This is my first Debian package.
+
+ -- Thomas Windheuser <thomas@0x5c.net>  Wed,  5 Jan 2005 19:57:27 +0900
+
