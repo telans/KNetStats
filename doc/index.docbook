@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY knetstats "<application>KNetStats 1&#46;0</application>">
+  <!ENTITY knetstats "<application>KNetStats 1&#46;1</application>">
   <!ENTITY kappname "&knetstats;"><!-- Do *not* replace kappname-->
   <!ENTITY package "kde-network"><!-- kdebase, kdeadmin, etc -->
   <!ENTITY % addindex "IGNORE">
