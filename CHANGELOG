@@ -1,0 +1,5 @@
+v1.1
+
+- Bug Fix: Not saving UpdateInterval when the network interface is not changed.
+- Litle optimizations
+- Support to IconMode (Activity Led's) or TextMode (showing rx/tx transfer rate)
