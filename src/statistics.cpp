@@ -39,16 +39,10 @@ void Statistics::update()
 {
 	mBRx->setText( byteFormat( static_cast<KNetStats*>( parent() )->totalBytesRx() ) );
 	mBTx->setText( byteFormat( static_cast<KNetStats*>( parent() )->totalBytesTx() ) );
+	mByteSpeedRx->setText( byteFormat( static_cast<KNetStats*>( parent() )->byteSpeedRx(), 1, " B" )+"/s" );
+	mByteSpeedTx->setText( byteFormat( static_cast<KNetStats*>( parent() )->byteSpeedTx(), 1, " B" )+"/s" );
 	mPRx->setText( QString::number( static_cast<KNetStats*>( parent() )->totalPktRx() ) );
 	mPTx->setText( QString::number( static_cast<KNetStats*>( parent() )->totalPktTx() ) );
-}
-
-QString Statistics::byteFormat( unsigned int num )
-{
-	if ( num > 1024 * 1024 ) 	// MB
-		return QString::number( float( num ) / ( 1024 * 1024 ), 'f', 2 ) + " MB";
-	else if ( num > 1024 ) 	// Kb
-		return QString::number( float( num ) / 1024, 'f', 2 ) + " KB";
-	else	// bytes
-		return QString::number( num ) + " bytes";
+	mPktSpeedRx->setText( QString::number( static_cast<KNetStats*>( parent() )->pktSpeedRx(), 'f', 1 )+"pkts/s" );
+	mPktSpeedTx->setText( QString::number( static_cast<KNetStats*>( parent() )->pktSpeedTx(), 'f', 1 )+"pkts/s" );
 }

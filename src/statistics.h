@@ -31,9 +31,27 @@ class Statistics : public StatisticsBase
 public:
 	Statistics( KNetStats *parent = 0, const char *name = 0 );
 
-	static QString byteFormat( unsigned int num );
+	/**
+	*	Formats a numberic byte representation
+	*	\param	num		The numeric representation
+	*	\param	decimal	Decimal digits
+	*	\param	bytesufix	Sufix for bytes
+	*	\param	ksufix	Sufix for kilobytes
+	*	\param	msufix	Sufix for megabytes
+	*/
+	static inline QString byteFormat( double num, unsigned int decimal = 2, const char* bytesufix = " bytes", const char* ksufix = " KB", const char* msufix = " MB");
 private slots:
 	void update();
 };
+
+QString Statistics::byteFormat( double num, unsigned int decimal, const char* bytesufix, const char* ksufix, const char* msufix )
+{
+	if ( num > 1024*1024 ) 	// MB
+		return QString::number( num/(1024*1024), 'f', decimal ) + msufix;
+	else if ( num > 1024.0f ) 	// Kb
+		return QString::number( num/1024, 'f', decimal ) + ksufix;
+	else	// bytes
+		return QString::number( num ) + bytesufix;
+}
 
 #endif

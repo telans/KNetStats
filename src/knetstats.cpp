@@ -29,10 +29,14 @@
 #include "configure.h"
 #include "statistics.h"
 
+#include <iostream>
+
 extern const char* programName;
 
-KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTotalBytesTx(0), mTotalPktRx(0), mTotalPktTx(0), mbConnected(true)
+KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTotalBytesTx(0), mTotalPktRx(0), mTotalPktTx(0), mSpeedRx(0), mSpeedTx(0), mbConnected(true), mTextMode(false)
 {
+	setTextFormat(Qt::PlainText);
+
 	// Load icons
 	mIconBoth = loadIcon("icon_both.png");
 	mIconRx = loadIcon("icon_rx.png");
@@ -40,7 +44,6 @@ KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTo
 	mIconNone = loadIcon("icon_none.png");
 	mIconError = loadIcon("icon_error.png");
 	mCurrentIcon = &mIconNone;
-	setPixmap(*mCurrentIcon);
 
 	// Context menu
 	KPopupMenu* menu = contextMenu();
@@ -61,6 +64,7 @@ KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTo
 	mInterface = cfg.readEntry("Interface");
 	if (!mInterface.isEmpty())
 		QToolTip::add(this, i18n("Monitoring ")+mInterface);
+	mTextMode = cfg.readBoolEntry("TextMode", false);
 
 	// Quit signal
 	connect(this, SIGNAL(quitSelected()), kapp, SLOT(quit(void)));
@@ -68,7 +72,19 @@ KNetStats::KNetStats():mBRx(0), mBTx(0), mPRx(0), mPTx(0), mTotalBytesRx(0), mTo
 	// Timer
 	mTimer = new QTimer(this, "timer");
 	connect(mTimer, SIGNAL(timeout()), this, SLOT(update(void)));
-	mTimer->start(mUpdateInterval);
+
+	if (mTextMode)
+	{
+		update();
+		setText("0B\n0B");
+		mSpeedTx = mSpeedRx = 0;
+		mTimer->start(1000);
+	}
+	else
+	{
+		setPixmap(*mCurrentIcon);
+		mTimer->start(mUpdateInterval);
+	}
 }
 
 void KNetStats::update()
@@ -101,62 +117,73 @@ void KNetStats::update()
 	bool linkok = false;
 	while(fgets(buffer, sizeof(buffer), fp))
 	{
-		// Search the interface string
-		unsigned int i;
-		for (i = 0; buffer[i]; i++)
-		{
-			if (buffer[i] != ' ')
-			{
-				for (unsigned int j = 0; j < (sizeof(interface)-1); j++,i++)
-				{
-					if (buffer[i] == ':')
-					{
-						interface[j] = 0;
-						i++;
-						break;
-					}
-					else
-						interface[j] = buffer[i];
-				}
-				break;
-			}
-		}
+		// Read statistics
+		sscanf(buffer, " %[^ \t\r\n:]%*c%u%u%*u%*u%*u%*u%*u%*u%u%u%*u%*u%*u%*u%*u%*u", interface, &brx, &prx, &btx, &ptx);
 
 		if (interface == mInterface)
 		{
 			QPixmap* newIcon;
-			// Read statistics
-			sscanf(&buffer[i], "%u%u%*u%*u%*u%*u%*u%*u%u%u%*u%*u%*u%*u%*u%*u", &brx, &prx, &btx, &ptx);
 
-			if (brx == mBRx)
+			// Calcula as velocidade
+			if (mTextMode)
 			{
-				if (btx == mBTx )
-					newIcon = &mIconNone;
-				else
-					newIcon = &mIconTx;
+				mSpeedTx = (btx - mBTx);
+				mSpeedRx = (brx - mBRx);
+				mSpeedPTx = (ptx - mPTx);
+				mSpeedPRx = (prx - mPRx);
 			}
 			else
 			{
-				if (btx == mBTx )
-					newIcon = &mIconRx;
+				mSpeedTx = ((btx - mBTx)*(1000.0f/mUpdateInterval));
+				mSpeedRx = ((brx - mBRx)*(1000.0f/mUpdateInterval));
+				mSpeedPTx = ((ptx - mPTx)*(1000.0f/mUpdateInterval));
+				mSpeedPRx = ((prx - mPRx)*(1000.0f/mUpdateInterval));
+			}
+// DEBUG
+std::cout << "Diff: " << (btx - mBTx) << std::endl;
+std::cout << "Interval: " << mUpdateInterval << std::endl;
+std::cout << "Speed: " << mSpeedTx << std::endl;
+std::cout << "-------------------------------\n";
+
+			if (mTextMode)
+			{
+				setText(Statistics::byteFormat(mSpeedTx, 1, "", "KB", "MB")+"\n"+Statistics::byteFormat(mSpeedRx, 1, "", "KB", "MB"));
+			}
+			else
+			{
+				if (brx == mBRx)
+				{
+					if (btx == mBTx )
+						newIcon = &mIconNone;
+					else
+						newIcon = &mIconTx;
+				}
 				else
-					newIcon = &mIconBoth;
+				{
+					if (btx == mBTx )
+						newIcon = &mIconRx;
+					else
+						newIcon = &mIconBoth;
+				}
+
+				if (newIcon != mCurrentIcon)
+				{
+					mCurrentIcon = newIcon;
+					setPixmap(*mCurrentIcon);
+				}
 			}
 
+			// Update stats
 			mTotalBytesRx += brx - mBRx;
 			mTotalBytesTx += btx - mBTx;
 			mTotalPktRx += prx - mPRx;
 			mTotalPktTx += ptx - mPTx;
+
 			mBRx = brx;
 			mBTx = btx;
 			mPRx = prx;
 			mPTx = ptx;
 
-			if (newIcon != mCurrentIcon)
-			{
-				mCurrentIcon = newIcon;
-				setPixmap(*mCurrentIcon);
-			}
 			if (!mbConnected)
 			{
 				mbConnected = true;
@@ -190,27 +217,13 @@ QStringList KNetStats::searchInterfaces()
 	char interface[8];
 	char buffer[128];
 
-	fseek(fp, 199, SEEK_SET);
+	// Ignore header...
+	fgets(buffer, sizeof(buffer), fp);
+	fgets(buffer, sizeof(buffer), fp);
 	while(fgets(buffer, sizeof(buffer), fp))
 	{
-		for( int i = 0; buffer[i]; i++)
-		{
-			if (buffer[i] != ' ')
-			{
-				for (int j = 0; buffer[i+j]; j++)
-				{
-					if (buffer[i+j] == ':')
-					{
-						interface[j] = 0;
-						list.append(interface);
-						break;
-					}
-					interface[j] = buffer[i+j];
-				}
-				break;
-			}
-		}
-
+		sscanf(buffer, " %[^ \t\r\n:]", interface);
+		list.append(interface);
 	}
 	return list;
 }
@@ -223,21 +236,31 @@ void KNetStats::configure()
 	{
 		QString newInterface = dlg.interface();
 		mUpdateInterval = dlg.updateInterval();
-		mTimer->changeInterval(mUpdateInterval);
+		mTextMode = (dlg.viewMode() == Configure::TextMode);
+		mbConnected = true;
+
+		KConfig cfg(KGlobal::dirs()->localkdedir()+"/share/config/knetstatsrc");
+		mInterface = newInterface;
+		cfg.writeEntry("UpdateInterval", mUpdateInterval);
+		cfg.writeEntry("Interface", mInterface);
+		cfg.writeEntry("TextMode", mTextMode);
+
+		if (!mTextMode)	// Update icon, if we changed to icon mode from textmode
+		{
+			mCurrentIcon = &mIconNone;
+			setPixmap(mIconNone);
+			mTimer->changeInterval(mUpdateInterval);
+		}
+		else
+			mTimer->changeInterval(1000);
 
 		if (newInterface != mInterface)
 		{
-			KConfig cfg(KGlobal::dirs()->localkdedir()+"/share/config/knetstatsrc");
-			mInterface = newInterface;
-			cfg.writeEntry("UpdateInterval", mUpdateInterval);
-			cfg.writeEntry("Interface", mInterface);
-
-			// Load statistics to the new interface
-			cfg.setGroup(mInterface);
 			mTotalBytesRx = mTotalBytesTx = mTotalPktRx = mTotalPktTx = 0;
 			mBRx = mBTx = mPRx = mPTx = 0;
-
+			mSpeedRx = mSpeedTx = mSpeedPRx = mSpeedPTx = 0;
 			QToolTip::add(this, i18n("Monitoring ")+mInterface);
+			KPassivePopup::message(programName, i18n("Now monitoring %1").arg(mInterface), mIconTx, this);
 		}
 	}
 }

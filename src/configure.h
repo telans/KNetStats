@@ -31,8 +31,14 @@ Q_OBJECT
 public:
     Configure(KNetStats *parent = 0, const char *name = 0);
 
+	enum ViewMode {
+		TextMode,
+		IconMode
+	};
+
 	unsigned int updateInterval() const;
 	const QString interface() const;
+	ViewMode viewMode() const;
 
 };
 

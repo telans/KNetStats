@@ -45,6 +45,8 @@ private:
 	unsigned int mBRx, mBTx, mPRx, mPTx;
 	/// Statistics
 	unsigned int mTotalBytesRx, mTotalBytesTx, mTotalPktRx, mTotalPktTx;
+	/// Speeds
+	double mSpeedRx, mSpeedTx, mSpeedPRx, mSpeedPTx;
 	/// Current interface
 	QString mInterface;
 	/// Current update interval
@@ -52,6 +54,9 @@ private:
 
 	/// is connected?
 	bool mbConnected;
+
+	/// If true, textmode is enabled, else, icon mode is enabled
+	bool mTextMode;
 
 public:
 	/// Default constructor
@@ -61,6 +66,8 @@ public:
 	inline const QString& interface() const;
 	///	The current Update Interval in miliseconds
 	inline int updateInterval() const;
+	/// We are in textmode?
+	inline bool textMode() const;
 
 	/// Total of bytes receiveds
 	inline unsigned int totalBytesRx() const;
@@ -70,6 +77,14 @@ public:
 	inline unsigned int totalPktRx() const;
 	/// Total of packets transmitted
 	inline unsigned int totalPktTx() const;
+	/// RX Speed in bytes per second
+	inline double byteSpeedRx() const;
+	/// TX Speed in bytes per second
+	inline double byteSpeedTx() const;
+	/// RX Speed in packets per second
+	inline double pktSpeedRx() const;
+	/// TX Speed in packets per second
+	inline double pktSpeedTx() const;
 
 	/**
 	*	\brief Search for network interfaces parsing /proc/net/dev
@@ -101,6 +116,11 @@ int KNetStats::updateInterval() const
 	return mUpdateInterval;
 }
 
+bool KNetStats::textMode() const
+{
+	return mTextMode;
+}
+
 unsigned int KNetStats::totalBytesRx() const
 {
 	return mTotalBytesRx;
@@ -119,6 +139,26 @@ unsigned int KNetStats::totalPktRx() const
 unsigned int KNetStats::totalPktTx() const
 {
 	return mTotalPktTx;
+}
+
+double KNetStats::byteSpeedRx() const
+{
+	return mSpeedRx;
+}
+
+double KNetStats::byteSpeedTx() const
+{
+	return mSpeedTx;
+}
+
+double KNetStats::pktSpeedRx() const
+{
+	return mSpeedPRx;
+}
+
+double KNetStats::pktSpeedTx() const
+{
+	return mSpeedPTx;
 }
 
 #endif

@@ -29,6 +29,8 @@ Configure::Configure( KNetStats *parent, const char *name )
 {
 	mInterface->insertStringList( KNetStats::searchInterfaces() );
 	mInterface->setCurrentItem( parent->interface() );
+	if (parent->textMode())
+		mViewMode->setCurrentItem( 1 );
 	mUpdateInterval->setValue( parent->updateInterval() );
 }
 
@@ -40,4 +42,9 @@ unsigned int Configure::updateInterval() const
 const QString Configure::interface() const
 {
 	return mInterface->currentText();
+}
+
+Configure::ViewMode Configure::viewMode() const
+{
+	return (mViewMode->currentItem() == 0) ? IconMode : TextMode;
 }
