@@ -72,6 +72,14 @@ KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOp
 	// Load config
 	QToolTip::add(this, i18n("Monitoring %1").arg(mInterface));
 
+	setup();
+
+	mStatistics = new Statistics(this);
+	show();
+}
+
+void KNetStatsView::setup()
+{
 	if (mView->mViewMode == Text)
 	{
 		setFont(mView->mTxtFont);
@@ -80,19 +88,23 @@ KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOp
 	}
 	else if (mView->mViewMode == Icon)
 	{
-		mCurrentIcon = &mView->mIconNone;
+		mCurrentIcon = &mIconNone;
 		mTimer->start(mView->mUpdateInterval);
 		setPixmap( *mCurrentIcon );
 	}
-
-	mStatistics = new Statistics(this);
 	update();
-	show();
 }
 
 KNetStatsView::~KNetStatsView()
 {
 	delete mView;
+}
+
+void KNetStatsView::setViewOpts( ViewOpts* view )
+{
+	delete mView;
+	mView = view;
+	setup();
 }
 
 void KNetStatsView::update()
@@ -137,16 +149,16 @@ void KNetStatsView::update()
 				if (brx == mBRx)
 				{
 					if (btx == mBTx )
-						newIcon = &mView->mIconNone;
+						newIcon = &mIconNone;
 					else
-						newIcon = &mView->mIconTx;
+						newIcon = &mIconTx;
 				}
 				else
 				{
 					if (btx == mBTx )
-						newIcon = &mView->mIconRx;
+						newIcon = &mIconRx;
 					else
-						newIcon = &mView->mIconBoth;
+						newIcon = &mIconBoth;
 				}
 
 				if (newIcon != mCurrentIcon)
@@ -182,7 +194,7 @@ void KNetStatsView::update()
 	if (!linkok && mbConnected)
 	{
 		mbConnected = false;
-		mCurrentIcon = &mView->mIconError;
+		mCurrentIcon = &mIconError;
 		setPixmap(*mCurrentIcon);
 		KPassivePopup::message(programName, i18n("%1 is inactive").arg(mInterface), kapp->miniIcon(), this);
 		mSpeedRx = mSpeedTx = mSpeedPRx = mSpeedPTx = 0;

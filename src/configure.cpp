@@ -25,6 +25,7 @@
 #include <qstringlist.h>
 #include <qlistbox.h>
 #include <qcheckbox.h>
+#include <qlabel.h>
 // Kde includes
 #include <kapplication.h>
 #include <klocale.h>
@@ -54,7 +55,12 @@ Configure::Configure(KNetStats* parent) : ConfigureBase(parent)
 		// Load configuration
 		QFont defaultFont = font();
 		KIconLoader* loader = kapp->iconLoader();
-		QPixmap iconV = loader->loadIcon("ok", KIcon::Small, 16);
+
+		QPixmap iconWlan = loader->loadIcon("icon_wlan.png", KIcon::Small, 16);
+		QPixmap iconPCI = loader->loadIcon("icon_pci.png", KIcon::Small, 16);
+		QPixmap iconModem = loader->loadIcon("icon_modem.png", KIcon::Small, 16);
+
+
 		for(QStringList::Iterator i = ifs.begin(); i != ifs.end(); ++i)
 		{
 			KConfigGroupSaver groupSaver(cfg, *i);
@@ -68,21 +74,14 @@ Configure::Configure(KNetStats* parent) : ConfigureBase(parent)
 			view.mTxtUplColor = cfg->readColorEntry("TxtUplColor", &Qt::red);
 			view.mTxtDldColor = cfg->readColorEntry("TxtDldColor", &Qt::green);
 			// IconView
-			view.mPathRx = cfg->readEntry("IconRx", "icon_rx.png");
-			view.mIconRx = loader->loadIcon(view.mPathRx, KIcon::Panel, ICONSIZE);
-			view.mPathTx = cfg->readEntry("IconTx", "icon_tx.png");
-			view.mIconTx = loader->loadIcon(view.mPathTx, KIcon::Panel, ICONSIZE);
-			view.mPathBoth = cfg->readEntry("IconBoth", "icon_both.png");
-			view.mIconBoth = loader->loadIcon(view.mPathBoth, KIcon::Panel, ICONSIZE);
-			view.mPathNone = cfg->readEntry("IconNone", "icon_none.png");
-			view.mIconNone = loader->loadIcon(view.mPathNone, KIcon::Panel, ICONSIZE);
-			view.mPathError = cfg->readEntry("IconError", "icon_error.png");
-			view.mIconError = loader->loadIcon(view.mPathError, KIcon::Panel, ICONSIZE);
+			view.mTheme = cfg->readNumEntry("Theme", 0);
 
-			if (view.mMonitoring)
-				mInterfaces->insertItem(iconV, *i);
+			if ((*i).startsWith("wlan"))
+				mInterfaces->insertItem(iconWlan, *i);
+			else if ((*i).startsWith("ppp"))
+				mInterfaces->insertItem(iconModem, *i);
 			else
-				mInterfaces->insertItem(*i);
+				mInterfaces->insertItem(iconPCI, *i);
 
 			mConfig[*i] = view;
 		}
@@ -92,24 +91,32 @@ Configure::Configure(KNetStats* parent) : ConfigureBase(parent)
 	}
 
 	connect(mInterfaces, SIGNAL(selectionChanged(QListBoxItem*)), this, SLOT(changeInterface(QListBoxItem*)));
-	connect(mIconList, SIGNAL(selected(int)), this, SLOT(changeIcon(int)));
-
-	connect(mMonitoring, SIGNAL(toggled(bool)), this, SLOT(monitoringToggled(bool)));
+	connect(mTheme, SIGNAL(activated(int)), this, SLOT(changeTheme(int)));
 }
 
 void Configure::changeInterface(QListBoxItem* item)
 {
 	QString interface = item->text();
-	std::cout << "changeInterface(" << interface << ")\n";
+
 	if (!mCurrentItem.isEmpty())
 	{
 		// Salvas as modificações passadas
 		ViewOpts& oldview = mConfig[mCurrentItem];
+		// general options
 		oldview.mMonitoring = mMonitoring->isChecked();
 		oldview.mUpdateInterval = mUpdateInterval->value();
+		oldview.mViewMode = (ViewMode) mViewMode->currentItem();
+		// txt view options
+		oldview.mTxtUplColor = mTxtUplColor->color();
+		oldview.mTxtDldColor = mTxtDldColor->color();
+		oldview.mTxtFont = mTxtFont->font();
+		// icon view
+		oldview.mTheme = mTheme->currentItem();
 	}
 
-	// Carrega as da nova interface
+	if (interface == mCurrentItem)
+		return;
+	// Carrega as opt. da nova interface
 	ViewOpts& view = mConfig[interface];
 	// general
 	mMonitoring->setChecked(view.mMonitoring);
@@ -119,18 +126,17 @@ void Configure::changeInterface(QListBoxItem* item)
 	mTxtUplColor->setColor(view.mTxtUplColor);
 	mTxtDldColor->setColor(view.mTxtDldColor);
 	mTxtFont->setFont( view.mTxtFont );
-	// Icon options
-	mIconList->changeItem( view.mIconTx, i18n("Upload"), 0);
-	mIconList->changeItem( view.mIconRx, i18n("Download"), 1);
-	mIconList->changeItem( view.mIconBoth, i18n("Both"), 2);
-	mIconList->changeItem( view.mIconNone, i18n("None"), 3);
-	mIconList->changeItem( view.mIconError, i18n("Error"), 4);
+	// icon options
+	mTheme->setCurrentItem(view.mTheme);
 
 	mCurrentItem = interface;
 }
 
 void Configure::accept()
 {
+	// Atualiza o cache de opções
+	changeInterface(mInterfaces->item( mInterfaces->currentItem() ));
+
 	// Salva a configuração
 	QStringList views;
 	bool ok = false;
@@ -161,29 +167,26 @@ void Configure::accept()
 		cfg->writeEntry("TxtUplColor", view.mTxtUplColor);
 		cfg->writeEntry("TxtDldColor", view.mTxtDldColor);
 		// IconView
-		cfg->writeEntry("IconRx", view.mPathRx);
-		cfg->writeEntry("IconTx", view.mPathTx);
-		cfg->writeEntry("IconBoth", view.mPathBoth);
-		cfg->writeEntry("IconNone", view.mPathNone);
-		cfg->writeEntry("IconError", view.mPathError);
+		cfg->writeEntry("Theme", view.mTheme);
 
-		views.append(i.key());
+		if (view.mMonitoring)
+			views.append(i.key());
 	}
 	cfg->writeEntry("Views", views);
 	done(QDialog::Accepted);
 }
 
-void Configure::changeIcon(int id)
+void Configure::changeTheme(int theme)
 {
-	// TODO: isso.
-	// essa merda ja tava toda feita so q apaguei sem querer o arquivo...
-}
-
-void Configure::monitoringToggled( bool on )
-{
-	if (on)
-		mInterfaces->changeItem(kapp->iconLoader()->loadIcon("ok", KIcon::Small, 16),
-							mInterfaces->currentText(), mInterfaces->currentItem());
-	else
-		mInterfaces->changeItem(mInterfaces->currentText(), mInterfaces->currentItem());
+	KIconLoader* loader = kapp->iconLoader();
+	mIconError->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_error.png",
+						  KIcon::Panel, ICONSIZE));
+	mIconNone->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_none.png",
+						 KIcon::Panel, ICONSIZE));
+	mIconTx->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_tx.png",
+					   KIcon::Panel, ICONSIZE));
+	mIconRx->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_rx.png",
+					   KIcon::Panel, ICONSIZE));
+	mIconBoth->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_both.png",
+						 KIcon::Panel, ICONSIZE));
 }

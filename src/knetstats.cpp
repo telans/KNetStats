@@ -108,16 +108,7 @@ ViewOpts* KNetStats::getViewOpt( const QString& interface )
 	view->mTxtUplColor = cfg->readColorEntry("TxtUplColor", &Qt::red);
 	view->mTxtDldColor = cfg->readColorEntry("TxtDldColor", &Qt::green);
 	// IconView
-	view->mPathRx = cfg->readEntry("IconRx", "icon_rx.png");
-	view->mIconRx = loader->loadIcon(view->mPathRx, KIcon::Panel, ICONSIZE);
-	view->mPathTx = cfg->readEntry("IconTx", "icon_tx.png");
-	view->mIconTx = loader->loadIcon(view->mPathTx, KIcon::Panel, ICONSIZE);
-	view->mPathBoth = cfg->readEntry("IconBoth", "icon_both.png");
-	view->mIconBoth = loader->loadIcon(view->mPathBoth, KIcon::Panel, ICONSIZE);
-	view->mPathNone = cfg->readEntry("IconNone", "icon_none.png");
-	view->mIconNone = loader->loadIcon(view->mPathNone, KIcon::Panel, ICONSIZE);
-	view->mPathError = cfg->readEntry("IconError", "icon_error.png");
-	view->mIconError = loader->loadIcon(view->mPathError, KIcon::Panel, ICONSIZE);
+	view->mTheme = cfg->readNumEntry("Theme", 0);
 
 	return view;
 }
@@ -161,18 +152,25 @@ std::cout << i.key() << "?\n";
 				TrayIconMap::Iterator it = mView.find(i.key());
 				if (it == mView.end())
 				{
-					ViewOpts* view = new ViewOpts(i.data());
+					ViewOpts* view = new ViewOpts(i.data()); // coping data.. hmm... ugly!
 					KNetStatsView* kview = new KNetStatsView(this, i.key(), view);
 					mView[i.key()] = kview;
 				}
 				else
 				{
-					// TODO: Atualizar a configuração dos trayicon já ativos
+					std::cout << "ViewMode (" << i.key() << "): " << (int)i.data().mViewMode << std::endl;
+					it.data()->setViewOpts( new ViewOpts(i.data()) );
 				}
 			}
 			else
 			{
 				// Verificar se existe um trayicon, e apagar o mesmo!
+				TrayIconMap::Iterator it = mView.find(i.key());
+				if (it != mView.end())
+				{
+					delete it.data();
+					mView.erase(it);
+				}
 			}
 		}
 

@@ -7,9 +7,9 @@
     <property name="geometry">
         <rect>
             <x>0</x>
-            <y>0</y>
-            <width>472</width>
-            <height>353</height>
+            <y>12</y>
+            <width>357</width>
+            <height>302</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -24,7 +24,7 @@
         <string>Configure</string>
     </property>
     <property name="sizeGripEnabled">
-        <bool>true</bool>
+        <bool>false</bool>
     </property>
     <property name="modal">
         <bool>true</bool>
@@ -32,6 +32,9 @@
     <grid>
         <property name="name">
             <cstring>unnamed</cstring>
+        </property>
+        <property name="resizeMode">
+            <enum>Minimum</enum>
         </property>
         <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
             <property name="name">
@@ -77,7 +80,7 @@
                         <cstring>mOk</cstring>
                     </property>
                     <property name="text">
-                        <string>Ok</string>
+                        <string>O&amp;k</string>
                     </property>
                     <property name="default">
                         <bool>true</bool>
@@ -88,7 +91,7 @@
                         <cstring>mCancel</cstring>
                     </property>
                     <property name="text">
-                        <string>Cancel</string>
+                        <string>Ca&amp;ncel</string>
                     </property>
                 </widget>
             </hbox>
@@ -122,47 +125,276 @@
                             <property name="margin">
                                 <number>0</number>
                             </property>
-                            <widget class="QLabel">
+                            <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>mLabel4</cstring>
+                                    <cstring>layout5</cstring>
                                 </property>
-                                <property name="text">
-                                    <string>Click on any icon to change then.</string>
-                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>mLabel4</cstring>
+                                        </property>
+                                        <property name="text">
+                                            <string>Theme:</string>
+                                        </property>
+                                    </widget>
+                                    <widget class="QComboBox">
+                                        <item>
+                                            <property name="text">
+                                                <string>Monitor</string>
+                                            </property>
+                                        </item>
+                                        <item>
+                                            <property name="text">
+                                                <string>Modem</string>
+                                            </property>
+                                        </item>
+                                        <item>
+                                            <property name="text">
+                                                <string>Network</string>
+                                            </property>
+                                        </item>
+                                        <item>
+                                            <property name="text">
+                                                <string>Wireless</string>
+                                            </property>
+                                        </item>
+                                        <item>
+                                            <property name="text">
+                                                <string>Kppp</string>
+                                            </property>
+                                        </item>
+                                        <property name="name">
+                                            <cstring>mTheme</cstring>
+                                        </property>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer2</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>21</width>
+                                                <height>20</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                </hbox>
                             </widget>
-                            <widget class="QListBox">
-                                <item>
-                                    <property name="text">
-                                        <string>Upload</string>
-                                    </property>
-                                </item>
-                                <item>
-                                    <property name="text">
-                                        <string>Download</string>
-                                    </property>
-                                </item>
-                                <item>
-                                    <property name="text">
-                                        <string>Both</string>
-                                    </property>
-                                </item>
-                                <item>
-                                    <property name="text">
-                                        <string>None</string>
-                                    </property>
-                                </item>
-                                <item>
-                                    <property name="text">
-                                        <string>Error</string>
-                                    </property>
-                                </item>
+                            <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>mIconList</cstring>
+                                    <cstring>layout7</cstring>
                                 </property>
-                                <property name="columnMode">
-                                    <enum>FitToWidth</enum>
-                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>mIconError</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>0</hsizetype>
+                                                <vsizetype>0</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>22</width>
+                                                <height>22</height>
+                                            </size>
+                                        </property>
+                                        <property name="scaledContents">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer3</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>20</width>
+                                                <height>20</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>mIconNone</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>0</hsizetype>
+                                                <vsizetype>0</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>22</width>
+                                                <height>22</height>
+                                            </size>
+                                        </property>
+                                        <property name="scaledContents">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer4</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>20</width>
+                                                <height>20</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>mIconTx</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>0</hsizetype>
+                                                <vsizetype>0</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>22</width>
+                                                <height>22</height>
+                                            </size>
+                                        </property>
+                                        <property name="scaledContents">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer5</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>20</width>
+                                                <height>20</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>mIconRx</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>0</hsizetype>
+                                                <vsizetype>0</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>22</width>
+                                                <height>22</height>
+                                            </size>
+                                        </property>
+                                        <property name="scaledContents">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer6</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>20</width>
+                                                <height>20</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>mIconBoth</cstring>
+                                        </property>
+                                        <property name="sizePolicy">
+                                            <sizepolicy>
+                                                <hsizetype>0</hsizetype>
+                                                <vsizetype>0</vsizetype>
+                                                <horstretch>0</horstretch>
+                                                <verstretch>0</verstretch>
+                                            </sizepolicy>
+                                        </property>
+                                        <property name="minimumSize">
+                                            <size>
+                                                <width>22</width>
+                                                <height>22</height>
+                                            </size>
+                                        </property>
+                                        <property name="scaledContents">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                </hbox>
                             </widget>
+                            <spacer>
+                                <property name="name">
+                                    <cstring>spacer11</cstring>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Vertical</enum>
+                                </property>
+                                <property name="sizeType">
+                                    <enum>Expanding</enum>
+                                </property>
+                                <property name="sizeHint">
+                                    <size>
+                                        <width>20</width>
+                                        <height>20</height>
+                                    </size>
+                                </property>
+                            </spacer>
                         </vbox>
                     </widget>
                     <widget class="QWidget">
@@ -206,6 +438,14 @@
                             <widget class="KFontRequester" row="2" column="0" rowspan="1" colspan="2">
                                 <property name="name">
                                     <cstring>mTxtFont</cstring>
+                                </property>
+                                <property name="sizePolicy">
+                                    <sizepolicy>
+                                        <hsizetype>5</hsizetype>
+                                        <vsizetype>0</vsizetype>
+                                        <horstretch>0</horstretch>
+                                        <verstretch>0</verstretch>
+                                    </sizepolicy>
                                 </property>
                             </widget>
                             <widget class="QLabel" row="0" column="0">
@@ -357,7 +597,7 @@
                         <cstring>mMonitoring</cstring>
                     </property>
                     <property name="text">
-                        <string>To monitor this interface</string>
+                        <string>To monitor this &amp;interface</string>
                     </property>
                 </widget>
             </grid>

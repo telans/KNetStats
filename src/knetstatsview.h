@@ -44,6 +44,8 @@ public:
 	KNetStatsView(KNetStats* parent, const QString& interface, ViewOpts* view);
 	~KNetStatsView();
 
+	void setViewOpts(ViewOpts* view);
+
 	///	The current monitored network interface
 	inline const QString& interface() const;
 	///	The current Update Interval in miliseconds
@@ -82,6 +84,9 @@ private:
 	/// View configuration
 	ViewOpts* mView;
 
+	/// Icons
+	QPixmap mIconError, mIconNone, mIconTx, mIconRx, mIconBoth;
+
 	/// Current state
 	QPixmap* mCurrentIcon;
 	/// Timer
@@ -95,6 +100,7 @@ private:
 	/// is connected?
 	bool mbConnected;
 
+	void setup();
 private slots:
 	/// Called by the timer to update statistics
 	void update();

@@ -21,7 +21,7 @@ env.ParseConfig('kde-config --prefix', KDEPrefix );
 env.ParseConfig('kde-config --expandvars --install lib', KDELibs );
 env['CPPPATH'] += [env['KDE_PREFIX']+'/include/', env['KDE_PREFIX']+'/include/kde' ];
 
-SrcList = [ 'src/configurebase.ui', 'src/statisticsbase.ui', 'src/main.cpp', 'src/knetstats.cpp', 'src/knetstatsview.cpp', 'src/statistics.cpp', 'src/configure.cpp' ]
+SrcList = [ 'src/configurebase.ui', 'src/configure.cpp', 'src/statisticsbase.ui', 'src/main.cpp', 'src/knetstats.cpp', 'src/knetstatsview.cpp', 'src/statistics.cpp' ]
 
 env.Program('bin/knetstats', SrcList)
 

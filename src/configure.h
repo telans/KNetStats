@@ -48,16 +48,7 @@ struct ViewOpts
 	QColor mTxtUplColor;
 	QColor mTxtDldColor;
 	// icon view
-	QString mPathRx;
-	QString mPathTx;
-	QString mPathBoth;
-	QString mPathNone;
-	QString mPathError;
-	QPixmap mIconRx;
-	QPixmap mIconTx;
-	QPixmap mIconBoth;
-	QPixmap mIconNone;
-	QPixmap mIconError;
+	int mTheme;
 };
 
 typedef QMap<QString, ViewOpts> ViewsMap;
@@ -75,12 +66,12 @@ public:
 private:
 	QString mCurrentItem;
 	ViewsMap mConfig;
+
 public slots:
 	void accept();
 protected slots:
 	void changeInterface(QListBoxItem* item);
-	void changeIcon(int id);
-	void monitoringToggled(bool on);
+	void changeTheme(int theme);
 
 };
 
