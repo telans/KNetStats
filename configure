@@ -8,5 +8,5 @@ then
 else
 	rm -rdf Makefile
 	qmake -unix -nocache knetstats.pro
-	echo -e "\033[1mType:\033[0m\n make\n make install\n\n\033[1mThe last command as \033[31;5mROOT USER!\033[0m\n"
+	echo -e "Type:\n    make; make install;"
 fi
