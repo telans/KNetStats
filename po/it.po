@@ -92,7 +92,7 @@ msgid "%1 is inactive"
 msgstr "%1 è inattiva"
 
 #: src/configure.cpp:142
-msgid "You need select at least one interface to monitor."
+msgid "You need to select at least one interface to monitor."
 msgstr "È necessario selezionare almeno un'interfaccia da monitorare."
 
 #: src/statisticsbase.cc:159
@@ -220,7 +220,7 @@ msgid "ms"
 msgstr "ms"
 
 #: src/configurebase.cc:277
-msgid "To monitor this &interface"
+msgid "Monitor this &interface"
 msgstr "Per monitorare questa &interfaccia"
 
 #~ msgid "&Statistics"

@@ -72,7 +72,8 @@ msgstr "&Ajuda"
 msgid ""
 "You don't have any network interface.\n"
 "KNetStats will quit now."
-msgstr "Você não possui nenhuma interface de rede.\n"
+msgstr ""
+"Você não possui nenhuma interface de rede.\n"
 "O programa será fechado."
 
 #: src/knetstatsview.cpp:81
@@ -92,7 +93,7 @@ msgid "%1 is inactive"
 msgstr "%1 esta inativo"
 
 #: src/configure.cpp:142
-msgid "You need select at least one interface to monitor."
+msgid "You need to select at least one interface to monitor."
 msgstr "Você precisa selecionar pelo menos uma interface de rede para monitorar."
 
 #: src/statisticsbase.cc:159
@@ -220,7 +221,7 @@ msgid "ms"
 msgstr "ms"
 
 #: src/configurebase.cc:277
-msgid "To monitor this &interface"
+msgid "Monitor this &interface"
 msgstr "Monitorar esta &interface"
 
 #~ msgid "&Statistics"
