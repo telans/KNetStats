@@ -1,0 +1,120 @@
+# Polish translation of KNetStats.
+# Copyright (C) 2004 Hugo Parente Lima
+# This file is distributed under the same license as the KNetStats package.
+# Wiktor Wandachowicz <wiktorw@people.pl>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: KNetStats 1.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-18 15:46+0000\n"
+"PO-Revision-Date: 2005-02-16 01:44+0100\n"
+"Last-Translator: Wiktor Wandachowicz <wiktorw@people.pl>\n"
+"Language-Team: pl <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/statistics.cpp:32
+msgid "Statistics for %1"
+msgstr "Statystyki dla %1"
+
+#: src/main.cpp:13
+msgid "KNetStats"
+msgstr "KNetStats"
+
+#: src/main.cpp:15
+msgid "A network device monitor."
+msgstr "Monitor urządzeń sieciowych."
+
+#: src/main.cpp:24
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Wiktor Wandachowicz"
+
+#: src/main.cpp:24
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "wiktorw@people.pl"
+
+#: src/knetstats.cpp:78
+msgid "&Statistics"
+msgstr "&Statystyki"
+
+#: src/knetstats.cpp:82
+msgid "&Help"
+msgstr "Pomo&c"
+
+#: src/knetstats.cpp:90 src/knetstats.cpp:289
+msgid "Monitoring "
+msgstr "Monitorowanie "
+
+#: src/knetstats.cpp:214
+msgid "%1 is active"
+msgstr "%1 jest aktywne"
+
+#: src/knetstats.cpp:228
+msgid "%1 is inactive"
+msgstr "%1 jest nieaktywne"
+
+#: src/knetstats.cpp:290
+msgid "Now monitoring %1"
+msgstr "Teraz monitorowane %1"
+
+#: src/.ui/statisticsbase.cpp:157
+msgid "StatisticsBase"
+msgstr "StatisticsBase"
+
+#: src/.ui/statisticsbase.cpp:158
+msgid "Bytes"
+msgstr "Bajty"
+
+#: src/.ui/statisticsbase.cpp:159 src/.ui/statisticsbase.cpp:164
+msgid "Received:"
+msgstr "Odebrane:"
+
+#: src/.ui/statisticsbase.cpp:160 src/.ui/statisticsbase.cpp:165
+msgid "Transmited:"
+msgstr "Wysłane:"
+
+#: src/.ui/statisticsbase.cpp:161 src/.ui/statisticsbase.cpp:166
+msgid "Upload speed:"
+msgstr "Szybkość wysyłania:"
+
+#: src/.ui/statisticsbase.cpp:162 src/.ui/statisticsbase.cpp:167
+msgid "Download speed:"
+msgstr "Szybkość pobierania:"
+
+#: src/.ui/statisticsbase.cpp:163
+msgid "Packets"
+msgstr "Pakiety"
+
+#: src/.ui/statisticsbase.cpp:168 src/.ui/configurebase.cpp:112
+msgid "Ok"
+msgstr "Ok"
+
+#: src/.ui/configurebase.cpp:106
+msgid "Configure"
+msgstr "Konfiguracja - KNetStats"
+
+#: src/.ui/configurebase.cpp:107
+msgid "Update interval (in miliseconds):"
+msgstr "Okres odświeżania (w milisekundach)"
+
+#: src/.ui/configurebase.cpp:108
+msgid "Network Interface:"
+msgstr "Interfejs sieciowy:"
+
+#: src/.ui/configurebase.cpp:110
+msgid "Icon (Activity)"
+msgstr "Ikona (aktywność)"
+
+#: src/.ui/configurebase.cpp:111
+msgid "Text (Speed)"
+msgstr "Tekstowo"
+
+#: src/.ui/configurebase.cpp:113
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: src/.ui/configurebase.cpp:114
+msgid "View mode:"
+msgstr "Tryb wyświetlania:"
