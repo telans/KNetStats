@@ -24,7 +24,7 @@ int main( int argc, char** argv )
 	aboutData.addAuthor( "Hugo Parente Lima", 0, "hugo_pl@users.sourceforge.net" );
 
 	// Credits
-	aboutData.addCredit( "Thomas Windheuser", I18N_NOOP("SConstruct help, Debian packages, etc."), 0);
+	aboutData.addCredit( "Thomas Windheuser", I18N_NOOP("SCons help, Debian packages, etc."), 0);
 	aboutData.addCredit( "KNemo", I18N_NOOP("Icon themes"), 0,
 						"http://kde-apps.org/content/show.php?content=12956" );
 	// translators
