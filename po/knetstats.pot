@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 15:46+0000\n"
+"POT-Creation-Date: 2005-02-19 19:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,106 +16,208 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/statistics.cpp:32
+#: src/statistics.cpp:30
 msgid "Statistics for %1"
 msgstr ""
 
-#: src/main.cpp:13
+#: src/main.cpp:11 src/statisticsbase.cc:158
 msgid "KNetStats"
 msgstr ""
 
-#: src/main.cpp:15
+#: src/main.cpp:17
 msgid "A network device monitor."
 msgstr ""
 
-#: src/main.cpp:24
+#: src/main.cpp:23
 msgid "_: NAME OF TRANSLATORS"
 msgstr ""
 
-#: src/main.cpp:24
+#: src/main.cpp:23
 msgid "_: EMAIL OF TRANSLATORS"
 msgstr ""
 
-#: src/knetstats.cpp:78
-msgid "&Statistics"
+#: src/main.cpp:25
+msgid "Icon themes"
 msgstr ""
 
-#: src/knetstats.cpp:82
+#: src/main.cpp:28
+msgid "Kirghiz translation"
+msgstr ""
+
+#: src/main.cpp:29
+msgid "Italian translation"
+msgstr ""
+
+#: src/main.cpp:30
+msgid "Spanish translation"
+msgstr ""
+
+#: src/main.cpp:31
+msgid "Deutsch translation"
+msgstr ""
+
+#: src/main.cpp:32
+msgid "Russian translation"
+msgstr ""
+
+#: src/main.cpp:33
+msgid "Polish translation"
+msgstr ""
+
+#: src/knetstats.cpp:57
 msgid "&Help"
 msgstr ""
 
-#: src/knetstats.cpp:90 src/knetstats.cpp:289
-msgid "Monitoring "
+#: src/knetstats.cpp:143
+msgid ""
+"You don't have any network interface.\n"
+"KNetStats will quit now."
 msgstr ""
 
-#: src/knetstats.cpp:214
+#: src/knetstatsview.cpp:81
+msgid "Monitoring %1"
+msgstr ""
+
+#: src/knetstatsview.cpp:130
+msgid "Error opening /proc/net/dev!"
+msgstr ""
+
+#: src/knetstatsview.cpp:198
 msgid "%1 is active"
 msgstr ""
 
-#: src/knetstats.cpp:228
+#: src/knetstatsview.cpp:218
 msgid "%1 is inactive"
 msgstr ""
 
-#: src/knetstats.cpp:290
-msgid "Now monitoring %1"
+#: src/configure.cpp:142
+msgid "You need select at least one interface to monitor."
 msgstr ""
 
-#: src/.ui/statisticsbase.cpp:157
-msgid "StatisticsBase"
-msgstr ""
-
-#: src/.ui/statisticsbase.cpp:158
+#: src/statisticsbase.cc:159
 msgid "Bytes"
 msgstr ""
 
-#: src/.ui/statisticsbase.cpp:159 src/.ui/statisticsbase.cpp:164
+#: src/statisticsbase.cc:160 src/statisticsbase.cc:165
 msgid "Received:"
 msgstr ""
 
-#: src/.ui/statisticsbase.cpp:160 src/.ui/statisticsbase.cpp:165
+#: src/statisticsbase.cc:161 src/statisticsbase.cc:166
 msgid "Transmited:"
 msgstr ""
 
-#: src/.ui/statisticsbase.cpp:161 src/.ui/statisticsbase.cpp:166
+#: src/statisticsbase.cc:162 src/statisticsbase.cc:167
 msgid "Upload speed:"
 msgstr ""
 
-#: src/.ui/statisticsbase.cpp:162 src/.ui/statisticsbase.cpp:167
+#: src/statisticsbase.cc:163 src/statisticsbase.cc:168
 msgid "Download speed:"
 msgstr ""
 
-#: src/.ui/statisticsbase.cpp:163
+#: src/statisticsbase.cc:164
 msgid "Packets"
 msgstr ""
 
-#: src/.ui/statisticsbase.cpp:168 src/.ui/configurebase.cpp:112
+#: src/statisticsbase.cc:169
 msgid "Ok"
 msgstr ""
 
-#: src/.ui/configurebase.cpp:106
-msgid "Configure"
+#: src/configurebase.cc:246
+msgid "Configure KNetStats"
 msgstr ""
 
-#: src/.ui/configurebase.cpp:107
-msgid "Update interval (in miliseconds):"
+#: src/configurebase.cc:247
+msgid "O&k"
 msgstr ""
 
-#: src/.ui/configurebase.cpp:108
-msgid "Network Interface:"
+#: src/configurebase.cc:248
+msgid "&Apply"
 msgstr ""
 
-#: src/.ui/configurebase.cpp:110
+#: src/configurebase.cc:249
+msgid "Alt+A"
+msgstr ""
+
+#: src/configurebase.cc:250
+msgid "&Cancel"
+msgstr ""
+
+#: src/configurebase.cc:251
+msgid "Alt+C"
+msgstr ""
+
+#: src/configurebase.cc:252
+msgid "Appearance"
+msgstr ""
+
+#: src/configurebase.cc:253
+msgid "Theme:"
+msgstr ""
+
+#: src/configurebase.cc:255
+msgid "Monitor"
+msgstr ""
+
+#: src/configurebase.cc:256
+msgid "Modem"
+msgstr ""
+
+#: src/configurebase.cc:257
+msgid "Network"
+msgstr ""
+
+#: src/configurebase.cc:258
+msgid "Wireless"
+msgstr ""
+
+#: src/configurebase.cc:259
+msgid "Kppp"
+msgstr ""
+
+#: src/configurebase.cc:261
+msgid "Download color:"
+msgstr ""
+
+#: src/configurebase.cc:263
+msgid "Upload color:"
+msgstr ""
+
+#: src/configurebase.cc:265
+msgid "Medium color:"
+msgstr ""
+
+#: src/configurebase.cc:267
+msgid "Lower color:"
+msgstr ""
+
+#: src/configurebase.cc:269
+msgid "High color:"
+msgstr ""
+
+#: src/configurebase.cc:270
+msgid "Configuration"
+msgstr ""
+
+#: src/configurebase.cc:272
 msgid "Icon (Activity)"
 msgstr ""
 
-#: src/.ui/configurebase.cpp:111
+#: src/configurebase.cc:273
 msgid "Text (Speed)"
 msgstr ""
 
-#: src/.ui/configurebase.cpp:113
-msgid "Cancel"
+#: src/configurebase.cc:274
+msgid "View mode:"
 msgstr ""
 
-#: src/.ui/configurebase.cpp:114
-msgid "View mode:"
+#: src/configurebase.cc:275
+msgid "Update interval:"
+msgstr ""
+
+#: src/configurebase.cc:276
+msgid "ms"
+msgstr ""
+
+#: src/configurebase.cc:277
+msgid "To monitor this &interface"
 msgstr ""
