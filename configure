@@ -1,5 +1,12 @@
 #!/bin/bash
+#	I don't know shell script, so I hate it ;-)
+#	This is the best that I can do.
 
-rm -rdf Makefile
-qmake -unix -nocache knetstats.pro
-echo -e "\033[1mType:\033[0m\n make\n make install\n\n\033[1mThe last command as \033[31;5mROOT USER!\033[0m\n"
+if [ ! -n $KDEDIR ]
+then
+	echo  "KDEDIR environment variable is not available! You need set then with the path of your KDE directory to compile KNetStats!"
+else
+	rm -rdf Makefile
+	qmake -unix -nocache knetstats.pro
+	echo -e "\033[1mType:\033[0m\n make\n make install\n\n\033[1mThe last command as \033[31;5mROOT USER!\033[0m\n"
+fi
