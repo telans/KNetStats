@@ -1,0 +1,129 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-18 15:46+0000\n"
+"PO-Revision-Date: 2004-12-24 16:53+0500\n"
+"Last-Translator: Ilyas Bakirov <just_ilyas@yahoo.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Kirghiz\n"
+"X-Poedit-Country: KYRGYZSTAN\n"
+
+#: src/statistics.cpp:32
+msgid "Statistics for %1"
+msgstr "%1 үчүн статистика"
+
+#: src/main.cpp:13
+msgid "KNetStats"
+msgstr "KNetStats"
+
+#: src/main.cpp:15
+msgid "A network device monitor."
+msgstr "Такрамактын монитор жабдыгы."
+
+#: src/main.cpp:24
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Ilyas"
+
+#: src/main.cpp:24
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "just_ilyas@yahoo.com"
+
+#: src/knetstats.cpp:78
+msgid "&Statistics"
+msgstr "&Статистика"
+
+#: src/knetstats.cpp:82
+msgid "&Help"
+msgstr "&Жардам"
+
+#: src/knetstats.cpp:90
+#: src/knetstats.cpp:289
+msgid "Monitoring "
+msgstr "Көзөмөлдөө"
+
+#: src/knetstats.cpp:214
+msgid "%1 is active"
+msgstr "%1 активдүү"
+
+#: src/knetstats.cpp:228
+msgid "%1 is inactive"
+msgstr "%1 активдүү эмес"
+
+#: src/knetstats.cpp:290
+msgid "Now monitoring %1"
+msgstr "%1 азыр көзөмөлүүдө"
+
+#: src/.ui/statisticsbase.cpp:157
+msgid "StatisticsBase"
+msgstr "StatisticsBase"
+
+#: src/.ui/statisticsbase.cpp:158
+msgid "Bytes"
+msgstr "Байт"
+
+#: src/.ui/statisticsbase.cpp:159
+#: src/.ui/statisticsbase.cpp:164
+msgid "Received:"
+msgstr "Алынды:"
+
+#: src/.ui/statisticsbase.cpp:160
+#: src/.ui/statisticsbase.cpp:165
+msgid "Transmited:"
+msgstr "Өткөзүлдү:"
+
+#: src/.ui/statisticsbase.cpp:161
+#: src/.ui/statisticsbase.cpp:166
+msgid "Upload speed:"
+msgstr "Серверге жүктөө ылдамдыгы:"
+
+#: src/.ui/statisticsbase.cpp:162
+#: src/.ui/statisticsbase.cpp:167
+msgid "Download speed:"
+msgstr "Серверден жүктөө ылдамдыгы: "
+
+#: src/.ui/statisticsbase.cpp:163
+msgid "Packets"
+msgstr "Пакеттер"
+
+#: src/.ui/statisticsbase.cpp:168
+#: src/.ui/configurebase.cpp:112
+msgid "Ok"
+msgstr "Ok"
+
+#: src/.ui/configurebase.cpp:106
+msgid "Configure"
+msgstr "Ырастоо"
+
+#: src/.ui/configurebase.cpp:107
+msgid "Update interval (in miliseconds):"
+msgstr "Интервалды жыңыртуу (милисекунда менен):"
+
+#: src/.ui/configurebase.cpp:108
+msgid "Network Interface:"
+msgstr "Тармак интерфейси:"
+
+#: src/.ui/configurebase.cpp:110
+msgid "Icon (Activity)"
+msgstr "Икона (Активдүүлүк)"
+
+#: src/.ui/configurebase.cpp:111
+msgid "Text (Speed)"
+msgstr "Текст (Ылдамдыгы)"
+
+#: src/.ui/configurebase.cpp:113
+msgid "Cancel"
+msgstr "Айнуу"
+
+#: src/.ui/configurebase.cpp:114
+msgid "View mode:"
+msgstr "Көрүнүш тиби:"
+
