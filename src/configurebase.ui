@@ -7,7 +7,7 @@
     <property name="geometry">
         <rect>
             <x>0</x>
-            <y>6</y>
+            <y>0</y>
             <width>392</width>
             <height>282</height>
         </rect>
@@ -73,9 +73,6 @@
                     <property name="text">
                         <string>Appl&amp;y</string>
                     </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
-                    </property>
                 </widget>
                 <widget class="KPushButton">
                     <property name="name">
@@ -83,9 +80,6 @@
                     </property>
                     <property name="text">
                         <string>Ca&amp;ncel</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
                     </property>
                 </widget>
             </hbox>
