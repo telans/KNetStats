@@ -24,6 +24,8 @@ rm -rdf /usr/share/apps/knetstats/
 rm /usr/share/locale/pt_BR/LC_MESSAGES/knetstats.mo
 rm /usr/share/locale/ky_KG/LC_MESSAGES/knetstats.mo
 rm /usr/share/locale/it/LC_MESSAGES/knetstats.mo
+rm /usr/share/locale/es/LC_MESSAGES/knetstats.mo
+rm /usr/share/locale/de/LC_MESSAGES/knetstats.mo
 
 
 --

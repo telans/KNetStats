@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/statistics.cpp:32
 msgid "Statistics for %1"
-msgstr ""
+msgstr "Estadisticas de %1"
 
 #: src/main.cpp:13
 msgid "KNetStats"
