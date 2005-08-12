@@ -1,6 +1,7 @@
 
 import os;
 import re;
+import commands;
 
 def KDEPrefix( env, str ):
 	if str == '':
@@ -31,15 +32,34 @@ env = Environment(
 # Avoid spreading .sconsign files everywhere
 env.SConsignFile('scons_signatures')
 
-#under debian, we have to set the plugindirectories, so that QT's uic will run.
-#we will test, if the current linux distribution is "Debian"
-#debian is detected by using the lsb_release program, which is part of the linux standard base
-lsbReleaseOutput = os.popen("lsb_release -i -s");
-osName = lsbReleaseOutput.readline().strip();
-if re.compile("Debian").search(osName,0) :
-	print osName + " detected";
-	env['QT_UICDECLFLAGS'] += '-L /usr/lib/kde3/plugins/';
-	env['QT_UICIMPLFLAGS'] += '-L /usr/lib/kde3/plugins/';
+#under debian and some other distributions, we have to set the plugindirectories, so that QT's uic will run.
+#first we try to detect the distribution by using the "lsb_release" program, which is part of the linux standard base
+(lsbReleaseStatus,lsbReleaseOutput) = commands.getstatusoutput("lsb_release -i -s");
+if (lsbReleaseStatus==0) :
+	osName = lsbReleaseOutput.strip();
+	if re.compile("Debian").search(osName,0) :
+		print osName + " detected";
+		env['QT_UICDECLFLAGS'] += '-L /usr/lib/kde3/plugins/';
+		env['QT_UICIMPLFLAGS'] += '-L /usr/lib/kde3/plugins/';
+	elif re.compile("Mandrakelinux").search(osName,0) :
+		print osName + " detected";
+		env['QT_UICDECLFLAGS'] += '-L /usr/lib/kde3/plugins/';
+		env['QT_UICIMPLFLAGS'] += '-L /usr/lib/kde3/plugins/';
+	else :
+		print "WARNING: The scons script could not recognice your kind of linux distribution.";
+		print "         If you get a compile error, this could be the reason for it.";
+		print "         In this case please file a bug report on https://sourceforge.net/projects/knetstats/.";
+		print "         Please include the following information in the bug report:";
+		print "         output of";
+		print "         $>lsb_release -i -s";
+		print "         and the path to the kde plugins for qt designer";
+		print "         they are usually located in \"/usr/lib/qt3/plugins/designer\"";
+		print "         just type on /";
+		print "         $>find -name \"kdewidgets*\"";
+else :
+	print "WARNING: lsb_release not found. This could lead to an compile error.";
+	print "         If you get a compile error, this could be the reason for it.";
+	print "         Make sure you have lsb_release installed. It is part of the Linux Standard Base.";
 
 env.ParseConfig('kde-config --prefix', KDEPrefix );
 env.ParseConfig('kde-config --expandvars --install lib', KDELibs );
