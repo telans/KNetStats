@@ -1,0 +1,202 @@
+# Bulgarian translation of KNetStats.
+# Copyright (C) 2004 Hugo Parente Lima
+# This file is distributed under the same license as the KNetStats package.
+# Petar Toushkov <peter.toushkov@mail.bg>, 2005.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bg\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-03-02 17:44+0000\n"
+"PO-Revision-Date: 2005-06-14 10:11+0300\n"
+"Last-Translator: Petar Toushkov <peter.toushkov@mail.bg>\n"
+"Language-Team:  lastmanstanding\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+
+#: src/statistics.cpp:30
+msgid "Statistics for %1"
+msgstr "Статистика за %1"
+
+#: src/main.cpp:11 src/uic_statisticsbase.cc:158
+msgid "KNetStats"
+msgstr "KNetStats"
+
+#: src/main.cpp:17
+msgid "A network device monitor."
+msgstr "Инструмент за мрежово наблюдение"
+
+#: src/main.cpp:23
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Petar Toushkov"
+
+#: src/main.cpp:23
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "peter.toushkov@mail.bg"
+
+#: src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
+msgstr "Помощ за програмата Scons, Debian пакети и пр."
+
+#: src/main.cpp:28
+msgid "Icon themes"
+msgstr "Теми"
+
+#: src/main.cpp:31
+msgid "KNetStats translation to other languages"
+msgstr "Превод на KNetStats и на други езици"
+
+#: src/knetstats.cpp:58
+msgid "&Help"
+msgstr "Помо&щ"
+
+#: src/knetstats.cpp:148
+msgid ""
+"You don't have any network interface.\n"
+"KNetStats will quit now."
+msgstr ""
+"Не разполагате с мрежов интерфейс.\n"
+"KNetStats ще прекрати наблюдението."
+
+#: src/knetstatsview.cpp:81
+msgid "Monitoring %1"
+msgstr "Наблюдение на %1"
+
+#: src/knetstatsview.cpp:130
+msgid "Error opening /proc/net/dev!"
+msgstr "Грешка при отварянето на /proc/net/dev!"
+
+#: src/knetstatsview.cpp:198
+msgid "%1 is active"
+msgstr "%1 e в активно състояние"
+
+#: src/knetstatsview.cpp:218
+msgid "%1 is inactive"
+msgstr "%1 не е в активно състояние"
+
+#: src/configure.cpp:141
+msgid "You need to select at least one interface to monitor."
+msgstr "Трябва да изберете най-малко един интерфейс за наблюдение"
+
+#: src/uic_statisticsbase.cc:159
+msgid "Bytes"
+msgstr "Байтове"
+
+#: src/uic_statisticsbase.cc:160 src/uic_statisticsbase.cc:165
+msgid "Received:"
+msgstr "Получени:"
+
+#: src/uic_statisticsbase.cc:161 src/uic_statisticsbase.cc:166
+msgid "Transmited:"
+msgstr "Изпратени:"
+
+#: src/uic_statisticsbase.cc:162 src/uic_statisticsbase.cc:167
+msgid "Upload speed:"
+msgstr "Скорост изпращане:"
+
+#: src/uic_statisticsbase.cc:163 src/uic_statisticsbase.cc:168
+msgid "Download speed:"
+msgstr "Скорост получаване:"
+
+#: src/uic_statisticsbase.cc:164
+msgid "Packets"
+msgstr "Пакети"
+
+#: src/uic_statisticsbase.cc:169
+msgid "Ok"
+msgstr "О'Кей"
+
+#: src/uic_configurebase.cc:244
+msgid "Configure KNetStats"
+msgstr "Настройки на KNetStats"
+
+#: src/uic_configurebase.cc:245
+msgid "O&k"
+msgstr "&О'Кей"
+
+#: src/uic_configurebase.cc:246
+msgid "Appl&y"
+msgstr "&Прилагане"
+
+#: src/uic_configurebase.cc:247
+msgid "Ca&ncel"
+msgstr "От&каз"
+
+#: src/uic_configurebase.cc:248
+msgid "Appearance"
+msgstr "Изглед"
+
+#: src/uic_configurebase.cc:249
+msgid "Theme:"
+msgstr "Тема:"
+
+#: src/uic_configurebase.cc:251
+msgid "Classic"
+msgstr "Класика"
+
+#: src/uic_configurebase.cc:252
+msgid "Modem"
+msgstr "Модем"
+
+#: src/uic_configurebase.cc:253
+msgid "Network"
+msgstr "Мрежа"
+
+#: src/uic_configurebase.cc:254
+msgid "Wireless"
+msgstr "Безжична мр."
+
+#: src/uic_configurebase.cc:255
+msgid "Kppp"
+msgstr "Kppp"
+
+#: src/uic_configurebase.cc:257
+msgid "Download color:"
+msgstr "Цвят получаване:"
+
+#: src/uic_configurebase.cc:259
+msgid "Upload color:"
+msgstr "Цвят изпращане:"
+
+#: src/uic_configurebase.cc:261
+msgid "Medium color:"
+msgstr "Цвят нормално:"
+
+#: src/uic_configurebase.cc:263
+msgid "Lower color:"
+msgstr "Цвят бавно:"
+
+#: src/uic_configurebase.cc:265
+msgid "High color:"
+msgstr "Цвят бързо:"
+
+#: src/uic_configurebase.cc:266
+msgid "Configuration"
+msgstr "Настройки"
+
+#: src/uic_configurebase.cc:268
+msgid "Icon (Activity)"
+msgstr "Икона (Активност)"
+
+#: src/uic_configurebase.cc:269
+msgid "Text (Speed)"
+msgstr "Текст (Скорост)"
+
+#: src/uic_configurebase.cc:270
+msgid "View mode:"
+msgstr "Изглед:"
+
+#: src/uic_configurebase.cc:271
+msgid "Update interval:"
+msgstr "Интервал обновяване:"
+
+#: src/uic_configurebase.cc:272
+msgid "ms"
+msgstr "мс"
+
+#: src/uic_configurebase.cc:273
+msgid "To monitor this &interface"
+msgstr "Наблюдение на този &интерфейс"
+
