@@ -6,3 +6,4 @@ msgmerge -U ky_KG.po knetstats.pot
 msgmerge -U pl.po knetstats.pot
 msgmerge -U pt_BR.po knetstats.pot
 msgmerge -U ru_RU.po knetstats.pot
+msgmerge -U bg.po knetstats.pot
