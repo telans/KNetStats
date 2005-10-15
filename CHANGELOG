@@ -1,3 +1,6 @@
+v1.3.1
+- Minor fix for Mandriva Linux (former Mandrake Linux). Env is now set for uic during build.
+
 v1.3
 
 - New configuration dialog.

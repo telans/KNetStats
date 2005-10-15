@@ -24,6 +24,8 @@ $programname = "";
 
 #version of the program
 $programversion = "";
+#the version number behind the upstream version number
+$packageversion = "";
 
 #this is where the sources for the package should be copied
 #this is actually relative to the source-basdir!!! not to the debian-meta dir!!
@@ -69,6 +71,8 @@ while (<CONFIGFILE>) {
 				$programname = $value;
 			}elsif ($key =~ /^programversion$/i) {
 				$programversion = $value;
+			}elsif ($key =~ /^packageversion$/i) {
+				$packageversion = $value;
 			}elsif ($key =~ /^packagedestination$/i) {
 				$packageDestination = $value;
 			}else {
@@ -148,6 +152,12 @@ sub processFile {
 
 find(\&processFile,$baseDir);
 
+#before we copy the debian config files, we have to make a tar.gz of the original sources
+#now change into the destination-dir and make a .orig.tar.gz
+chdir($baseDir."/debian-meta/".$packageDestination);
+system("tar cfz ".$programname."_".$programversion.".orig.tar.gz ".$programname."-".$programversion);
+chdir($baseDir."/debian-meta");
+
 #create a debian dir at the destination
 my $newDirname = $baseDir."/debian-meta/".$packageDestination.$programname."-".$programversion."/debian";
 eval { mkpath($newDirname) };
@@ -164,8 +174,4 @@ foreach ("compat","copyright","dirs","changelog","control","docs","rules") {
 }
 
 
-#now change into the destination-dir and make a .tar.gz
-#chdir($baseDir."/debian-meta/".$packageDestination);
-#system("tar cfz ".$programname."-".$programversion.".tar.gz ".$programname."-".$programversion);
-chdir($baseDir."/debian-meta");
 

@@ -45,7 +45,9 @@ build-stamp: configure-stamp
 	# Add here commands to compile the package.
 	DESTDIR=$(CURDIR)/debian/knetstats scons
 	-rm -f `find $(CURDIR)/debian/knetstats -name .sconsign`
-	docbook-to-man doc/index.docbook > knetstats.1x
+	-rm -f $(CURDIR)/scons_signatures.dblite
+	#docbook-to-man doc/index.docbook > knetstats.1x
+	xsltproc  -o knetstats.1x --nonet /usr/share/xml/docbook/stylesheet/nwalsh/manpages/docbook.xsl doc/manpage.xml
 
 	touch build-stamp
 
@@ -57,6 +59,7 @@ clean:
 	# Add here commands to clean up after the build process.
 	-DESTDIR=$(CURDIR)/debian/knetstats scons --clean
 	-rm -f `find $(CURDIR)/debian/knetstats -name .sconsign`
+	-rm -f $(CURDIR)/scons_signatures.dblite
 
 	dh_clean 
 
@@ -69,7 +72,7 @@ install: build
 	# Add here commands to install the package into debian/knetstats.
 	DESTDIR=$(CURDIR)/debian/knetstats scons install
 	-rm -f `find $(CURDIR)/debian/knetstats -name .sconsign`
-
+	-rm -f $(CURDIR)/scons_signatures.dblite
 
 
 # Build architecture-independent files here.
@@ -93,7 +96,7 @@ binary-arch: build install
 #	dh_installinit
 #	dh_installcron
 #	dh_installinfo
-	dh_installman knetstats.1x
+	dh_installman knetstats.1
 	dh_link
 	dh_strip
 	dh_compress
