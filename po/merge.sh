@@ -7,3 +7,4 @@ msgmerge -U pl.po knetstats.pot
 msgmerge -U pt_BR.po knetstats.pot
 msgmerge -U ru_RU.po knetstats.pot
 msgmerge -U bg.po knetstats.pot
+msgmerge -U zn_CH.po knetstats.pot
