@@ -24,6 +24,7 @@
 
 // Qt includes
 #include <qstringlist.h>
+#include <qdir.h>
 // KDE includes
 #include <kconfig.h>
 #include <kglobal.h>
@@ -42,8 +43,7 @@
 // StdC++ includes
 #include <algorithm>
 
-KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0)
-{
+KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0) {
 	setIcon(kapp->icon());
 
 	// Cria o contextMenu
@@ -63,32 +63,24 @@ KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0)
 
 	connect(helpmenu, SIGNAL(showAboutApplication()), this, SLOT(about()));
 
-
-
 	// lê arquivo de configuração
 	KConfig* cfg = kapp->config();
 	QStringList views = cfg->readListEntry("CurrentViews");
 
-	if (!views.size())	// no views... =/, mostra tela de configuração
-	{
+	if (!views.size()) {	// no views... =/, mostra tela de configuração
 		if (!this->configure())
 			mAllOk = false;
-	}
-	else
-	{
+	} else {
 		// inicia as views necessarias.
-		for (QStringList::Iterator i = views.begin(); i != views.end(); ++i)
-		{
+		for (QStringList::Iterator i = views.begin(); i != views.end(); ++i) {
 			KNetStatsView* kview = new KNetStatsView(this, *i, getViewOpt(*i));
 			mView[*i] = kview;
 		}
 	}
-
 }
 
 // move it to knetstats view constructor?
-ViewOpts* KNetStats::getViewOpt( const QString& interface )
-{
+ViewOpts* KNetStats::getViewOpt( const QString& interface ) {
 	KConfig* cfg = kapp->config();
 	QFont defaultFont = font();
 
@@ -108,34 +100,18 @@ ViewOpts* KNetStats::getViewOpt( const QString& interface )
 	return view;
 }
 
-QStringList KNetStats::searchInterfaces()
-{
-	FILE* fp = fopen("/proc/net/dev", "r");
-
-	QStringList list;
-
-	if (!fp)
-		return list;
-	char interface[8];
-	char buffer[128];
-
-	// Ignore header...
-	fgets(buffer, sizeof(buffer), fp);
-	fgets(buffer, sizeof(buffer), fp);
-	while(fgets(buffer, sizeof(buffer), fp))
-	{
-		sscanf(buffer, " %[^ \t\r\n:]", interface);
-		list.append(interface);
-	}
+QStringList KNetStats::searchInterfaces() {
+	QDir dir("/sys/class/net");
+	QStringList list = dir.entryList(QDir::Dirs);
+	list.pop_front(); // removes "." and ".." entriess
+	list.pop_front();
 	return list;
 }
 
-bool KNetStats::configure()
-{
+bool KNetStats::configure() {
 	if (mConfigure)
 		mConfigure->show();
-	else
-	{
+	else {
 		// Procura interfaces de rede
 		QStringList ifs = KNetStats::searchInterfaces();
 		ifs += kapp->config()->readListEntry("AllViews");
@@ -143,8 +119,7 @@ bool KNetStats::configure()
 		ifs.erase( std::unique(ifs.begin(), ifs.end()), ifs.end() );
 		kapp->config()->writeEntry("AllViews", ifs);
 
-		if (!ifs.size())
-		{
+		if (!ifs.size()) {
 			KMessageBox::error(this, i18n("You don't have any network interface.\nKNetStats will quit now."));
 			return false;
 		}
@@ -160,8 +135,7 @@ bool KNetStats::configure()
 
 void KNetStats::configOk()
 {
-	if (mConfigure->saveConfig())
-	{
+	if (mConfigure->saveConfig()) {
 		applyConfig( mConfigure->currentConfig() );
 		delete mConfigure;
 		mConfigure = 0;
@@ -219,3 +193,5 @@ void KNetStats::about()
 	KAboutApplication dlg(this);
 	dlg.exec();
 }
+
+#include "knetstats.moc"

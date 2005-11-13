@@ -7,9 +7,9 @@
     <property name="geometry">
         <rect>
             <x>0</x>
-            <y>0</y>
-            <width>392</width>
-            <height>282</height>
+            <y>21</y>
+            <width>355</width>
+            <height>307</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -62,6 +62,9 @@
                     <property name="text">
                         <string>O&amp;k</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+K</string>
+                    </property>
                     <property name="default">
                         <bool>true</bool>
                     </property>
@@ -73,6 +76,9 @@
                     <property name="text">
                         <string>Appl&amp;y</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+Y</string>
+                    </property>
                 </widget>
                 <widget class="KPushButton">
                     <property name="name">
@@ -81,6 +87,9 @@
                     <property name="text">
                         <string>Ca&amp;ncel</string>
                     </property>
+                    <property name="accel">
+                        <string>Alt+N</string>
+                    </property>
                 </widget>
             </hbox>
         </widget>
@@ -88,10 +97,26 @@
             <property name="name">
                 <cstring>mInterfaces</cstring>
             </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>7</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
         </widget>
         <widget class="QGroupBox" row="1" column="1">
             <property name="name">
                 <cstring>mAppearanceGroup</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>7</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
             <property name="title">
                 <string>Appearance</string>
@@ -465,41 +490,17 @@
                             <property name="margin">
                                 <number>0</number>
                             </property>
-                            <widget class="KColorButton" row="0" column="1">
-                                <property name="name">
-                                    <cstring>mBarHighColor</cstring>
-                                </property>
-                                <property name="text">
-                                    <string></string>
-                                </property>
-                            </widget>
-                            <widget class="QLabel" row="1" column="0">
-                                <property name="name">
-                                    <cstring>mLabel8</cstring>
-                                </property>
-                                <property name="text">
-                                    <string>Medium color:</string>
-                                </property>
-                            </widget>
-                            <widget class="KColorButton" row="1" column="1">
-                                <property name="name">
-                                    <cstring>mBarMidColor</cstring>
-                                </property>
-                                <property name="text">
-                                    <string></string>
-                                </property>
-                            </widget>
                             <widget class="QLabel" row="2" column="0">
                                 <property name="name">
-                                    <cstring>mLabel9</cstring>
+                                    <cstring>mGraphBgLabel</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Lower color:</string>
+                                    <string>Background:</string>
                                 </property>
                             </widget>
-                            <widget class="KColorButton" row="2" column="1">
+                            <widget class="KColorButton" row="0" column="1">
                                 <property name="name">
-                                    <cstring>mBarLowColor</cstring>
+                                    <cstring>mGraphUplColor</cstring>
                                 </property>
                                 <property name="text">
                                     <string></string>
@@ -510,7 +511,39 @@
                                     <cstring>mLabel7</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>High color:</string>
+                                    <string>Upload color</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="0">
+                                <property name="name">
+                                    <cstring>mLabel8</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Download color:</string>
+                                </property>
+                            </widget>
+                            <widget class="KColorButton" row="1" column="1">
+                                <property name="name">
+                                    <cstring>mGraphDldColor</cstring>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="KColorButton" row="2" column="1">
+                                <property name="name">
+                                    <cstring>mGraphBgColor</cstring>
+                                </property>
+                                <property name="text">
+                                    <string></string>
+                                </property>
+                            </widget>
+                            <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
+                                <property name="name">
+                                    <cstring>mTransparenteBackground</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Transparent &amp;background</string>
                                 </property>
                             </widget>
                         </grid>
@@ -522,6 +555,14 @@
             <property name="name">
                 <cstring>mConfigurationGroup</cstring>
             </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>5</hsizetype>
+                    <vsizetype>7</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
+            </property>
             <property name="title">
                 <string>Configuration</string>
             </property>
@@ -532,12 +573,17 @@
                 <widget class="KComboBox" row="2" column="1">
                     <item>
                         <property name="text">
-                            <string>Icon (Activity)</string>
+                            <string>Icon</string>
                         </property>
                     </item>
                     <item>
                         <property name="text">
-                            <string>Text (Speed)</string>
+                            <string>Text</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>Graphic</string>
                         </property>
                     </item>
                     <property name="name">
@@ -599,7 +645,36 @@
         <receiver>mWdgStack</receiver>
         <slot>raiseWidget(int)</slot>
     </connection>
+    <connection>
+        <sender>mTransparenteBackground</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>mGraphBgColor</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>mTransparenteBackground</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>mGraphBgLabel</receiver>
+        <slot>setDisabled(bool)</slot>
+    </connection>
 </connections>
+<tabstops>
+    <tabstop>mOk</tabstop>
+    <tabstop>mApply</tabstop>
+    <tabstop>mCancel</tabstop>
+    <tabstop>mInterfaces</tabstop>
+    <tabstop>mMonitoring</tabstop>
+    <tabstop>mUpdateInterval</tabstop>
+    <tabstop>mViewMode</tabstop>
+    <tabstop>mTheme</tabstop>
+    <tabstop>mTxtUplColor</tabstop>
+    <tabstop>mTxtDldColor</tabstop>
+    <tabstop>mTxtFont</tabstop>
+    <tabstop>mGraphUplColor</tabstop>
+    <tabstop>mGraphDldColor</tabstop>
+    <tabstop>mGraphBgColor</tabstop>
+    <tabstop>mTransparenteBackground</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
     <includehint>kpushbutton.h</includehint>

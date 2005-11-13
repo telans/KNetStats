@@ -179,3 +179,4 @@ void Configure::changeTheme(int theme)
 	mIconBoth->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_both.png",
 						 KIcon::Panel, ICONSIZE));
 }
+#include "configure.moc"

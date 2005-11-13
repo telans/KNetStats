@@ -77,6 +77,9 @@ protected:
 	void paintEvent( QPaintEvent* ev );
 
 private:
+	QString mSysDevPath;
+	bool mCarrier;
+	
 	/// Global ContextMenu
 	KPopupMenu* mContextMenu;
 	/// Statistics window
@@ -94,9 +97,9 @@ private:
 	/// Timer
 	QTimer* mTimer;
 	///	Rx e Tx to bytes and packets
-	unsigned int mBRx, mBTx, mPRx, mPTx;
+	unsigned long mBRx, mBTx, mPRx, mPTx;
 	/// Statistics
-	unsigned int mTotalBytesRx, mTotalBytesTx, mTotalPktRx, mTotalPktTx;
+	unsigned long mTotalBytesRx, mTotalBytesTx, mTotalPktRx, mTotalPktTx;
 	/// Speeds
 	double mSpeedRx[HISTORY_SIZE], mSpeedTx[HISTORY_SIZE];
 	double mSpeedPRx[HISTORY_SIZE], mSpeedPTx[HISTORY_SIZE];
@@ -104,9 +107,10 @@ private:
 	int mPtr;
 
 	/// is connected?
-	bool mbConnected;
+	bool mConnected;
 
 	void setup();
+	unsigned long readValue(const char* name);
 	inline double calcSpeed(const double* field) const;
 private slots:
 	/// Called by the timer to update statistics

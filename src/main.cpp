@@ -4,7 +4,7 @@
 
 #include <kcmdlineargs.h>
 #include <kaboutdata.h>
-#include <kapp.h>
+#include <kapplication.h>
 #include <klocale.h>
 
 #include "knetstats.h"
@@ -13,7 +13,7 @@ const char* programName = I18N_NOOP( "KNetStats" );
 int main( int argc, char** argv )
 {
 	KAboutData aboutData( "knetstats", programName,
-	                      "v1.3",									// version
+	                      "v1.5",									// version
 						  I18N_NOOP( "A network device monitor." ),	// description
 						  KAboutData::License_GPL,					// license
 	                      "(C) 2004-2005 Hugo Parente Lima",		// copyright
@@ -28,11 +28,11 @@ int main( int argc, char** argv )
 	aboutData.addCredit( "KNemo", I18N_NOOP("Icon themes"), 0,
 						"http://kde-apps.org/content/show.php?content=12956" );
 	// translators
-	aboutData.addCredit( "Ilyas Bakirov, Roberto Leandrini, Carlos Ortiz, Henrik Gebauer, Edward Romantsov, Wiktor Wandachowicz, Guillaume Savaton", I18N_NOOP("KNetStats translation to other languages"), 0);
+	aboutData.addCredit( "Ilyas Bakirov, Roberto Leandrini, Carlos Ortiz, Henrik Gebauer, Edward Romantsov, Wiktor Wandachowicz, Guillaume Savaton, Petar Toushkov, Liu Di", I18N_NOOP("KNetStats translation to other languages"), 0);
 
 	KCmdLineArgs::init( argc, argv, &aboutData );
-
 	KApplication::disableAutoDcopRegistration();
+	
 	KApplication app;
 	KNetStats knetstats;
 	if (!knetstats.allOk())

@@ -59,3 +59,4 @@ void Statistics::accept()
 	mTimer->stop();
 	StatisticsBase::accept();
 }
+#include "statistics.moc"

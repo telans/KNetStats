@@ -56,11 +56,11 @@
 extern const char* programName;
 
 KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOpts* view)
-	: KSystemTray(parent, 0), mInterface(interface),mView(view)
-{
+	: mSysDevPath("/sys/class/net/"+interface+"/"), KSystemTray(parent, 0), mInterface(interface),mView(view) {
+	mCarrier = true;
 	mStatistics = 0;
 	mBRx = mBTx = mPRx = mPTx = 0;
-	mbConnected = true;
+	mConnected = true;
 	mTotalBytesRx = mTotalBytesTx = mTotalPktRx = mTotalPktTx = 0;
 	mPtr = 0;
 	memset(mSpeedRx, 0, sizeof(double)*HISTORY_SIZE);
@@ -83,12 +83,10 @@ KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOp
 	mStatistics = new Statistics(this);
 }
 
-void KNetStatsView::setup()
-{
+void KNetStatsView::setup() {
 	if (mView->mViewMode == Text)
 		setFont(mView->mTxtFont);
-	else if (mView->mViewMode == Icon)
-	{
+	else if (mView->mViewMode == Icon) {
 		// Load Icons
 		KIconLoader* loader = kapp->iconLoader();
 		mIconError = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_error.png",
@@ -101,20 +99,18 @@ void KNetStatsView::setup()
 						KIcon::Panel, ICONSIZE);
 		mIconBoth = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_both.png",
 							KIcon::Panel, ICONSIZE);
-		mCurrentIcon = mbConnected ? &mIconNone : &mIconError;
+		mCurrentIcon = (mConnected && mCarrier) ? &mIconNone : &mIconError;
 	}
 	mTimer->start(mView->mUpdateInterval);
 	updateStats();
 	QWidget::update();
 }
 
-KNetStatsView::~KNetStatsView()
-{
+KNetStatsView::~KNetStatsView() {
 	delete mView;
 }
 
-void KNetStatsView::setViewOpts( ViewOpts* view )
-{
+void KNetStatsView::setViewOpts( ViewOpts* view ) {
 	delete mView;
 	mView = view;
 	setup();
@@ -123,100 +119,95 @@ void KNetStatsView::setViewOpts( ViewOpts* view )
 void KNetStatsView::updateStats()
 {
 	// Read and parse /proc/net/dev
-	FILE* fp = fopen("/proc/net/dev", "r");
-	if (!fp)
-	{
-		mTimer->stop();
-		KMessageBox::error(this, i18n("Error opening /proc/net/dev!"));
-		return;
-	}
-
-	unsigned int brx, btx, prx, ptx;
-	char interface[8];
-	char buffer[128];
-
-	// skip headers (why not a fseek() ?)
-	fgets(buffer, sizeof(buffer), fp);
-	fgets(buffer, sizeof(buffer), fp);
-
-	bool linkok = false;
-	while(fgets(buffer, sizeof(buffer), fp))
-	{
-		// Read statistics
-		sscanf(buffer, " %[^ \t\r\n:]%*c%u%u%*u%*u%*u%*u%*u%*u%u%u%*u%*u%*u%*u%*u%*u", interface, &brx, &prx, &btx, &ptx);
-
-		if (interface == mInterface)
-		{
-			QPixmap* newIcon;
-
-			// Calcula as velocidades
-			mSpeedTx[mPtr] = ((btx - mBTx)*(1000.0f/mView->mUpdateInterval));
-			mSpeedRx[mPtr] = ((brx - mBRx)*(1000.0f/mView->mUpdateInterval));
-			mSpeedPTx[mPtr] = ((ptx - mPTx)*(1000.0f/mView->mUpdateInterval));
-			mSpeedPRx[mPtr] = ((prx - mPRx)*(1000.0f/mView->mUpdateInterval));
-
-			if (mView->mViewMode == Text)
-				QWidget::update();
-			else if (mView->mViewMode == Icon)
-			{
-				if (brx == mBRx)
-				{
-					if (btx == mBTx )
-						newIcon = &mIconNone;
-					else
-						newIcon = &mIconTx;
-				}
-				else
-				{
-					if (btx == mBTx )
-						newIcon = &mIconRx;
-					else
-						newIcon = &mIconBoth;
-				}
-
-				if (newIcon != mCurrentIcon)
-				{
-					mCurrentIcon = newIcon;
-					QWidget::update();
-				}
-			}
-
-			// Update stats
-			mTotalBytesRx += brx - mBRx;
-			mTotalBytesTx += btx - mBTx;
-			mTotalPktRx += prx - mPRx;
-			mTotalPktTx += ptx - mPTx;
-
-			mBRx = brx;
-			mBTx = btx;
-			mPRx = prx;
-			mPTx = ptx;
-
-			if (!mbConnected)
-			{
-				mbConnected = true;
-				KPassivePopup::message(programName, i18n("%1 is active").arg(mInterface), kapp->miniIcon(), this);
-			}
-			linkok = true;
-			if (++mPtr >= HISTORY_SIZE)
-				mPtr = 0;
-			break;
-		}
-	}
-
-	fclose(fp);
-
-	if (!linkok && mbConnected)
-	{
-		mbConnected = false;
+	FILE* fp = fopen((mSysDevPath+"carrier").latin1(), "r");
+	
+	if (!fp && mConnected) { // interface caiu...
+		mConnected = false;
 		mCurrentIcon = &mIconError;
+		
 		memset(mSpeedRx, 0, sizeof(double)*HISTORY_SIZE);
 		memset(mSpeedTx, 0, sizeof(double)*HISTORY_SIZE);
 		memset(mSpeedPRx, 0, sizeof(double)*HISTORY_SIZE);
 		memset(mSpeedPTx, 0, sizeof(double)*HISTORY_SIZE);
-		QWidget::update();
 		KPassivePopup::message(programName, i18n("%1 is inactive").arg(mInterface), kapp->miniIcon(), this);
+	} else if (fp && !mConnected) {
+		mConnected = true;
+		KPassivePopup::message(programName, i18n("%1 is active").arg(mInterface), kapp->miniIcon(), this);
 	}
+	int carrierFlag;
+	if (fp) {
+		carrierFlag = fgetc(fp);
+		fclose(fp);
+	}
+	
+	if (!mConnected)
+		return;
+	
+	if (carrierFlag == '0') { // carrier down
+		if (mCarrier) {
+			mCarrier = false;
+			KPassivePopup::message(programName, i18n("%1 is disconnected").arg(mInterface), kapp->miniIcon(), this);
+		}
+		return;
+	} else if (!mCarrier) { // carrier up
+		mCarrier = true;
+		KPassivePopup::message(programName, i18n("%1 is connected").arg(mInterface), kapp->miniIcon(), this);
+	}
+	
+	unsigned int brx = readValue("rx_bytes");
+	unsigned int btx = readValue("tx_bytes");
+	unsigned int prx = readValue("rx_packets");
+	unsigned int ptx = readValue("tx_packets");
+	
+	
+	QPixmap* newIcon;
+
+	// Calcula as velocidades
+	mSpeedTx[mPtr] = ((btx - mBTx)*(1000.0f/mView->mUpdateInterval));
+	mSpeedRx[mPtr] = ((brx - mBRx)*(1000.0f/mView->mUpdateInterval));
+	mSpeedPTx[mPtr] = ((ptx - mPTx)*(1000.0f/mView->mUpdateInterval));
+	mSpeedPRx[mPtr] = ((prx - mPRx)*(1000.0f/mView->mUpdateInterval));
+
+	if (mView->mViewMode == Icon) {
+		if (brx == mBRx) {
+			if (btx == mBTx )
+				newIcon = &mIconNone;
+			else
+				newIcon = &mIconTx;
+		} else {
+			if (btx == mBTx )
+				newIcon = &mIconRx;
+			else
+				newIcon = &mIconBoth;
+		}
+
+		if (newIcon != mCurrentIcon) {
+			mCurrentIcon = newIcon;
+			QWidget::update();
+		}
+	}else if (btx != mBTx && brx != mBRx)
+		QWidget::update();
+	
+	// Update stats
+	mTotalBytesRx += brx - mBRx;
+	mTotalBytesTx += btx - mBTx;
+	mTotalPktRx += prx - mPRx;
+	mTotalPktTx += ptx - mPTx;
+
+	mBRx = brx;
+	mBTx = btx;
+	mPRx = prx;
+	mPTx = ptx;
+
+	if (++mPtr >= HISTORY_SIZE)
+		mPtr = 0;
+}
+
+unsigned long KNetStatsView::readValue(const char* name) {
+	FILE* fp = fopen((mSysDevPath+"statistics/"+name).latin1(), "r");
+	long retval = fscanf(fp, "%lu", &retval);
+	fclose(fp);
+	return retval;
 }
 
 void KNetStatsView::paintEvent( QPaintEvent* ev )
@@ -257,3 +248,5 @@ void KNetStatsView::statistics()
 	else
 		mStatistics->show();
 }
+
+#include "knetstatsview.moc"
