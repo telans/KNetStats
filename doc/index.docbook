@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!DOCTYPE book PUBLIC "-//KDE//DTD DocBook XML V4.1.2-Based Variant V1.1//EN" "dtd/kdex.dtd" [
-  <!ENTITY knetstats "<application>KNetStats 1&#46;3</application>">
+  <!ENTITY knetstats "<application>KNetStats 1&#46;5</application>">
   <!ENTITY kappname "&knetstats;"><!-- Do *not* replace kappname-->
   <!ENTITY package "kde-network"><!-- kdebase, kdeadmin, etc -->
   <!ENTITY % addindex "IGNORE">
@@ -17,25 +17,6 @@
      Other minor cleanup and changes 18 October 2001 -->
 
 
-<!--
-This template was designed by: David Rugge davidrugge@mindspring.com
-with lots of help from: Eric Bischoff ebisch@cybercable.tm.fr
-and Frederik Fouvry fouvry@sfs.nphil.uni-tuebingen.de
-of the KDE DocBook team.
-
-You may freely use this template for writing any sort of KDE documentation.
-If you have any changes or improvements, please let us know.
-
-Remember:
-- in XML, the case of the <tags> and attributes is relevant ;
-- also, quote all attributes.
-
-Please don't forget to remove all these comments in your final documentation,
-thanks ;-).
--->
-
-<!-- ................................................................ -->
-
 <!-- The language must NOT be changed here. -->
 
 <book lang="&language;">
@@ -48,7 +29,7 @@ as Authors, publish date, the abstract, and Keywords -->
 
 <authorgroup>
 <author>
-<firstname>Hugo P.L.</firstname>
+<firstname>Hugo Parente Lima</firstname>
 <othername></othername>
 	<surname></surname>
 <affiliation>
@@ -60,8 +41,8 @@ as Authors, publish date, the abstract, and Keywords -->
 <!-- TRANS:ROLES_OF_TRANSLATORS -->
 
 <copyright>
-<year>2004</year>
-<holder>Hugo P.L.</holder>
+<year>2004-2005</year>
+<holder>Hugo Parente Lima</holder>
 </copyright>
 <!-- Translators: put here the copyright notice of the translation -->
 <!-- Put here the FDL notice.  Read the explanation in fdl-notice.docbook
@@ -75,8 +56,8 @@ Please respect the format of the date (YYYY-MM-DD) and of the version
 (V.MM.LL), it could be used by automation scripts.
 Do NOT change these in the translation. -->
 
-<date>2004-9-16</date>
-<releaseinfo>1&#46;0</releaseinfo>
+<date>2005-11-14</date>
+<releaseinfo>1&#46;1</releaseinfo>
 
 <!-- Abstract about this handbook -->
 
@@ -112,7 +93,7 @@ consistent documentation style across all KDE apps. -->
 <chapter id="Using-KnetStats">
 <title>Using &knetstats;</title>
 
-<para>Choose a interface and see the leds =P</para>
+<para>Choose a interface and see the leds :-).</para>
 <!-- This chapter should tell the user how to use your app. You should use as
 many sections (Chapter, Sect1, Sect3, etc...) as is necessary to fully document
 your application. -->
@@ -131,20 +112,16 @@ distribution. -->
 <para>
 &knetstats;
 </para>
-<para>
-Program copyright 2004 Hugo P.L. <email>hugo_pl@users.sourceforge.net</email>
-</para>
+<para>Hugo Parente Lima - original author.</para>
+<para>Thomas Windheuser - SCons help, Debian packages, etc.</para>
+<para><ulink url="http://kde-apps.org/content/show.php?content=12956">KNemo</ulink> - Icon themes</para>
+<para>Ilyas Bakirov, Roberto Leandrini, Carlos Ortiz, Henrik Gebauer, Edward Romantsov, Wiktor Wandachowicz, Guillaume Savaton, Petar Toushkov, Liu Di - KNetStats translation to other languages</para>
+
+<para>You can find more info on <ulink url="http://knetstats.sourceforge.net">KNetStats website</ulink>.</para>
 
 <!-- TRANS:CREDIT_FOR_TRANSLATORS -->
 
 &underFDL;               <!-- FDL: do not remove -->
-
-<!-- Determine which license your application is licensed under,
-     and delete all the remaining licenses below:
-
-     (NOTE:  All documentation are licensed under the FDL,
-     regardless of what license the application uses) -->
-
 &underGPL;        	 <!-- GPL License -->
 
 </chapter>
