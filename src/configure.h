@@ -34,10 +34,16 @@ static const int ICONSIZE = 22;
 class KNetStats;
 class QListBoxItem;
 
+/**
+*	KNetstats view mode on system tray.
+*/
 enum ViewMode {
-	Icon, Text//, Bars
+	Icon, Text, Graphic
 };
 
+/**
+*	Visualization options.
+*/
 struct ViewOpts
 {
 	// general
@@ -54,6 +60,9 @@ struct ViewOpts
 
 typedef QMap<QString, ViewOpts> ViewsMap;
 
+/**
+*	Configure dialog
+*/
 class Configure : public ConfigureBase
 {
 	Q_OBJECT

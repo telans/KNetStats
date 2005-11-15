@@ -159,34 +159,26 @@ void KNetStats::configCancel()
 
 void KNetStats::applyConfig(const ViewsMap& map)
 {
-	for (ViewsMap::ConstIterator i = map.begin(); i != map.end(); ++i)
-	{
-		if (i.data().mMonitoring)
-		{
+	for (ViewsMap::ConstIterator i = map.begin(); i != map.end(); ++i) {
+		if (i.data().mMonitoring) {
 			// Verifica se ja esta sendo monitorada
 			TrayIconMap::Iterator it = mView.find(i.key());
-			if (it == mView.end())
-			{
+			if (it == mView.end()) {
 				ViewOpts* view = new ViewOpts(i.data()); // coping data.. hmm... ugly!
 				KNetStatsView* kview = new KNetStatsView(this, i.key(), view);
 				mView[i.key()] = kview;
-			}
-			else
+			} else
 				it.data()->setViewOpts( new ViewOpts(i.data()) );
-		}
-		else
-		{
+		} else {
 			// Verificar se existe um trayicon, e apagar o mesmo!
 			TrayIconMap::Iterator it = mView.find(i.key());
-			if (it != mView.end())
-			{
+			if (it != mView.end()) {
 				delete it.data();
 				mView.erase(it);
 			}
 		}
 	}
 }
-
 
 void KNetStats::about()
 {

@@ -48,16 +48,21 @@ public:
 
 	void applyConfig(const ViewsMap& map);
 
-	bool allOk() const
-	{
+	/**
+	*	Exists at least 1 view?
+	*/
+	bool allOk() const {
 		return mAllOk;
 	}
 
 public slots:
 	/// Display configure the dialog box
 	bool configure();
+	/// Configure dialog OK button
 	void configOk();
+	/// Configure dialog Apply button
 	void configApply();
+	/// Configure dialog Cancel button
 	void configCancel();
 
 	/// Diaplay the about box

@@ -118,7 +118,6 @@ void KNetStatsView::setViewOpts( ViewOpts* view ) {
 
 void KNetStatsView::updateStats()
 {
-	// Read and parse /proc/net/dev
 	FILE* fp = fopen((mSysDevPath+"carrier").latin1(), "r");
 	
 	if (!fp && mConnected) { // interface caiu...
@@ -204,8 +203,10 @@ void KNetStatsView::updateStats()
 }
 
 unsigned long KNetStatsView::readValue(const char* name) {
+	// stdio functions appear to be more fast than QFile?
 	FILE* fp = fopen((mSysDevPath+"statistics/"+name).latin1(), "r");
-	long retval = fscanf(fp, "%lu", &retval);
+	long retval;
+	fscanf(fp, "%lu", &retval);
 	fclose(fp);
 	return retval;
 }
@@ -213,23 +214,29 @@ unsigned long KNetStatsView::readValue(const char* name) {
 void KNetStatsView::paintEvent( QPaintEvent* ev )
 {
 	QPainter paint(this);
-	switch(mView->mViewMode)
-	{
+	switch(mView->mViewMode) {
 		case Icon:
 			paint.drawPixmap(0, 0, *mCurrentIcon);
 			break;
 		case Text:
-		{
-			paint.setFont( mView->mTxtFont );
-			paint.setPen( mView->mTxtUplColor );
-			paint.drawText( rect(), Qt::AlignTop, Statistics::byteFormat(byteSpeedTx(), 1, "", "KB", "MB"));
-			paint.setPen( mView->mTxtDldColor );
-			paint.drawText( rect(), Qt::AlignBottom, Statistics::byteFormat(byteSpeedRx(), 1, "", "KB", "MB"));
+			drawText(paint);
 			break;
-		}
-/*		case Bars:
-			break;*/
+		case Graphic:
+			drawGraphic(paint);
+			break;
 	}
+}
+
+void KNetStatsView::drawText(QPainter& paint) {
+	paint.setFont( mView->mTxtFont );
+	paint.setPen( mView->mTxtUplColor );
+	paint.drawText( rect(), Qt::AlignTop, Statistics::byteFormat(byteSpeedTx(), 1, "", "KB", "MB"));
+	paint.setPen( mView->mTxtDldColor );
+	paint.drawText( rect(), Qt::AlignBottom, Statistics::byteFormat(byteSpeedRx(), 1, "", "KB", "MB"));
+}
+
+void KNetStatsView::drawGraphic(QPainter& paint) {
+	
 }
 
 void KNetStatsView::mousePressEvent(QMouseEvent* ev)

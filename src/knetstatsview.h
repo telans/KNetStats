@@ -29,6 +29,7 @@
 #include "configure.h"
 class QTimer;
 class QMouseEvent;
+class QPainter;
 class QPaintEvent;
 class Statistics;
 class KNetStats;
@@ -77,7 +78,9 @@ protected:
 	void paintEvent( QPaintEvent* ev );
 
 private:
+	/// Path to the device.
 	QString mSysDevPath;
+	/// Interface carrier is on?
 	bool mCarrier;
 	
 	/// Global ContextMenu
@@ -109,8 +112,12 @@ private:
 	/// is connected?
 	bool mConnected;
 
+	/// setup the view.
 	void setup();
+	/// read a value from /sys/class/net/interface/name
 	unsigned long readValue(const char* name);
+	void drawText(QPainter& paint);
+	void drawGraphic(QPainter& paint);
 	inline double calcSpeed(const double* field) const;
 private slots:
 	/// Called by the timer to update statistics
