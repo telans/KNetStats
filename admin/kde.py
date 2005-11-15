@@ -633,7 +633,7 @@ def generate(env):
 			bdir=lenv['_BUILDDIR_']
 			for dir in lenv.make_list(tmptransfiles):
 				transfiles.append( lenv.join(bdir, dir) )
-		else: tmptransfiles=transfiles
+		else: transfiles=tmptransfiles
 
 		languages=None
 		if lenv['ARGS'] and lenv['ARGS'].has_key('languages'):
