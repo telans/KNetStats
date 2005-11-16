@@ -57,16 +57,16 @@ extern const char* programName;
 
 KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOpts* view)
 	: mSysDevPath("/sys/class/net/"+interface+"/"), KSystemTray(parent, 0), mInterface(interface),mView(view) {
-	mCarrier = true;
-	mStatistics = 0;
+	mFirstUpdate = true;
+	mMaxSpeedAge = 0;
+	mMaxSpeed = 0.0;
 	mBRx = mBTx = mPRx = mPTx = 0;
-	mConnected = true;
+	mConnected = mCarrier = true;
 	mTotalBytesRx = mTotalBytesTx = mTotalPktRx = mTotalPktTx = 0;
-	mPtr = 0;
-	memset(mSpeedRx, 0, sizeof(double)*HISTORY_SIZE);
-	memset(mSpeedTx, 0, sizeof(double)*HISTORY_SIZE);
-	memset(mSpeedPRx, 0, sizeof(double)*HISTORY_SIZE);
-	memset(mSpeedPTx, 0, sizeof(double)*HISTORY_SIZE);
+	mSpeedBufferPtr = mSpeedHistoryPtr = 0;
+	
+	mStatistics = 0;
+	resetBuffers();
 
 	setTextFormat(Qt::PlainText);
 	show();
@@ -104,6 +104,7 @@ void KNetStatsView::setup() {
 	mTimer->start(mView->mUpdateInterval);
 	updateStats();
 	QWidget::update();
+	mFirstUpdate = false;
 }
 
 KNetStatsView::~KNetStatsView() {
@@ -124,10 +125,7 @@ void KNetStatsView::updateStats()
 		mConnected = false;
 		mCurrentIcon = &mIconError;
 		
-		memset(mSpeedRx, 0, sizeof(double)*HISTORY_SIZE);
-		memset(mSpeedTx, 0, sizeof(double)*HISTORY_SIZE);
-		memset(mSpeedPRx, 0, sizeof(double)*HISTORY_SIZE);
-		memset(mSpeedPTx, 0, sizeof(double)*HISTORY_SIZE);
+		resetBuffers();
 		KPassivePopup::message(programName, i18n("%1 is inactive").arg(mInterface), kapp->miniIcon(), this);
 	} else if (fp && !mConnected) {
 		mConnected = true;
@@ -160,13 +158,35 @@ void KNetStatsView::updateStats()
 	
 	
 	QPixmap* newIcon;
-
+	if (++mSpeedBufferPtr >= SPEED_BUFFER_SIZE)
+		mSpeedBufferPtr = 0;
+	
 	// Calcula as velocidades
-	mSpeedTx[mPtr] = ((btx - mBTx)*(1000.0f/mView->mUpdateInterval));
-	mSpeedRx[mPtr] = ((brx - mBRx)*(1000.0f/mView->mUpdateInterval));
-	mSpeedPTx[mPtr] = ((ptx - mPTx)*(1000.0f/mView->mUpdateInterval));
-	mSpeedPRx[mPtr] = ((prx - mPRx)*(1000.0f/mView->mUpdateInterval));
-
+	mSpeedBufferTx[mSpeedBufferPtr] = ((btx - mBTx)*(1000.0f/mView->mUpdateInterval));
+	mSpeedBufferRx[mSpeedBufferPtr] = ((brx - mBRx)*(1000.0f/mView->mUpdateInterval));
+	mSpeedBufferPTx[mSpeedBufferPtr] = ((ptx - mPTx)*(1000.0f/mView->mUpdateInterval));
+	mSpeedBufferPRx[mSpeedBufferPtr] = ((prx - mPRx)*(1000.0f/mView->mUpdateInterval));
+	
+	if (++mSpeedHistoryPtr >= HISTORY_SIZE)
+		mSpeedHistoryPtr = 0;
+	mSpeedHistoryRx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferRx);
+	mSpeedHistoryTx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferTx);
+	
+	if (!mFirstUpdate) { // a primeira velocidade sempre eh absurda, para evitar isso temos o mFirstUpdate
+		mMaxSpeedAge--;
+		
+		if (mSpeedHistoryTx[mSpeedHistoryPtr] > mMaxSpeed) {
+			mMaxSpeed = mSpeedHistoryTx[mSpeedHistoryPtr];
+			mMaxSpeedAge = HISTORY_SIZE;
+		}
+		if (mSpeedHistoryRx[mSpeedHistoryPtr] > mMaxSpeed)  {
+			mMaxSpeed = mSpeedHistoryRx[mSpeedHistoryPtr];
+			mMaxSpeedAge = HISTORY_SIZE;
+		}
+		if (mMaxSpeedAge < 1)
+			calcMaxSpeed();
+	}
+	
 	if (mView->mViewMode == Icon) {
 		if (brx == mBRx) {
 			if (btx == mBTx )
@@ -184,7 +204,7 @@ void KNetStatsView::updateStats()
 			mCurrentIcon = newIcon;
 			QWidget::update();
 		}
-	}else if (btx != mBTx && brx != mBRx)
+	}else if (mView->mViewMode == Graphic || (btx != mBTx && brx != mBRx))
 		QWidget::update();
 	
 	// Update stats
@@ -198,8 +218,6 @@ void KNetStatsView::updateStats()
 	mPRx = prx;
 	mPTx = ptx;
 
-	if (++mPtr >= HISTORY_SIZE)
-		mPtr = 0;
 }
 
 unsigned long KNetStatsView::readValue(const char* name) {
@@ -209,6 +227,15 @@ unsigned long KNetStatsView::readValue(const char* name) {
 	fscanf(fp, "%lu", &retval);
 	fclose(fp);
 	return retval;
+}
+
+void KNetStatsView::resetBuffers() {
+	memset(mSpeedHistoryRx, 0, sizeof(double)*HISTORY_SIZE);
+	memset(mSpeedHistoryTx, 0, sizeof(double)*HISTORY_SIZE);
+	memset(mSpeedBufferRx, 0, sizeof(double)*SPEED_BUFFER_SIZE);
+	memset(mSpeedBufferTx, 0, sizeof(double)*SPEED_BUFFER_SIZE);
+	memset(mSpeedBufferPRx, 0, sizeof(double)*SPEED_BUFFER_SIZE);
+	memset(mSpeedBufferPTx, 0, sizeof(double)*SPEED_BUFFER_SIZE);
 }
 
 void KNetStatsView::paintEvent( QPaintEvent* ev )
@@ -236,7 +263,39 @@ void KNetStatsView::drawText(QPainter& paint) {
 }
 
 void KNetStatsView::drawGraphic(QPainter& paint) {
+	//	paint.setBackgroundColor(Qt::black);
+	QSize size = this->size();
+	//	paint.fillRect(0, 0, size.width(), size.height(), Qt::SolidPattern);
+
+	int step = size.width()/HISTORY_SIZE;
+	if (step < 1)
+		step = 1;
+	const int maxHeight = size.height()-1;
 	
+	qDebug("MaxSpeed: %d, age: %d", int(mMaxSpeed), mMaxSpeedAge);
+	int lastX;
+	int lastRxY = maxHeight - int(maxHeight * (mSpeedHistoryRx[mSpeedHistoryPtr]/mMaxSpeed));
+	int lastTxY = maxHeight - int(maxHeight * (mSpeedHistoryTx[mSpeedHistoryPtr]/mMaxSpeed));
+	int x = lastX = size.width();
+	int count = 0;
+	for (int i = mSpeedHistoryPtr; count < HISTORY_SIZE; i--) {
+		if (i < 0)
+			i = HISTORY_SIZE-1;
+		
+		int rxY = maxHeight - int(maxHeight * (mSpeedHistoryRx[i]/mMaxSpeed));
+		int txY = maxHeight - int(maxHeight * (mSpeedHistoryTx[i]/mMaxSpeed));
+		paint.setPen(Qt::blue);
+		paint.drawLine(lastX, lastRxY, x, rxY);
+		paint.setPen(Qt::red);
+		paint.drawLine(lastX, lastTxY, x, txY);
+		qDebug("%d => %d", i, int(mSpeedHistoryRx[i]));
+		lastX = x;
+		lastRxY = rxY;
+		lastTxY = txY;
+		
+		count++;
+		x-=step;
+	}
 }
 
 void KNetStatsView::mousePressEvent(QMouseEvent* ev)

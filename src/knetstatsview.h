@@ -34,7 +34,6 @@ class QPaintEvent;
 class Statistics;
 class KNetStats;
 
-#define HISTORY_SIZE 5
 
 /**
 *	Main class
@@ -42,6 +41,12 @@ class KNetStats;
 class KNetStatsView : public KSystemTray
 {
 	Q_OBJECT
+		
+	enum {
+		HISTORY_SIZE = 22,	// Tamanho do historico.
+		SPEED_BUFFER_SIZE = 10	// Tamanho do buffer usado para calcular a velocidade
+	};
+		
 public:
 	/// Default constructor
 	KNetStatsView(KNetStats* parent, const QString& interface, ViewOpts* view);
@@ -103,12 +108,21 @@ private:
 	unsigned long mBRx, mBTx, mPRx, mPTx;
 	/// Statistics
 	unsigned long mTotalBytesRx, mTotalBytesTx, mTotalPktRx, mTotalPktTx;
-	/// Speeds
-	double mSpeedRx[HISTORY_SIZE], mSpeedTx[HISTORY_SIZE];
-	double mSpeedPRx[HISTORY_SIZE], mSpeedPTx[HISTORY_SIZE];
-
-	int mPtr;
-
+	/// Speed buffers
+	double mSpeedBufferRx[SPEED_BUFFER_SIZE], mSpeedBufferTx[SPEED_BUFFER_SIZE];
+	double mSpeedBufferPRx[SPEED_BUFFER_SIZE], mSpeedBufferPTx[SPEED_BUFFER_SIZE];
+	/// pointer to current speed buffer
+	int mSpeedBufferPtr;
+	
+	
+	bool mFirstUpdate;
+	
+	double mSpeedHistoryRx[HISTORY_SIZE];
+	double mSpeedHistoryTx[HISTORY_SIZE];
+	int mSpeedHistoryPtr;
+	double mMaxSpeed;
+	int mMaxSpeedAge;
+	
 	/// is connected?
 	bool mConnected;
 
@@ -118,6 +132,8 @@ private:
 	unsigned long readValue(const char* name);
 	void drawText(QPainter& paint);
 	void drawGraphic(QPainter& paint);
+	void resetBuffers();
+	inline void calcMaxSpeed();
 	inline double calcSpeed(const double* field) const;
 private slots:
 	/// Called by the timer to update statistics
@@ -127,12 +143,29 @@ private slots:
 
 };
 
+void KNetStatsView::calcMaxSpeed() {
+	double max = 0.0;
+	int ptr = mSpeedHistoryPtr;
+	for (int i = 0; i < HISTORY_SIZE; ++i) {
+		if (mSpeedHistoryRx[i] > max) {
+			max = mSpeedHistoryRx[i];
+			ptr = i;
+		}
+		if (mSpeedHistoryTx[i] > max) {
+			max = mSpeedHistoryTx[i];
+			ptr = i;
+		}
+	}
+	mMaxSpeed = max;
+	mMaxSpeedAge = (mSpeedHistoryPtr > ptr) ? (mSpeedHistoryPtr - ptr) : (mSpeedHistoryPtr + HISTORY_SIZE - ptr);
+}
+
 double KNetStatsView::calcSpeed(const double* field) const
 {
 	double total = 0.0;
-	for (int i = 0; i < HISTORY_SIZE; ++i)
+	for (int i = 0; i < SPEED_BUFFER_SIZE; ++i)
 		total += field[i];
-	return total/HISTORY_SIZE;
+	return total/SPEED_BUFFER_SIZE;
 }
 
 const QString& KNetStatsView::interface() const
@@ -172,22 +205,22 @@ unsigned int KNetStatsView::totalPktTx() const
 
 double KNetStatsView::byteSpeedRx() const
 {
-	return calcSpeed(mSpeedRx);
+	return mSpeedHistoryRx[mSpeedHistoryPtr];
 }
 
 double KNetStatsView::byteSpeedTx() const
 {
-	return calcSpeed(mSpeedTx);
+	return mSpeedHistoryTx[mSpeedHistoryPtr];
 }
 
 double KNetStatsView::pktSpeedRx() const
 {
-	return calcSpeed(mSpeedPRx);
+	return calcSpeed(mSpeedBufferPRx);
 }
 
 double KNetStatsView::pktSpeedTx() const
 {
-	return calcSpeed(mSpeedPTx);
+	return calcSpeed(mSpeedBufferPTx);
 }
 
 #endif

@@ -4,4 +4,4 @@ Import( 'env' )
 
 sourceList = "configurebase.ui configure.cpp statisticsbase.ui main.cpp knetstats.cpp knetstatsview.cpp statistics.cpp"
 env.KDEprogram('knetstats', sourceList)
-env.KDEaddlibs('qt-mt kio kdecore kdeprint')
+env.KDEaddlibs('kdeui')
