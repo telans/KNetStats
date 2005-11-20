@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KNetStats 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-02 17:44+0000\n"
+"POT-Creation-Date: 2005-11-20 03:07+0000\n"
 "PO-Revision-Date: 2005-11-04 08:57+0800\n"
 "Last-Translator: sejishikong <liudidi@gmail.com>\n"
 "Language-Team: zh_CN <sejishikong@linuxfans.org>\n"
@@ -15,43 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/statistics.cpp:30
-msgid "Statistics for %1"
-msgstr "%1 的统计数据"
+#: ../src/configure.cpp:126
+msgid "You need to select at least one interface to monitor."
+msgstr "你需要选择至少一个要监视的界面。"
 
-#: src/main.cpp:11 src/uic_statisticsbase.cc:158
-msgid "KNetStats"
-msgstr "KNetStats"
-
-#: src/main.cpp:17
-msgid "A network device monitor."
-msgstr "一个网络设备监视器"
-
-#: src/main.cpp:23
-msgid "_: NAME OF TRANSLATORS"
-msgstr "sejishikong"
-
-#: src/main.cpp:23
-msgid "_: EMAIL OF TRANSLATORS"
-msgstr "liudidi@gmail.com"
-
-#: src/main.cpp:27
-msgid "SCons help, Debian packages, etc."
-msgstr "SCons 帮助, Debian 包等"
-
-#: src/main.cpp:28
-msgid "Icon themes"
-msgstr "图标主题"
-
-#: src/main.cpp:31
-msgid "KNetStats translation to other languages"
-msgstr "KNetStats翻译到其它语言"
-
-#: src/knetstats.cpp:58
-msgid "&Help"
-msgstr "帮助(&H)"
-
-#: src/knetstats.cpp:148
+#: ../src/knetstats.cpp:132
 msgid ""
 "You don't have any network interface.\n"
 "KNetStats will quit now."
@@ -59,142 +27,231 @@ msgstr ""
 "你没有任何网络界面。\n"
 "KNetStat 将退出。"
 
-#: src/knetstatsview.cpp:81
+#: ../src/knetstatsview.cpp:89
 msgid "Monitoring %1"
 msgstr "监视 %1"
 
-#: src/knetstatsview.cpp:130
-msgid "Error opening /proc/net/dev!"
-msgstr "打开 /proc/net/dev 错误！"
-
-#: src/knetstatsview.cpp:198
-msgid "%1 is active"
-msgstr "%1 是活动的"
-
-#: src/knetstatsview.cpp:218
+#: ../src/knetstatsview.cpp:139
 msgid "%1 is inactive"
 msgstr "%1 是不活动的"
 
-#: src/configure.cpp:141
-msgid "You need to select at least one interface to monitor."
-msgstr "你需要选择至少一个要监视的界面。"
+#: ../src/knetstatsview.cpp:142
+msgid "%1 is active"
+msgstr "%1 是活动的"
 
-#: src/uic_statisticsbase.cc:159
-msgid "Bytes"
-msgstr "字节"
+#: ../src/knetstatsview.cpp:156
+#, fuzzy
+msgid "%1 is disconnected"
+msgstr "%1 是不活动的"
 
-#: src/uic_statisticsbase.cc:160 src/uic_statisticsbase.cc:165
-msgid "Received:"
-msgstr "接收："
+#: ../src/knetstatsview.cpp:161
+#, fuzzy
+msgid "%1 is connected"
+msgstr "%1 是不活动的"
 
-#: src/uic_statisticsbase.cc:161 src/uic_statisticsbase.cc:166
-msgid "Transmited:"
-msgstr "传送："
+#: ../src/main.cpp:11 ../src/statisticsbase.cpp:225
+msgid "KNetStats"
+msgstr "KNetStats"
 
-#: src/uic_statisticsbase.cc:162 src/uic_statisticsbase.cc:167
-msgid "Upload speed:"
-msgstr "上传速度："
+#: ../src/main.cpp:17
+msgid "A network device monitor."
+msgstr "一个网络设备监视器"
 
-#: src/uic_statisticsbase.cc:163 src/uic_statisticsbase.cc:168
-msgid "Download speed:"
-msgstr "下载速度："
+#: ../src/main.cpp:23
+msgid "_: NAME OF TRANSLATORS"
+msgstr "sejishikong"
 
-#: src/uic_statisticsbase.cc:164
-msgid "Packets"
-msgstr "包"
+#: ../src/main.cpp:23
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "liudidi@gmail.com"
 
-#: src/uic_statisticsbase.cc:169
-msgid "Ok"
-msgstr "好"
+#: ../src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
+msgstr "SCons 帮助, Debian 包等"
 
-#: src/uic_configurebase.cc:244
+#: ../src/main.cpp:28
+msgid "Icon themes"
+msgstr "图标主题"
+
+#: ../src/main.cpp:31
+msgid "KNetStats translation to other languages"
+msgstr "KNetStats翻译到其它语言"
+
+#: ../src/statistics.cpp:34
+#, fuzzy
+msgid "Details of %1"
+msgstr "%1 的统计数据"
+
+#: ../src/configurebase.cpp:271
 msgid "Configure KNetStats"
 msgstr "配置KNetStats"
 
-#: src/uic_configurebase.cc:245
-msgid "O&k"
-msgstr "好(&K)"
+#: ../src/configurebase.cpp:272 ../src/statisticsbase.cpp:241
+msgid "Ok"
+msgstr "好"
 
-#: src/uic_configurebase.cc:246
-msgid "Appl&y"
-msgstr "应用(&Y)"
-
-#: src/uic_configurebase.cc:247
-msgid "Ca&ncel"
-msgstr "取消(&N)"
-
-#: src/uic_configurebase.cc:248
-msgid "Appearance"
-msgstr "外观"
-
-#: src/uic_configurebase.cc:249
+#: ../src/configurebase.cpp:276
 msgid "Theme:"
 msgstr "主题："
 
-#: src/uic_configurebase.cc:251
+#: ../src/configurebase.cpp:278
 msgid "Classic"
 msgstr "经典"
 
-#: src/uic_configurebase.cc:252
+#: ../src/configurebase.cpp:279
 msgid "Modem"
 msgstr "猫"
 
-#: src/uic_configurebase.cc:253
+#: ../src/configurebase.cpp:280
 msgid "Network"
 msgstr "网络"
 
-#: src/uic_configurebase.cc:254
+#: ../src/configurebase.cpp:281
 msgid "Wireless"
 msgstr "无线"
 
-#: src/uic_configurebase.cc:255
+#: ../src/configurebase.cpp:282
 msgid "Kppp"
 msgstr "Kppp"
 
-#: src/uic_configurebase.cc:257
+#: ../src/configurebase.cpp:284 ../src/configurebase.cpp:290
 msgid "Download color:"
 msgstr "下载颜色："
 
-#: src/uic_configurebase.cc:259
+#: ../src/configurebase.cpp:286 ../src/configurebase.cpp:289
 msgid "Upload color:"
 msgstr "上传颜色："
 
-#: src/uic_configurebase.cc:261
-msgid "Medium color:"
-msgstr "中速颜色："
+#: ../src/configurebase.cpp:287
+msgid "Background:"
+msgstr ""
 
-#: src/uic_configurebase.cc:263
-msgid "Lower color:"
-msgstr "低速颜色："
+#: ../src/configurebase.cpp:293
+msgid "Transparent background"
+msgstr ""
 
-#: src/uic_configurebase.cc:265
-msgid "High color:"
-msgstr "高速颜色："
+#: ../src/configurebase.cpp:296
+msgid "Icon"
+msgstr ""
 
-#: src/uic_configurebase.cc:266
-msgid "Configuration"
-msgstr "配置"
+#: ../src/configurebase.cpp:297
+msgid "Text"
+msgstr ""
 
-#: src/uic_configurebase.cc:268
-msgid "Icon (Activity)"
-msgstr "图标 (活动的)"
+#: ../src/configurebase.cpp:298
+msgid "Chart"
+msgstr ""
 
-#: src/uic_configurebase.cc:269
-msgid "Text (Speed)"
-msgstr "文本 (速度)"
-
-#: src/uic_configurebase.cc:270
+#: ../src/configurebase.cpp:299
 msgid "View mode:"
 msgstr "查看模式："
 
-#: src/uic_configurebase.cc:271
+#: ../src/configurebase.cpp:300
 msgid "Update interval:"
 msgstr "更新间隔："
 
-#: src/uic_configurebase.cc:272
+#: ../src/configurebase.cpp:301
 msgid "ms"
 msgstr "毫秒"
 
-#: src/uic_configurebase.cc:273
-msgid "To monitor this &interface"
+#: ../src/configurebase.cpp:302
+#, fuzzy
+msgid "To monitor this interface"
 msgstr "监视这个界面(&I)"
+
+#: ../src/statisticsbase.cpp:226
+msgid "? KB/s"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:227
+msgid "0 KB/s"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:228
+msgid "Upload speed:"
+msgstr "上传速度："
+
+#: ../src/statisticsbase.cpp:229
+msgid "Received:"
+msgstr "接收："
+
+#: ../src/statisticsbase.cpp:230
+msgid "Download speed:"
+msgstr "下载速度："
+
+#: ../src/statisticsbase.cpp:231
+msgid "Transmited:"
+msgstr "传送："
+
+#: ../src/statisticsbase.cpp:232
+msgid "Bytes"
+msgstr "字节"
+
+#: ../src/statisticsbase.cpp:233
+msgid "Packets"
+msgstr "包"
+
+#: ../src/statisticsbase.cpp:234
+msgid "Statistics"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:235
+msgid "IP:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:236
+msgid "Netmask:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:237
+msgid "MAC:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:238
+msgid "MTU:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:240
+#, fuzzy
+msgid "Details"
+msgstr "%1 的统计数据"
+
+#~ msgid "O&k"
+#~ msgstr "好(&K)"
+
+#, fuzzy
+#~ msgid "Upload color"
+#~ msgstr "上传颜色："
+
+#~ msgid "&Help"
+#~ msgstr "帮助(&H)"
+
+#~ msgid "Error opening /proc/net/dev!"
+#~ msgstr "打开 /proc/net/dev 错误！"
+
+#~ msgid "Appl&y"
+#~ msgstr "应用(&Y)"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "取消(&N)"
+
+#~ msgid "Appearance"
+#~ msgstr "外观"
+
+#~ msgid "Medium color:"
+#~ msgstr "中速颜色："
+
+#~ msgid "Lower color:"
+#~ msgstr "低速颜色："
+
+#~ msgid "High color:"
+#~ msgstr "高速颜色："
+
+#~ msgid "Configuration"
+#~ msgstr "配置"
+
+#~ msgid "Icon (Activity)"
+#~ msgstr "图标 (活动的)"
+
+#~ msgid "Text (Speed)"
+#~ msgstr "文本 (速度)"

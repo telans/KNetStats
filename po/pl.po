@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KNetStats 1.3-beta2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-02 17:44+0000\n"
+"POT-Creation-Date: 2005-11-20 03:07+0000\n"
 "PO-Revision-Date: 2005-03-05 09:11+0100\n"
 "Last-Translator: Wiktor Wandachowicz <wiktorw@people.pl>\n"
 "Language-Team: pl <LL@li.org>\n"
@@ -15,43 +15,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/statistics.cpp:30
-msgid "Statistics for %1"
-msgstr "Statystyki dla %1"
+#: ../src/configure.cpp:126
+msgid "You need to select at least one interface to monitor."
+msgstr "Wybierz przynajmniej jeden interfejs do monitorowania."
 
-#: src/main.cpp:11 src/uic_statisticsbase.cc:158
-msgid "KNetStats"
-msgstr "KNetStats"
-
-#: src/main.cpp:17
-msgid "A network device monitor."
-msgstr "Monitor urządzeń sieciowych."
-
-#: src/main.cpp:23
-msgid "_: NAME OF TRANSLATORS"
-msgstr "Wiktor Wandachowicz"
-
-#: src/main.cpp:23
-msgid "_: EMAIL OF TRANSLATORS"
-msgstr "wiktorw@people.pl"
-
-#: src/main.cpp:27
-msgid "SCons help, Debian packages, etc."
-msgstr "Pomoc przy SCons, pakiety Debiana, itp."
-
-#: src/main.cpp:28
-msgid "Icon themes"
-msgstr "Motywy ikon"
-
-#: src/main.cpp:31
-msgid "KNetStats translation to other languages"
-msgstr "Tłumaczenie KNetStats na inne języki"
-
-#: src/knetstats.cpp:58
-msgid "&Help"
-msgstr "Pomo&c"
-
-#: src/knetstats.cpp:148
+#: ../src/knetstats.cpp:132
 msgid ""
 "You don't have any network interface.\n"
 "KNetStats will quit now."
@@ -59,149 +27,235 @@ msgstr ""
 "Brak dostępnych interfejsów sieciowych.\n"
 "KNetStats zostanie zakończony."
 
-#: src/knetstatsview.cpp:81
+#: ../src/knetstatsview.cpp:89
 msgid "Monitoring %1"
 msgstr "Monitorowanie %1"
 
-#: src/knetstatsview.cpp:130
-msgid "Error opening /proc/net/dev!"
-msgstr "Błąd przy otwieraniu /proc/net/dev!"
-
-#: src/knetstatsview.cpp:198
-msgid "%1 is active"
-msgstr "%1 jest aktywne"
-
-#: src/knetstatsview.cpp:218
+#: ../src/knetstatsview.cpp:139
 msgid "%1 is inactive"
 msgstr "%1 jest nieaktywne"
 
-#: src/configure.cpp:141
-msgid "You need to select at least one interface to monitor."
-msgstr "Wybierz przynajmniej jeden interfejs do monitorowania."
+#: ../src/knetstatsview.cpp:142
+msgid "%1 is active"
+msgstr "%1 jest aktywne"
 
-#: src/uic_statisticsbase.cc:159
-msgid "Bytes"
-msgstr "Bajty"
+#: ../src/knetstatsview.cpp:156
+#, fuzzy
+msgid "%1 is disconnected"
+msgstr "%1 jest nieaktywne"
 
-#: src/uic_statisticsbase.cc:160 src/uic_statisticsbase.cc:165
-msgid "Received:"
-msgstr "Odebrane:"
+#: ../src/knetstatsview.cpp:161
+#, fuzzy
+msgid "%1 is connected"
+msgstr "%1 jest nieaktywne"
 
-#: src/uic_statisticsbase.cc:161 src/uic_statisticsbase.cc:166
-msgid "Transmited:"
-msgstr "Wysłane:"
+#: ../src/main.cpp:11 ../src/statisticsbase.cpp:225
+msgid "KNetStats"
+msgstr "KNetStats"
 
-#: src/uic_statisticsbase.cc:162 src/uic_statisticsbase.cc:167
-msgid "Upload speed:"
-msgstr "Szybkość wysyłania:"
+#: ../src/main.cpp:17
+msgid "A network device monitor."
+msgstr "Monitor urządzeń sieciowych."
 
-#: src/uic_statisticsbase.cc:163 src/uic_statisticsbase.cc:168
-msgid "Download speed:"
-msgstr "Szybkość pobierania:"
+#: ../src/main.cpp:23
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Wiktor Wandachowicz"
 
-#: src/uic_statisticsbase.cc:164
-msgid "Packets"
-msgstr "Pakiety"
+#: ../src/main.cpp:23
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "wiktorw@people.pl"
 
-#: src/uic_statisticsbase.cc:169
-msgid "Ok"
-msgstr "Ok"
+#: ../src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
+msgstr "Pomoc przy SCons, pakiety Debiana, itp."
 
-#: src/uic_configurebase.cc:244
+#: ../src/main.cpp:28
+msgid "Icon themes"
+msgstr "Motywy ikon"
+
+#: ../src/main.cpp:31
+msgid "KNetStats translation to other languages"
+msgstr "Tłumaczenie KNetStats na inne języki"
+
+#: ../src/statistics.cpp:34
+#, fuzzy
+msgid "Details of %1"
+msgstr "Statystyki dla %1"
+
+#: ../src/configurebase.cpp:271
 msgid "Configure KNetStats"
 msgstr "Konfiguracja - KNetStats"
 
-#: src/uic_configurebase.cc:245
-msgid "O&k"
-msgstr "O&k"
+#: ../src/configurebase.cpp:272 ../src/statisticsbase.cpp:241
+msgid "Ok"
+msgstr "Ok"
 
-#: src/uic_configurebase.cc:246
-msgid "Appl&y"
-msgstr "&Zastosuj"
-
-#: src/uic_configurebase.cc:247
-msgid "Ca&ncel"
-msgstr "&Anuluj"
-
-#: src/uic_configurebase.cc:248
-msgid "Appearance"
-msgstr "Wygląd"
-
-#: src/uic_configurebase.cc:249
+#: ../src/configurebase.cpp:276
 msgid "Theme:"
 msgstr "Motyw:"
 
-#: src/uic_configurebase.cc:251
+#: ../src/configurebase.cpp:278
 msgid "Classic"
 msgstr "Klasyczny"
 
-#: src/uic_configurebase.cc:252
+#: ../src/configurebase.cpp:279
 msgid "Modem"
 msgstr "Modem"
 
-#: src/uic_configurebase.cc:253
+#: ../src/configurebase.cpp:280
 msgid "Network"
 msgstr "Karta sieciowa"
 
-#: src/uic_configurebase.cc:254
+#: ../src/configurebase.cpp:281
 msgid "Wireless"
 msgstr "Bezprzewodowe"
 
-#: src/uic_configurebase.cc:255
+#: ../src/configurebase.cpp:282
 msgid "Kppp"
 msgstr "Kppp"
 
-#: src/uic_configurebase.cc:257
+#: ../src/configurebase.cpp:284 ../src/configurebase.cpp:290
 msgid "Download color:"
 msgstr "Kolor dla pobierania:"
 
-#: src/uic_configurebase.cc:259
+#: ../src/configurebase.cpp:286 ../src/configurebase.cpp:289
 msgid "Upload color:"
 msgstr "Kolor dla wysyłania:"
 
-#: src/uic_configurebase.cc:261
-msgid "Medium color:"
-msgstr "Kolor (medium):"
+#: ../src/configurebase.cpp:287
+msgid "Background:"
+msgstr ""
 
-#: src/uic_configurebase.cc:263
-msgid "Lower color:"
-msgstr "Kolor (lower):"
+#: ../src/configurebase.cpp:293
+msgid "Transparent background"
+msgstr ""
 
-#: src/uic_configurebase.cc:265
-msgid "High color:"
-msgstr "Kolor (high):"
+#: ../src/configurebase.cpp:296
+msgid "Icon"
+msgstr ""
 
-#: src/uic_configurebase.cc:266
-msgid "Configuration"
-msgstr "Konfiguracja - KNetStats"
+#: ../src/configurebase.cpp:297
+msgid "Text"
+msgstr ""
 
-#: src/uic_configurebase.cc:268
-msgid "Icon (Activity)"
-msgstr "Ikona (aktywność)"
+#: ../src/configurebase.cpp:298
+msgid "Chart"
+msgstr ""
 
-#: src/uic_configurebase.cc:269
-msgid "Text (Speed)"
-msgstr "Tekstowo"
-
-#: src/uic_configurebase.cc:270
+#: ../src/configurebase.cpp:299
 msgid "View mode:"
 msgstr "Tryb wyświetlania:"
 
-#: src/uic_configurebase.cc:271
+#: ../src/configurebase.cpp:300
 msgid "Update interval:"
 msgstr "Okres odświeżania"
 
-#: src/uic_configurebase.cc:272
+#: ../src/configurebase.cpp:301
 msgid "ms"
 msgstr "ms"
 
-#: src/uic_configurebase.cc:273
-msgid "To monitor this &interface"
+#: ../src/configurebase.cpp:302
+#, fuzzy
+msgid "To monitor this interface"
 msgstr "Monitoruj ten interfejs"
 
+#: ../src/statisticsbase.cpp:226
+msgid "? KB/s"
+msgstr ""
 
-#~ msgid "&Statistics"
-#~ msgstr "&Statystyki"
+#: ../src/statisticsbase.cpp:227
+msgid "0 KB/s"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:228
+msgid "Upload speed:"
+msgstr "Szybkość wysyłania:"
+
+#: ../src/statisticsbase.cpp:229
+msgid "Received:"
+msgstr "Odebrane:"
+
+#: ../src/statisticsbase.cpp:230
+msgid "Download speed:"
+msgstr "Szybkość pobierania:"
+
+#: ../src/statisticsbase.cpp:231
+msgid "Transmited:"
+msgstr "Wysłane:"
+
+#: ../src/statisticsbase.cpp:232
+msgid "Bytes"
+msgstr "Bajty"
+
+#: ../src/statisticsbase.cpp:233
+msgid "Packets"
+msgstr "Pakiety"
+
+#: ../src/statisticsbase.cpp:234
+#, fuzzy
+msgid "Statistics"
+msgstr "&Statystyki"
+
+#: ../src/statisticsbase.cpp:235
+msgid "IP:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:236
+msgid "Netmask:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:237
+msgid "MAC:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:238
+msgid "MTU:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:240
+#, fuzzy
+msgid "Details"
+msgstr "Statystyki dla %1"
+
+#~ msgid "O&k"
+#~ msgstr "O&k"
+
+#, fuzzy
+#~ msgid "Upload color"
+#~ msgstr "Kolor dla wysyłania:"
+
+#~ msgid "&Help"
+#~ msgstr "Pomo&c"
+
+#~ msgid "Error opening /proc/net/dev!"
+#~ msgstr "Błąd przy otwieraniu /proc/net/dev!"
+
+#~ msgid "Appl&y"
+#~ msgstr "&Zastosuj"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "&Anuluj"
+
+#~ msgid "Appearance"
+#~ msgstr "Wygląd"
+
+#~ msgid "Medium color:"
+#~ msgstr "Kolor (medium):"
+
+#~ msgid "Lower color:"
+#~ msgstr "Kolor (lower):"
+
+#~ msgid "High color:"
+#~ msgstr "Kolor (high):"
+
+#~ msgid "Configuration"
+#~ msgstr "Konfiguracja - KNetStats"
+
+#~ msgid "Icon (Activity)"
+#~ msgstr "Ikona (aktywność)"
+
+#~ msgid "Text (Speed)"
+#~ msgstr "Tekstowo"
 
 #~ msgid "Now monitoring %1"
 #~ msgstr "Teraz monitorowane %1"

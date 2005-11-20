@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: KNetStats 1.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-03 20:10GMT+02:00\n"
+"POT-Creation-Date: 2005-11-20 03:07+0000\n"
 "PO-Revision-Date: 2005-03-03 20:10GMT+02:00\n"
 "Last-Translator: Edward Romantsov <xUnion@ukr.net>\n"
 "Language-Team: xUnion <xUnion@ukr.net>\n"
@@ -19,43 +19,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/statistics.cpp:30
-msgid "Statistics for %1"
-msgstr "Статистика для интерфейса %1"
+#: ../src/configure.cpp:126
+msgid "You need to select at least one interface to monitor."
+msgstr "Вам необходимо выбрать хотя бы один интерфейс для наблюдения."
 
-#: src/main.cpp:11 src/uic_statisticsbase.cc:158
-msgid "KNetStats"
-msgstr "KNetStats"
-
-#: src/main.cpp:17
-msgid "A network device monitor."
-msgstr "Монитор сетевых интерфейсов."
-
-#: src/main.cpp:23
-msgid "_: NAME OF TRANSLATORS"
-msgstr "Edward Romantsov"
-
-#: src/main.cpp:23
-msgid "_: EMAIL OF TRANSLATORS"
-msgstr "xunion@ukr.net"
-
-#: src/main.cpp:27
-msgid "SCons help, Debian packages, etc."
-msgstr "Помощь по программе SCons, пакетам ОС Debian и т.д."
-
-#: src/main.cpp:28
-msgid "Icon themes"
-msgstr "Темы"
-
-#: src/main.cpp:31
-msgid "KNetStats translation to other languages"
-msgstr "Перевод KNetStats на другие языки"
-
-#: src/knetstats.cpp:58
-msgid "&Help"
-msgstr "&Помощь"
-
-#: src/knetstats.cpp:148
+#: ../src/knetstats.cpp:132
 msgid ""
 "You don't have any network interface.\n"
 "KNetStats will quit now."
@@ -63,144 +31,231 @@ msgstr ""
 "Сетевые интерфейсы отсутствуют.\n"
 "KNetStats завершает работу."
 
-#: src/knetstatsview.cpp:81
+#: ../src/knetstatsview.cpp:89
 msgid "Monitoring %1"
 msgstr "Наблюдение %1"
 
-#: src/knetstatsview.cpp:130
-msgid "Error opening /proc/net/dev!"
-msgstr "Произошла ошибка при открытии файла устройств /proc/net/dev!"
-
-#: src/knetstatsview.cpp:198
-msgid "%1 is active"
-msgstr "%1 в активном состоянии"
-
-#: src/knetstatsview.cpp:218
+#: ../src/knetstatsview.cpp:139
 msgid "%1 is inactive"
 msgstr "%1 в неактивном состоянии"
 
-#: src/configure.cpp:141
-msgid "You need to select at least one interface to monitor."
-msgstr "Вам необходимо выбрать хотя бы один интерфейс для наблюдения."
+#: ../src/knetstatsview.cpp:142
+msgid "%1 is active"
+msgstr "%1 в активном состоянии"
 
-#: src/uic_statisticsbase.cc:159
-msgid "Bytes"
-msgstr "Байт(а)"
+#: ../src/knetstatsview.cpp:156
+#, fuzzy
+msgid "%1 is disconnected"
+msgstr "%1 в неактивном состоянии"
 
-#: src/uic_statisticsbase.cc:160 src/uic_statisticsbase.cc:165
-msgid "Received:"
-msgstr "Получено:"
+#: ../src/knetstatsview.cpp:161
+#, fuzzy
+msgid "%1 is connected"
+msgstr "%1 в неактивном состоянии"
 
-#: src/uic_statisticsbase.cc:161 src/uic_statisticsbase.cc:166
-msgid "Transmited:"
-msgstr "Отправлено:"
+#: ../src/main.cpp:11 ../src/statisticsbase.cpp:225
+msgid "KNetStats"
+msgstr "KNetStats"
 
-#: src/uic_statisticsbase.cc:162 src/uic_statisticsbase.cc:167
-msgid "Upload speed:"
-msgstr "Исходящая скорость:"
+#: ../src/main.cpp:17
+msgid "A network device monitor."
+msgstr "Монитор сетевых интерфейсов."
 
-#: src/uic_statisticsbase.cc:163 src/uic_statisticsbase.cc:168
-msgid "Download speed:"
-msgstr "Скорость загрузки:"
+#: ../src/main.cpp:23
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Edward Romantsov"
 
-#: src/uic_statisticsbase.cc:164
-msgid "Packets"
-msgstr "Пакетов"
+#: ../src/main.cpp:23
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "xunion@ukr.net"
 
-#: src/uic_statisticsbase.cc:169
-msgid "Ok"
-msgstr "О.К."
+#: ../src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
+msgstr "Помощь по программе SCons, пакетам ОС Debian и т.д."
 
-#: src/uic_configurebase.cc:244
+#: ../src/main.cpp:28
+msgid "Icon themes"
+msgstr "Темы"
+
+#: ../src/main.cpp:31
+msgid "KNetStats translation to other languages"
+msgstr "Перевод KNetStats на другие языки"
+
+#: ../src/statistics.cpp:34
+#, fuzzy
+msgid "Details of %1"
+msgstr "Статистика для интерфейса %1"
+
+#: ../src/configurebase.cpp:271
 msgid "Configure KNetStats"
 msgstr "Настройки KNetStats"
 
-#: src/uic_configurebase.cc:245
-msgid "O&k"
+#: ../src/configurebase.cpp:272 ../src/statisticsbase.cpp:241
+msgid "Ok"
 msgstr "О.К."
 
-#: src/uic_configurebase.cc:246
-msgid "Appl&y"
-msgstr "Применить"
-
-#: src/uic_configurebase.cc:247
-msgid "Ca&ncel"
-msgstr "Отмена"
-
-#: src/uic_configurebase.cc:248
-msgid "Appearance"
-msgstr "Вид"
-
-#: src/uic_configurebase.cc:249
+#: ../src/configurebase.cpp:276
 msgid "Theme:"
 msgstr "Тема:"
 
-#: src/uic_configurebase.cc:251
+#: ../src/configurebase.cpp:278
 msgid "Classic"
 msgstr "Классик"
 
-#: src/uic_configurebase.cc:252
+#: ../src/configurebase.cpp:279
 msgid "Modem"
 msgstr "Модем"
 
-#: src/uic_configurebase.cc:253
+#: ../src/configurebase.cpp:280
 msgid "Network"
 msgstr "Сеть"
 
-#: src/uic_configurebase.cc:254
+#: ../src/configurebase.cpp:281
 msgid "Wireless"
 msgstr "Безпроводная сеть"
 
-#: src/uic_configurebase.cc:255
+#: ../src/configurebase.cpp:282
 msgid "Kppp"
 msgstr "Kppp"
 
-#: src/uic_configurebase.cc:257
+#: ../src/configurebase.cpp:284 ../src/configurebase.cpp:290
 msgid "Download color:"
 msgstr "Цвет индикатора входящих пакетов:"
 
-#: src/uic_configurebase.cc:259
+#: ../src/configurebase.cpp:286 ../src/configurebase.cpp:289
 msgid "Upload color:"
 msgstr "Цвет индикатора исходящих пакетов:"
 
-#: src/uic_configurebase.cc:261
-msgid "Medium color:"
-msgstr "Нормально:"
+#: ../src/configurebase.cpp:287
+msgid "Background:"
+msgstr ""
 
-#: src/uic_configurebase.cc:263
-msgid "Lower color:"
-msgstr "Медленно:"
+#: ../src/configurebase.cpp:293
+msgid "Transparent background"
+msgstr ""
 
-#: src/uic_configurebase.cc:265
-msgid "High color:"
-msgstr "Быстро:"
+#: ../src/configurebase.cpp:296
+msgid "Icon"
+msgstr ""
 
-#: src/uic_configurebase.cc:266
-msgid "Configuration"
-msgstr "Настройки"
+#: ../src/configurebase.cpp:297
+msgid "Text"
+msgstr ""
 
-#: src/uic_configurebase.cc:268
-msgid "Icon (Activity)"
-msgstr "Иконка (Активность)"
+#: ../src/configurebase.cpp:298
+msgid "Chart"
+msgstr ""
 
-#: src/uic_configurebase.cc:269
-msgid "Text (Speed)"
-msgstr "Текст (Скорость)"
-
-#: src/uic_configurebase.cc:270
+#: ../src/configurebase.cpp:299
 msgid "View mode:"
 msgstr "Отображение:"
 
-#: src/uic_configurebase.cc:271
+#: ../src/configurebase.cpp:300
 msgid "Update interval:"
 msgstr "Интервал обновления:"
 
-#: src/uic_configurebase.cc:272
+#: ../src/configurebase.cpp:301
 msgid "ms"
 msgstr "мс"
 
-#: src/uic_configurebase.cc:273
-msgid "To monitor this &interface"
+#: ../src/configurebase.cpp:302
+#, fuzzy
+msgid "To monitor this interface"
 msgstr "Наблюдение за интерфейсом"
 
+#: ../src/statisticsbase.cpp:226
+msgid "? KB/s"
+msgstr ""
 
+#: ../src/statisticsbase.cpp:227
+msgid "0 KB/s"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:228
+msgid "Upload speed:"
+msgstr "Исходящая скорость:"
+
+#: ../src/statisticsbase.cpp:229
+msgid "Received:"
+msgstr "Получено:"
+
+#: ../src/statisticsbase.cpp:230
+msgid "Download speed:"
+msgstr "Скорость загрузки:"
+
+#: ../src/statisticsbase.cpp:231
+msgid "Transmited:"
+msgstr "Отправлено:"
+
+#: ../src/statisticsbase.cpp:232
+msgid "Bytes"
+msgstr "Байт(а)"
+
+#: ../src/statisticsbase.cpp:233
+msgid "Packets"
+msgstr "Пакетов"
+
+#: ../src/statisticsbase.cpp:234
+msgid "Statistics"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:235
+msgid "IP:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:236
+msgid "Netmask:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:237
+msgid "MAC:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:238
+msgid "MTU:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:240
+#, fuzzy
+msgid "Details"
+msgstr "Статистика для интерфейса %1"
+
+#~ msgid "O&k"
+#~ msgstr "О.К."
+
+#, fuzzy
+#~ msgid "Upload color"
+#~ msgstr "Цвет индикатора исходящих пакетов:"
+
+#~ msgid "&Help"
+#~ msgstr "&Помощь"
+
+#~ msgid "Error opening /proc/net/dev!"
+#~ msgstr "Произошла ошибка при открытии файла устройств /proc/net/dev!"
+
+#~ msgid "Appl&y"
+#~ msgstr "Применить"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "Отмена"
+
+#~ msgid "Appearance"
+#~ msgstr "Вид"
+
+#~ msgid "Medium color:"
+#~ msgstr "Нормально:"
+
+#~ msgid "Lower color:"
+#~ msgstr "Медленно:"
+
+#~ msgid "High color:"
+#~ msgstr "Быстро:"
+
+#~ msgid "Configuration"
+#~ msgstr "Настройки"
+
+#~ msgid "Icon (Activity)"
+#~ msgstr "Иконка (Активность)"
+
+#~ msgid "Text (Speed)"
+#~ msgstr "Текст (Скорость)"

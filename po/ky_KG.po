@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ky_KG\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-03-02 17:44+0000\n"
+"POT-Creation-Date: 2005-11-20 03:07+0000\n"
 "PO-Revision-Date: 2005-03-03 16:53+0500\n"
 "Last-Translator: Ilyas Bakirov <just_ilyas@yahoo.com>\n"
 "Language-Team: kyrgyz\n"
@@ -18,43 +18,11 @@ msgstr ""
 "X-Poedit-Country: KYRGYZSTAN\n"
 "X-Generator: KBabel 1.3\n"
 
-#: src/statistics.cpp:30
-msgid "Statistics for %1"
-msgstr "%1 үчүн статистика"
+#: ../src/configure.cpp:126
+msgid "You need to select at least one interface to monitor."
+msgstr "Сиз жок дегенде бир интерфейсти тандашыңыз керек."
 
-#: src/main.cpp:11 src/uic_statisticsbase.cc:158
-msgid "KNetStats"
-msgstr "KNetStats"
-
-#: src/main.cpp:17
-msgid "A network device monitor."
-msgstr "Тармак жабдыктарынын монитору."
-
-#: src/main.cpp:23
-msgid "_: NAME OF TRANSLATORS"
-msgstr "Ilyas"
-
-#: src/main.cpp:23
-msgid "_: EMAIL OF TRANSLATORS"
-msgstr "just_ilyas@yahoo.com"
-
-#: src/main.cpp:27
-msgid "SCons help, Debian packages, etc."
-msgstr "SCons жардамы, Debian пакеттери, ж.б."
-
-#: src/main.cpp:28
-msgid "Icon themes"
-msgstr "Сүрөтбелги темалары"
-
-#: src/main.cpp:31
-msgid "KNetStats translation to other languages"
-msgstr "KNetStats'тын башка тилдердеги котормолору"
-
-#: src/knetstats.cpp:58
-msgid "&Help"
-msgstr "&Жардам"
-
-#: src/knetstats.cpp:148
+#: ../src/knetstats.cpp:132
 msgid ""
 "You don't have any network interface.\n"
 "KNetStats will quit now."
@@ -62,143 +30,231 @@ msgstr ""
 "Сизде эч кандай тармак жабдыктары жок.\n"
 "KNetStats аягына чыгат."
 
-#: src/knetstatsview.cpp:81
+#: ../src/knetstatsview.cpp:89
 msgid "Monitoring %1"
 msgstr "%1 көзөмөлдөнүүдө"
 
-#: src/knetstatsview.cpp:130
-msgid "Error opening /proc/net/dev!"
-msgstr "/proc/net/dev'ди ачууда ката!"
-
-#: src/knetstatsview.cpp:198
-msgid "%1 is active"
-msgstr "%1 активдүү"
-
-#: src/knetstatsview.cpp:218
+#: ../src/knetstatsview.cpp:139
 msgid "%1 is inactive"
 msgstr "%1 активдүү эмес"
 
-#: src/configure.cpp:141
-msgid "You need to select at least one interface to monitor."
-msgstr "Сиз жок дегенде бир интерфейсти тандашыңыз керек."
+#: ../src/knetstatsview.cpp:142
+msgid "%1 is active"
+msgstr "%1 активдүү"
 
-#: src/uic_statisticsbase.cc:159
-msgid "Bytes"
-msgstr "Байт"
+#: ../src/knetstatsview.cpp:156
+#, fuzzy
+msgid "%1 is disconnected"
+msgstr "%1 активдүү эмес"
 
-#: src/uic_statisticsbase.cc:160 src/uic_statisticsbase.cc:165
-msgid "Received:"
-msgstr "Алынды:"
+#: ../src/knetstatsview.cpp:161
+#, fuzzy
+msgid "%1 is connected"
+msgstr "%1 активдүү эмес"
 
-#: src/uic_statisticsbase.cc:161 src/uic_statisticsbase.cc:166
-msgid "Transmited:"
-msgstr "Өткөзүлдү:"
+#: ../src/main.cpp:11 ../src/statisticsbase.cpp:225
+msgid "KNetStats"
+msgstr "KNetStats"
 
-#: src/uic_statisticsbase.cc:162 src/uic_statisticsbase.cc:167
-msgid "Upload speed:"
-msgstr "Чыгуу ылдамдыгы:"
+#: ../src/main.cpp:17
+msgid "A network device monitor."
+msgstr "Тармак жабдыктарынын монитору."
 
-#: src/uic_statisticsbase.cc:163 src/uic_statisticsbase.cc:168
-msgid "Download speed:"
-msgstr "Серверден жүктөө ылдамдыгы: "
+#: ../src/main.cpp:23
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Ilyas"
 
-#: src/uic_statisticsbase.cc:164
-msgid "Packets"
-msgstr "Пакеттер"
+#: ../src/main.cpp:23
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "just_ilyas@yahoo.com"
 
-#: src/uic_statisticsbase.cc:169
-msgid "Ok"
-msgstr "Ok"
+#: ../src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
+msgstr "SCons жардамы, Debian пакеттери, ж.б."
 
-#: src/uic_configurebase.cc:244
+#: ../src/main.cpp:28
+msgid "Icon themes"
+msgstr "Сүрөтбелги темалары"
+
+#: ../src/main.cpp:31
+msgid "KNetStats translation to other languages"
+msgstr "KNetStats'тын башка тилдердеги котормолору"
+
+#: ../src/statistics.cpp:34
+#, fuzzy
+msgid "Details of %1"
+msgstr "%1 үчүн статистика"
+
+#: ../src/configurebase.cpp:271
 msgid "Configure KNetStats"
 msgstr "KNetStats'ты ырастоо"
 
-#: src/uic_configurebase.cc:245
-msgid "O&k"
-msgstr "O&k"
+#: ../src/configurebase.cpp:272 ../src/statisticsbase.cpp:241
+msgid "Ok"
+msgstr "Ok"
 
-#: src/uic_configurebase.cc:246
-msgid "Appl&y"
-msgstr "Ко&лдон"
-
-#: src/uic_configurebase.cc:247
-msgid "Ca&ncel"
-msgstr "Ай&нуу"
-
-#: src/uic_configurebase.cc:248
-msgid "Appearance"
-msgstr "Көрүнүшү"
-
-#: src/uic_configurebase.cc:249
+#: ../src/configurebase.cpp:276
 msgid "Theme:"
 msgstr "Тема:"
 
-#: src/uic_configurebase.cc:251
+#: ../src/configurebase.cpp:278
 msgid "Classic"
 msgstr "Класик"
 
-#: src/uic_configurebase.cc:252
+#: ../src/configurebase.cpp:279
 msgid "Modem"
 msgstr "Модем"
 
-#: src/uic_configurebase.cc:253
+#: ../src/configurebase.cpp:280
 msgid "Network"
 msgstr "Тармак"
 
-#: src/uic_configurebase.cc:254
+#: ../src/configurebase.cpp:281
 msgid "Wireless"
 msgstr "Кабельсиз"
 
-#: src/uic_configurebase.cc:255
+#: ../src/configurebase.cpp:282
 msgid "Kppp"
 msgstr "Kppp"
 
-#: src/uic_configurebase.cc:257
+#: ../src/configurebase.cpp:284 ../src/configurebase.cpp:290
 msgid "Download color:"
 msgstr "Серверден жүктөө өңү:"
 
-#: src/uic_configurebase.cc:259
+#: ../src/configurebase.cpp:286 ../src/configurebase.cpp:289
 msgid "Upload color:"
 msgstr "Серверге жүктөө өңү:"
 
-#: src/uic_configurebase.cc:261
-msgid "Medium color:"
-msgstr "Орточо өңү:"
+#: ../src/configurebase.cpp:287
+msgid "Background:"
+msgstr ""
 
-#: src/uic_configurebase.cc:263
-msgid "Lower color:"
-msgstr "Бозомук өңү:"
+#: ../src/configurebase.cpp:293
+msgid "Transparent background"
+msgstr ""
 
-#: src/uic_configurebase.cc:265
-msgid "High color:"
-msgstr "Ачык өңү:"
+#: ../src/configurebase.cpp:296
+msgid "Icon"
+msgstr ""
 
-#: src/uic_configurebase.cc:266
-msgid "Configuration"
-msgstr "Ырастоолор"
+#: ../src/configurebase.cpp:297
+msgid "Text"
+msgstr ""
 
-#: src/uic_configurebase.cc:268
-msgid "Icon (Activity)"
-msgstr "Сүрөтбелги (Активдүүлүк)"
+#: ../src/configurebase.cpp:298
+msgid "Chart"
+msgstr ""
 
-#: src/uic_configurebase.cc:269
-msgid "Text (Speed)"
-msgstr "Текст (Ылдамдыгы)"
-
-#: src/uic_configurebase.cc:270
+#: ../src/configurebase.cpp:299
 msgid "View mode:"
 msgstr "Көрүнүш тиби:"
 
-#: src/uic_configurebase.cc:271
+#: ../src/configurebase.cpp:300
 msgid "Update interval:"
 msgstr "Интервалды жыңыртуу (милисекунда менен):"
 
-#: src/uic_configurebase.cc:272
+#: ../src/configurebase.cpp:301
 msgid "ms"
 msgstr "мс"
 
-#: src/uic_configurebase.cc:273
-msgid "To monitor this &interface"
+#: ../src/configurebase.cpp:302
+#, fuzzy
+msgid "To monitor this interface"
 msgstr "Бул &интерфейсти көзөмөлдөө"
 
+#: ../src/statisticsbase.cpp:226
+msgid "? KB/s"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:227
+msgid "0 KB/s"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:228
+msgid "Upload speed:"
+msgstr "Чыгуу ылдамдыгы:"
+
+#: ../src/statisticsbase.cpp:229
+msgid "Received:"
+msgstr "Алынды:"
+
+#: ../src/statisticsbase.cpp:230
+msgid "Download speed:"
+msgstr "Серверден жүктөө ылдамдыгы: "
+
+#: ../src/statisticsbase.cpp:231
+msgid "Transmited:"
+msgstr "Өткөзүлдү:"
+
+#: ../src/statisticsbase.cpp:232
+msgid "Bytes"
+msgstr "Байт"
+
+#: ../src/statisticsbase.cpp:233
+msgid "Packets"
+msgstr "Пакеттер"
+
+#: ../src/statisticsbase.cpp:234
+msgid "Statistics"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:235
+msgid "IP:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:236
+msgid "Netmask:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:237
+msgid "MAC:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:238
+msgid "MTU:"
+msgstr ""
+
+#: ../src/statisticsbase.cpp:240
+#, fuzzy
+msgid "Details"
+msgstr "%1 үчүн статистика"
+
+#~ msgid "O&k"
+#~ msgstr "O&k"
+
+#, fuzzy
+#~ msgid "Upload color"
+#~ msgstr "Серверге жүктөө өңү:"
+
+#~ msgid "&Help"
+#~ msgstr "&Жардам"
+
+#~ msgid "Error opening /proc/net/dev!"
+#~ msgstr "/proc/net/dev'ди ачууда ката!"
+
+#~ msgid "Appl&y"
+#~ msgstr "Ко&лдон"
+
+#~ msgid "Ca&ncel"
+#~ msgstr "Ай&нуу"
+
+#~ msgid "Appearance"
+#~ msgstr "Көрүнүшү"
+
+#~ msgid "Medium color:"
+#~ msgstr "Орточо өңү:"
+
+#~ msgid "Lower color:"
+#~ msgstr "Бозомук өңү:"
+
+#~ msgid "High color:"
+#~ msgstr "Ачык өңү:"
+
+#~ msgid "Configuration"
+#~ msgstr "Ырастоолор"
+
+#~ msgid "Icon (Activity)"
+#~ msgstr "Сүрөтбелги (Активдүүлүк)"
+
+#~ msgid "Text (Speed)"
+#~ msgstr "Текст (Ылдамдыгы)"
