@@ -293,11 +293,9 @@ void KNetStatsView::drawGraphic(QPainter& paint) {
 	
 	QSize size = this->size();
 	
-	if (!mOptions->mChartTransparentBackground) {
+	if (!mOptions->mChartTransparentBackground)
 		paint.fillRect(0, 0, size.width(), size.height(), mOptions->mChartBgColor);
-	}
 
-	const double step = size.width()/double(HISTORY_SIZE);
 	const int HEIGHT = size.height()-1;
 	
 	//	qDebug("MaxSpeed: %d, age: %d", int(mMaxSpeed), mMaxSpeedAge);
@@ -306,7 +304,7 @@ void KNetStatsView::drawGraphic(QPainter& paint) {
 	int lastTxY = HEIGHT - int(HEIGHT * (mSpeedHistoryTx[mSpeedHistoryPtr]/mMaxSpeed));
 	int x = lastX = size.width();
 	int count = 0;
-	for (int i = mSpeedHistoryPtr; count < HISTORY_SIZE; i--) {
+	for (int i = mSpeedHistoryPtr; count < width(); i--) {
 		if (i < 0)
 			i = HISTORY_SIZE-1;
 		
@@ -322,7 +320,7 @@ void KNetStatsView::drawGraphic(QPainter& paint) {
 		lastTxY = txY;
 		
 		count++;
-		x = width()-int(step*(count+1));
+		x = width()-int(count+1);
 	}
 }
 

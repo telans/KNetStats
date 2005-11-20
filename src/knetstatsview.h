@@ -47,7 +47,7 @@ class KNetStatsView : public KSystemTray
 	Q_OBJECT
 		
 	enum {
-		HISTORY_SIZE = 22,	// Tamanho do historico.
+		HISTORY_SIZE = 50,	// Tamanho do historico.
 		SPEED_BUFFER_SIZE = 10	// Tamanho do buffer usado para calcular a velocidade
 	};
 		
