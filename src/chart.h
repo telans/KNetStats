@@ -1,5 +1,5 @@
 /***************************************************************************
-*   Copyright (C) 2004 by Hugo Parente Lima                               *
+*   Copyright (C) 2005 by Hugo Parente Lima                               *
 *   hugo_pl@users.sourceforge.net                                         *
 *                                                                         *
 *   This program is free software; you can redistribute it and/or modify  *
@@ -17,50 +17,27 @@
 *   Free Software Foundation, Inc.,                                       *
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
-#ifndef STATISTICS_H
-#define STATISTICS_H
 
-#include "statisticsbase.h"
-#include <qstring.h>
+#ifndef CHART_H
+#define CHART_H
 
-class KNetStatsView;
+#include <qwidget.h>
 
-class Statistics : public StatisticsBase
-{
-	Q_OBJECT
+class QPaintEvent;
+
+class Chart : public QWidget {
 public:
-	Statistics( KNetStatsView* parent = 0, const char *name = 0 );
+	Chart(QWidget* parent, const double* uploadBuffer, const double* downloadBuffer, int bufferSize, const int* ptr, const double* maxspeed);
+	QSize sizeHint() { return QSize(200, 100); }
+protected:	
+	void paintEvent( QPaintEvent* ev );
 
-	/**
-	*	Formats a numberic byte representation
-	*	\param	num		The numeric representation
-	*	\param	decimal	Decimal digits
-	*	\param	bytesufix	Sufix for bytes
-	*	\param	ksufix	Sufix for kilobytes
-	*	\param	msufix	Sufix for megabytes
-	*/
-	static inline QString byteFormat( double num, unsigned int decimal = 2, const char* bytesufix = " bytes", const char* ksufix = " KB", const char* msufix = " MB");
-
-	void show();
 private:
-	QTimer* mTimer;
-	const QString& mInterface;
-	KNetStatsView* mParent;
-public slots:
-	void accept();
-
-private slots:
-	void update();
+	const double* mUplBuffer;
+	const double* mDldBuffer;
+	const int mBufferSize;
+	const int* mPtr;
+	const double* mMaxSpeed;
 };
-
-QString Statistics::byteFormat( double num, unsigned int decimal, const char* bytesufix, const char* ksufix, const char* msufix )
-{
-	if ( num >= 1024.0*1024.0 ) 	// MB
-		return QString::number( num/(1024.0*1024.0), 'f', decimal ) + msufix;
-	else if ( num >= 1024.0 ) 	// Kb
-		return QString::number( num/1024.0, 'f', decimal ) + ksufix;
-	else	// bytes
-		return QString::number( num, 'f', decimal ) + bytesufix;
-}
 
 #endif

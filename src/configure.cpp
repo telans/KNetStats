@@ -40,40 +40,20 @@
 #include <kpushbutton.h>
 
 
-Configure::Configure(KNetStats* parent, const QStringList& ifs) : ConfigureBase(parent)
-{
+Configure::Configure(KNetStats* parent, const QStringList& ifs) : ConfigureBase(parent) {
 	KConfig* cfg = kapp->config();
 
 	// Load configuration
-	QFont defaultFont = font();
 	KIconLoader* loader = kapp->iconLoader();
 
 	QPixmap iconPCI = loader->loadIcon("icon_pci.png", KIcon::Small, 16);
 
-
-	for(QStringList::ConstIterator i = ifs.begin(); i != ifs.end(); ++i)
-	{
-		KConfigGroupSaver groupSaver(cfg, *i);
-		ViewOpts view;
-		// general
-		view.mUpdateInterval = cfg->readNumEntry("UpdateInterval", 300);
-		view.mViewMode = (ViewMode)cfg->readNumEntry("ViewMode", 0);
-		view.mMonitoring = cfg->readBoolEntry("Monitoring", true);
-		// txt view
-		view.mTxtFont = cfg->readFontEntry("TxtFont", &defaultFont);
-		view.mTxtUplColor = cfg->readColorEntry("TxtUplColor", &Qt::red);
-		view.mTxtDldColor = cfg->readColorEntry("TxtDldColor", &Qt::green);
-		// IconView
-
-		int defaultTheme = 0;
-		if ((*i).startsWith("wlan"))
-			defaultTheme = 3;
-		mInterfaces->insertItem(iconPCI, *i);
-		view.mTheme = cfg->readNumEntry("Theme", defaultTheme);
-
-		mConfig[*i] = view;
+	// Clone the configuration.
+	for (QStringList::ConstIterator it = ifs.begin(); it != ifs.end(); ++it) {
+		mInterfaces->insertItem(iconPCI, *it);
+		parent->readInterfaceOptions(*it, &mConfig[*it]);
 	}
-
+	
 	mInterfaces->setCurrentItem(0);
 	changeInterface(mInterfaces->selectedItem());
 
@@ -81,14 +61,13 @@ Configure::Configure(KNetStats* parent, const QStringList& ifs) : ConfigureBase(
 	connect(mTheme, SIGNAL(activated(int)), this, SLOT(changeTheme(int)));
 }
 
-void Configure::changeInterface(QListBoxItem* item)
-{
+void Configure::changeInterface(QListBoxItem* item) {
 	QString interface = item->text();
 
 	if (!mCurrentItem.isEmpty())
 	{
 		// Salvas as modificações passadas
-		ViewOpts& oldview = mConfig[mCurrentItem];
+		ViewOptions& oldview = mConfig[mCurrentItem];
 		// general options
 		oldview.mMonitoring = mMonitoring->isChecked();
 		oldview.mUpdateInterval = mUpdateInterval->value();
@@ -99,12 +78,17 @@ void Configure::changeInterface(QListBoxItem* item)
 		oldview.mTxtFont = mTxtFont->font();
 		// icon view
 		oldview.mTheme = mTheme->currentItem();
+		// chart view
+		oldview.mChartUplColor = mChartUplColor->color();
+		oldview.mChartDldColor = mChartDldColor->color();
+		oldview.mChartBgColor = mChartBgColor->color();
+		oldview.mChartTransparentBackground = mChartTransparentBackground->isChecked();
 	}
 
 	if (interface == mCurrentItem)
 		return;
 	// Carrega as opt. da nova interface
-	ViewOpts& view = mConfig[interface];
+	ViewOptions& view = mConfig[interface];
 	// general
 	mMonitoring->setChecked(view.mMonitoring);
 	mUpdateInterval->setValue(view.mUpdateInterval);
@@ -117,52 +101,30 @@ void Configure::changeInterface(QListBoxItem* item)
 	// icon options
 	mTheme->setCurrentItem(view.mTheme);
 	changeTheme(view.mTheme);
-
+	// chart options
+	mChartUplColor->setColor(view.mChartUplColor);
+	mChartDldColor->setColor(view.mChartDldColor);
+	mChartBgColor->setColor(view.mChartBgColor);
+	mChartTransparentBackground->setChecked(view.mChartTransparentBackground);
+	
 	mCurrentItem = interface;
 }
 
-bool Configure::saveConfig()
+bool Configure::canSaveConfig()
 {
 	// Atualiza o cache de opções
 	changeInterface(mInterfaces->item( mInterfaces->currentItem() ));
 
-	// Salva a configuração
-	QStringList views;
 	bool ok = false;
-	for(ViewsMap::Iterator i = mConfig.begin(); i != mConfig.end(); ++i)
-		if (i.data().mMonitoring)
-		{
+	for(OptionsMap::ConstIterator i = mConfig.begin(); i != mConfig.end(); ++i)
+		if (i.data().mMonitoring) {
 			ok = true;
 			break;
 		}
 
 	if (!ok)
-	{
 		KMessageBox::error(this, i18n("You need to select at least one interface to monitor."));
-		return false;
-	}
-
-	KConfig* cfg = kapp->config();
-	for(ViewsMap::Iterator i = mConfig.begin(); i != mConfig.end(); ++i)
-	{
-		KConfigGroupSaver groupSaver(cfg, i.key());
-		ViewOpts& view = i.data();
-		// general
-		cfg->writeEntry("UpdateInterval", view.mUpdateInterval);
-		cfg->writeEntry("ViewMode", view.mViewMode);
-		cfg->writeEntry("Monitoring", view.mMonitoring);
-		// txt view
-		cfg->writeEntry("TxtFont", view.mTxtFont);
-		cfg->writeEntry("TxtUplColor", view.mTxtUplColor);
-		cfg->writeEntry("TxtDldColor", view.mTxtDldColor);
-		// IconView
-		cfg->writeEntry("Theme", view.mTheme);
-
-		if (view.mMonitoring)
-			views.append(i.key());
-	}
-	cfg->writeEntry("CurrentViews", views);
-	return true;
+	return ok;
 }
 
 void Configure::changeTheme(int theme)

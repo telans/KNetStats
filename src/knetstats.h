@@ -31,6 +31,7 @@ class KConfig;
 class KPopupMenu;
 class KActionCollection;
 
+
 class KNetStats : public QWidget
 {
 	Q_OBJECT
@@ -39,14 +40,11 @@ public:
 	KNetStats();
 
 	KPopupMenu* const contextMenu() const { return mContextMenu; }
-	ViewOpts* getViewOpt( const QString& interface );
 	/**
 	*	\brief Search for network interfaces parsing /proc/net/dev
 	*	\return A StringList with the network interface names
 	*/
 	static QStringList searchInterfaces();
-
-	void applyConfig(const ViewsMap& map);
 
 	/**
 	*	Exists at least 1 view?
@@ -54,6 +52,8 @@ public:
 	bool allOk() const {
 		return mAllOk;
 	}
+	
+	void readInterfaceOptions(const QString& interface, ViewOptions* opts);
 
 public slots:
 	/// Display configure the dialog box
@@ -74,7 +74,11 @@ private:
 	Configure* mConfigure;
 	KActionCollection* mActionCollection;
 	typedef QMap<QString, KNetStatsView*> TrayIconMap;
-	TrayIconMap mView;
+	TrayIconMap mViews;
+	
+	void readOptions();
+	void saveConfig(const OptionsMap& options);
+	void clearOptions(OptionsMap* options);
 };
 
 #endif

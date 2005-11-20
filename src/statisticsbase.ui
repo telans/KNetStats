@@ -8,14 +8,14 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>383</width>
-            <height>158</height>
+            <width>261</width>
+            <height>303</height>
         </rect>
     </property>
     <property name="sizePolicy">
         <sizepolicy>
             <hsizetype>5</hsizetype>
-            <vsizetype>4</vsizetype>
+            <vsizetype>5</vsizetype>
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
         </sizepolicy>
@@ -23,83 +23,84 @@
     <property name="caption">
         <string>KNetStats</string>
     </property>
-    <grid>
+    <vbox>
         <property name="name">
             <cstring>unnamed</cstring>
         </property>
         <property name="resizeMode">
             <enum>Minimum</enum>
         </property>
-        <widget class="QButtonGroup" row="0" column="0">
+        <widget class="QLayoutWidget">
             <property name="name">
-                <cstring>grpBytes</cstring>
-            </property>
-            <property name="title">
-                <string>Bytes</string>
+                <cstring>layout3</cstring>
             </property>
             <grid>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLabel" row="0" column="1">
+                <widget class="QFrame" row="0" column="1" rowspan="3" colspan="1">
                     <property name="name">
-                        <cstring>mBRx</cstring>
+                        <cstring>mChart</cstring>
                     </property>
-                    <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>7</hsizetype>
+                            <vsizetype>5</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
+                    <property name="frameShape">
+                        <enum>NoFrame</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Plain</enum>
                     </property>
                 </widget>
-                <widget class="QLabel" row="1" column="1">
+                <spacer row="1" column="0">
                     <property name="name">
-                        <cstring>mBTx</cstring>
+                        <cstring>spacer4_2</cstring>
                     </property>
-                    <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
                     </property>
-                </widget>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>41</height>
+                        </size>
+                    </property>
+                </spacer>
                 <widget class="QLabel" row="0" column="0">
                     <property name="name">
-                        <cstring>mLabel1</cstring>
+                        <cstring>mMaxSpeed</cstring>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>7</pointsize>
+                        </font>
                     </property>
                     <property name="text">
-                        <string>Received:</string>
+                        <string>? KB/s</string>
                     </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>mLabel2</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Transmited:</string>
+                    <property name="alignment">
+                        <set>AlignVCenter|AlignRight</set>
                     </property>
                 </widget>
                 <widget class="QLabel" row="2" column="0">
                     <property name="name">
-                        <cstring>mLabel5</cstring>
+                        <cstring>textLabel2_3</cstring>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>7</pointsize>
+                        </font>
                     </property>
                     <property name="text">
-                        <string>Upload speed:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="0">
-                    <property name="name">
-                        <cstring>mLabel6</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Download speed:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="1">
-                    <property name="name">
-                        <cstring>mByteSpeedRx</cstring>
-                    </property>
-                    <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="2" column="1">
-                    <property name="name">
-                        <cstring>mByteSpeedTx</cstring>
+                        <string>0 KB/s</string>
                     </property>
                     <property name="alignment">
                         <set>AlignVCenter|AlignRight</set>
@@ -107,84 +108,300 @@
                 </widget>
             </grid>
         </widget>
-        <widget class="QButtonGroup" row="0" column="1">
+        <widget class="QTabWidget">
             <property name="name">
-                <cstring>grpPackets</cstring>
+                <cstring>tabWidget2</cstring>
             </property>
-            <property name="title">
-                <string>Packets</string>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>7</hsizetype>
+                    <vsizetype>4</vsizetype>
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                </sizepolicy>
             </property>
-            <grid>
+            <widget class="QWidget">
                 <property name="name">
-                    <cstring>unnamed</cstring>
+                    <cstring>tab</cstring>
                 </property>
-                <widget class="QLabel" row="1" column="1" rowspan="1" colspan="2">
+                <attribute name="title">
+                    <string>Statistics</string>
+                </attribute>
+                <grid>
                     <property name="name">
-                        <cstring>mPTx</cstring>
+                        <cstring>unnamed</cstring>
                     </property>
-                    <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="1" rowspan="1" colspan="2">
+                    <widget class="QLabel" row="3" column="0">
+                        <property name="name">
+                            <cstring>mLabel5</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Upload speed:</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>mLabel1</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Received:</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="4" column="0">
+                        <property name="name">
+                            <cstring>mLabel6</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Download speed:</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="2" column="0">
+                        <property name="name">
+                            <cstring>mLabel2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Transmited:</string>
+                        </property>
+                    </widget>
+                    <spacer row="0" column="0">
+                        <property name="name">
+                            <cstring>spacer2_2</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>71</width>
+                                <height>20</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QLabel" row="4" column="2">
+                        <property name="name">
+                            <cstring>mPktSpeedRx</cstring>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="1">
+                        <property name="name">
+                            <cstring>textLabel1</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Bytes</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="2">
+                        <property name="name">
+                            <cstring>mPRx</cstring>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="3" column="1">
+                        <property name="name">
+                            <cstring>mByteSpeedTx</cstring>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="2" column="1">
+                        <property name="name">
+                            <cstring>mBTx</cstring>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="2" column="2">
+                        <property name="name">
+                            <cstring>mPTx</cstring>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="3" column="2">
+                        <property name="name">
+                            <cstring>mPktSpeedTx</cstring>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="1">
+                        <property name="name">
+                            <cstring>mBRx</cstring>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="4" column="1">
+                        <property name="name">
+                            <cstring>mByteSpeedRx</cstring>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="2">
+                        <property name="name">
+                            <cstring>textLabel2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Packets</string>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QWidget">
+                <property name="name">
+                    <cstring>tab</cstring>
+                </property>
+                <attribute name="title">
+                    <string>Details</string>
+                </attribute>
+                <grid>
                     <property name="name">
-                        <cstring>mPRx</cstring>
+                        <cstring>unnamed</cstring>
                     </property>
-                    <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="0" column="0">
-                    <property name="name">
-                        <cstring>mLabel3</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Received:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="1" column="0">
-                    <property name="name">
-                        <cstring>mLabel4</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Transmited:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="2" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>mLabel7</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Upload speed:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="0" rowspan="1" colspan="2">
-                    <property name="name">
-                        <cstring>mLabel8</cstring>
-                    </property>
-                    <property name="text">
-                        <string>Download speed:</string>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="2" column="2">
-                    <property name="name">
-                        <cstring>mPktSpeedTx</cstring>
-                    </property>
-                    <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
-                    </property>
-                </widget>
-                <widget class="QLabel" row="3" column="2">
-                    <property name="name">
-                        <cstring>mPktSpeedRx</cstring>
-                    </property>
-                    <property name="alignment">
-                        <set>AlignVCenter|AlignRight</set>
-                    </property>
-                </widget>
-            </grid>
+                    <widget class="QLabel" row="0" column="0">
+                        <property name="name">
+                            <cstring>textLabel1_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>IP:</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="1" column="0">
+                        <property name="name">
+                            <cstring>textLabel2_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Netmask:</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="2" column="0">
+                        <property name="name">
+                            <cstring>textLabel3</cstring>
+                        </property>
+                        <property name="text">
+                            <string>MAC:</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="3" column="0">
+                        <property name="name">
+                            <cstring>textLabel7</cstring>
+                        </property>
+                        <property name="text">
+                            <string>MTU:</string>
+                        </property>
+                    </widget>
+                    <spacer row="4" column="0" rowspan="1" colspan="3">
+                        <property name="name">
+                            <cstring>spacer4</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Vertical</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>200</width>
+                                <height>21</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="KActiveLabel" row="0" column="2">
+                        <property name="name">
+                            <cstring>mIP</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>5</hsizetype>
+                                <vsizetype>7</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="wordWrap">
+                            <enum>NoWrap</enum>
+                        </property>
+                    </widget>
+                    <widget class="KActiveLabel" row="1" column="2">
+                        <property name="name">
+                            <cstring>mNetmask</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>5</hsizetype>
+                                <vsizetype>7</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="wordWrap">
+                            <enum>NoWrap</enum>
+                        </property>
+                    </widget>
+                    <widget class="KActiveLabel" row="2" column="2">
+                        <property name="name">
+                            <cstring>mMAC</cstring>
+                        </property>
+                        <property name="sizePolicy">
+                            <sizepolicy>
+                                <hsizetype>5</hsizetype>
+                                <vsizetype>7</vsizetype>
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                            </sizepolicy>
+                        </property>
+                        <property name="wordWrap">
+                            <enum>NoWrap</enum>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="3" column="2">
+                        <property name="name">
+                            <cstring>mMTU</cstring>
+                        </property>
+                        <property name="text">
+                            <string></string>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignVCenter|AlignRight</set>
+                        </property>
+                    </widget>
+                    <spacer row="0" column="1" rowspan="4" colspan="1">
+                        <property name="name">
+                            <cstring>spacer5</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>51</width>
+                                <height>80</height>
+                            </size>
+                        </property>
+                    </spacer>
+                </grid>
+            </widget>
         </widget>
-        <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="2">
+        <widget class="QLayoutWidget">
             <property name="name">
                 <cstring>layout2</cstring>
             </property>
@@ -213,8 +430,16 @@
                     <property name="name">
                         <cstring>mOk</cstring>
                     </property>
+                    <property name="sizePolicy">
+                        <sizepolicy>
+                            <hsizetype>1</hsizetype>
+                            <vsizetype>4</vsizetype>
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                        </sizepolicy>
+                    </property>
                     <property name="text">
-                        <string>O&amp;k</string>
+                        <string>Ok</string>
                     </property>
                     <property name="autoDefault">
                         <bool>true</bool>
@@ -222,7 +447,7 @@
                 </widget>
             </hbox>
         </widget>
-    </grid>
+    </vbox>
 </widget>
 <connections>
     <connection>
@@ -232,8 +457,15 @@
         <slot>accept()</slot>
     </connection>
 </connections>
+<tabstops>
+    <tabstop>tabWidget2</tabstop>
+    <tabstop>mOk</tabstop>
+</tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>
+    <includehint>kactivelabel.h</includehint>
+    <includehint>kactivelabel.h</includehint>
+    <includehint>kactivelabel.h</includehint>
     <includehint>kpushbutton.h</includehint>
 </includehints>
 </UI>

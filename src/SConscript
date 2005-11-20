@@ -2,6 +2,6 @@
 
 Import( 'env' )
 
-sourceList = "configurebase.ui configure.cpp statisticsbase.ui main.cpp knetstats.cpp knetstatsview.cpp statistics.cpp"
+sourceList = "configurebase.ui configure.cpp statisticsbase.ui main.cpp knetstats.cpp knetstatsview.cpp statistics.cpp chart.cpp"
 env.KDEprogram('knetstats', sourceList)
 env.KDEaddlibs('kdeui')

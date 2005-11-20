@@ -7,7 +7,7 @@
     <property name="geometry">
         <rect>
             <x>0</x>
-            <y>21</y>
+            <y>0</y>
             <width>355</width>
             <height>307</height>
         </rect>
@@ -60,10 +60,7 @@
                         <cstring>mOk</cstring>
                     </property>
                     <property name="text">
-                        <string>O&amp;k</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
+                        <string>Ok</string>
                     </property>
                     <property name="default">
                         <bool>true</bool>
@@ -74,10 +71,7 @@
                         <cstring>mApply</cstring>
                     </property>
                     <property name="text">
-                        <string>Appl&amp;y</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+Y</string>
+                        <string>Apply</string>
                     </property>
                 </widget>
                 <widget class="KPushButton">
@@ -85,10 +79,7 @@
                         <cstring>mCancel</cstring>
                     </property>
                     <property name="text">
-                        <string>Ca&amp;ncel</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+N</string>
+                        <string>Cancel</string>
                     </property>
                 </widget>
             </hbox>
@@ -492,7 +483,7 @@
                             </property>
                             <widget class="QLabel" row="2" column="0">
                                 <property name="name">
-                                    <cstring>mGraphBgLabel</cstring>
+                                    <cstring>mChartBgLabel</cstring>
                                 </property>
                                 <property name="text">
                                     <string>Background:</string>
@@ -500,7 +491,7 @@
                             </widget>
                             <widget class="KColorButton" row="0" column="1">
                                 <property name="name">
-                                    <cstring>mGraphUplColor</cstring>
+                                    <cstring>mChartUplColor</cstring>
                                 </property>
                                 <property name="text">
                                     <string></string>
@@ -511,7 +502,7 @@
                                     <cstring>mLabel7</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Upload color</string>
+                                    <string>Upload color:</string>
                                 </property>
                             </widget>
                             <widget class="QLabel" row="1" column="0">
@@ -524,7 +515,7 @@
                             </widget>
                             <widget class="KColorButton" row="1" column="1">
                                 <property name="name">
-                                    <cstring>mGraphDldColor</cstring>
+                                    <cstring>mChartDldColor</cstring>
                                 </property>
                                 <property name="text">
                                     <string></string>
@@ -532,7 +523,7 @@
                             </widget>
                             <widget class="KColorButton" row="2" column="1">
                                 <property name="name">
-                                    <cstring>mGraphBgColor</cstring>
+                                    <cstring>mChartBgColor</cstring>
                                 </property>
                                 <property name="text">
                                     <string></string>
@@ -540,10 +531,10 @@
                             </widget>
                             <widget class="QCheckBox" row="3" column="0" rowspan="1" colspan="2">
                                 <property name="name">
-                                    <cstring>mTransparenteBackground</cstring>
+                                    <cstring>mChartTransparentBackground</cstring>
                                 </property>
                                 <property name="text">
-                                    <string>Transparent &amp;background</string>
+                                    <string>Transparent background</string>
                                 </property>
                             </widget>
                         </grid>
@@ -583,7 +574,7 @@
                     </item>
                     <item>
                         <property name="text">
-                            <string>Graphic</string>
+                            <string>Chart</string>
                         </property>
                     </item>
                     <property name="name">
@@ -631,7 +622,7 @@
                         <cstring>mMonitoring</cstring>
                     </property>
                     <property name="text">
-                        <string>To monitor this &amp;interface</string>
+                        <string>To monitor this interface</string>
                     </property>
                 </widget>
             </grid>
@@ -646,15 +637,15 @@
         <slot>raiseWidget(int)</slot>
     </connection>
     <connection>
-        <sender>mTransparenteBackground</sender>
+        <sender>mChartTransparentBackground</sender>
         <signal>toggled(bool)</signal>
-        <receiver>mGraphBgColor</receiver>
+        <receiver>mChartBgColor</receiver>
         <slot>setDisabled(bool)</slot>
     </connection>
     <connection>
-        <sender>mTransparenteBackground</sender>
+        <sender>mChartTransparentBackground</sender>
         <signal>toggled(bool)</signal>
-        <receiver>mGraphBgLabel</receiver>
+        <receiver>mChartBgLabel</receiver>
         <slot>setDisabled(bool)</slot>
     </connection>
 </connections>
@@ -670,10 +661,10 @@
     <tabstop>mTxtUplColor</tabstop>
     <tabstop>mTxtDldColor</tabstop>
     <tabstop>mTxtFont</tabstop>
-    <tabstop>mGraphUplColor</tabstop>
-    <tabstop>mGraphDldColor</tabstop>
-    <tabstop>mGraphBgColor</tabstop>
-    <tabstop>mTransparenteBackground</tabstop>
+    <tabstop>mChartUplColor</tabstop>
+    <tabstop>mChartDldColor</tabstop>
+    <tabstop>mChartBgColor</tabstop>
+    <tabstop>mChartTransparentBackground</tabstop>
 </tabstops>
 <layoutdefaults spacing="6" margin="11"/>
 <includehints>

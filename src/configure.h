@@ -44,7 +44,7 @@ enum ViewMode {
 /**
 *	Visualization options.
 */
-struct ViewOpts
+struct ViewOptions
 {
 	// general
 	int mUpdateInterval;
@@ -56,9 +56,15 @@ struct ViewOpts
 	QColor mTxtDldColor;
 	// icon view
 	int mTheme;
+	// chart view
+	QColor mChartUplColor;
+	QColor mChartDldColor;
+	QColor mChartBgColor;
+	bool mChartTransparentBackground;
 };
 
-typedef QMap<QString, ViewOpts> ViewsMap;
+typedef QMap<QString, ViewOptions> OptionsMap;
+
 
 /**
 *	Configure dialog
@@ -69,14 +75,12 @@ class Configure : public ConfigureBase
 public:
 	Configure(KNetStats* parent, const QStringList& ifs);
 
-	const ViewsMap& currentConfig()
-	{
-		return mConfig;
-	}
-	bool saveConfig();
+	const OptionsMap& currentConfig() const { return mConfig; }
+	bool canSaveConfig();
+	const OptionsMap& options() const { return mConfig; }
 private:
 	QString mCurrentItem;
-	ViewsMap mConfig;
+	OptionsMap mConfig;
 
 protected slots:
 	void changeInterface(QListBoxItem* item);

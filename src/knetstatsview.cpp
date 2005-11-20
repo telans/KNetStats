@@ -1,5 +1,5 @@
 /***************************************************************************
- *   Copyright (C) 2004 by Hugo Parente Lima                               *
+ *   Copyright (C) 2004-2005 by Hugo Parente Lima                               *
  *   hugo_pl@users.sourceforge.net                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -50,13 +50,20 @@
 #include <cstring>
 #include <cstdio>
 
+// Linux headers
+#include <unistd.h>
+#include <sys/socket.h> 
+#include <sys/ioctl.h>
+
+
 #include "configure.h"
 #include "statistics.h"
 
 extern const char* programName;
 
-KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOpts* view)
-	: mSysDevPath("/sys/class/net/"+interface+"/"), KSystemTray(parent, 0), mInterface(interface),mView(view) {
+KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOptions* options)
+: mSysDevPath("/sys/class/net/"+interface+"/"), KSystemTray(parent, 0), mInterface(interface), mOptions(options) {
+	mFdSock = 0;
 	mFirstUpdate = true;
 	mMaxSpeedAge = 0;
 	mMaxSpeed = 0.0;
@@ -64,16 +71,17 @@ KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOp
 	mConnected = mCarrier = true;
 	mTotalBytesRx = mTotalBytesTx = mTotalPktRx = mTotalPktTx = 0;
 	mSpeedBufferPtr = mSpeedHistoryPtr = 0;
-	
 	mStatistics = 0;
+	
 	resetBuffers();
-
+	openFdSocket();
+	memset(&mDevInfo, 0, sizeof(mDevInfo));
+	strcpy(mDevInfo.ifr_name, mInterface.latin1());
+	
 	setTextFormat(Qt::PlainText);
-	show();
-
-	// Context menu
 	mContextMenu = parent->contextMenu();
-
+	show();
+	
 	// Timer
 	mTimer = new QTimer(this, "timer");
 	connect(mTimer, SIGNAL(timeout()), this, SLOT(updateStats(void)));
@@ -83,37 +91,40 @@ KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOp
 	mStatistics = new Statistics(this);
 }
 
+KNetStatsView::~KNetStatsView() {
+	delete mOptions;
+	if (mFdSock != -1)
+		shutdown(mFdSock, SHUT_RDWR);
+	
+}
+
 void KNetStatsView::setup() {
-	if (mView->mViewMode == Text)
-		setFont(mView->mTxtFont);
-	else if (mView->mViewMode == Icon) {
+	if (mOptions->mViewMode == Text)
+		setFont(mOptions->mTxtFont);
+	else if (mOptions->mViewMode == Icon) {
 		// Load Icons
 		KIconLoader* loader = kapp->iconLoader();
-		mIconError = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_error.png",
+		mIconError = loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_error.png",
 							KIcon::Panel, ICONSIZE);
-		mIconNone = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_none.png",
+		mIconNone = loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_none.png",
 							KIcon::Panel, ICONSIZE);
-		mIconTx = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_tx.png",
+		mIconTx = loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_tx.png",
 						KIcon::Panel, ICONSIZE);
-		mIconRx =loader->loadIcon("theme"+QString::number(mView->mTheme)+"_rx.png",
+		mIconRx =loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_rx.png",
 						KIcon::Panel, ICONSIZE);
-		mIconBoth = loader->loadIcon("theme"+QString::number(mView->mTheme)+"_both.png",
+		mIconBoth = loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_both.png",
 							KIcon::Panel, ICONSIZE);
-		mCurrentIcon = (mConnected && mCarrier) ? &mIconNone : &mIconError;
+		mCurrentIcon = &mIconNone;
 	}
-	mTimer->start(mView->mUpdateInterval);
+	mTimer->start(mOptions->mUpdateInterval);
 	updateStats();
 	QWidget::update();
 	mFirstUpdate = false;
 }
 
-KNetStatsView::~KNetStatsView() {
-	delete mView;
-}
-
-void KNetStatsView::setViewOpts( ViewOpts* view ) {
-	delete mView;
-	mView = view;
+void KNetStatsView::setViewOptions( ViewOptions* opts ) {
+	delete mOptions;
+	mOptions = opts;
 	setup();
 }
 
@@ -123,9 +134,8 @@ void KNetStatsView::updateStats()
 	
 	if (!fp && mConnected) { // interface caiu...
 		mConnected = false;
-		mCurrentIcon = &mIconError;
-		
 		resetBuffers();
+		QWidget::update();
 		KPassivePopup::message(programName, i18n("%1 is inactive").arg(mInterface), kapp->miniIcon(), this);
 	} else if (fp && !mConnected) {
 		mConnected = true;
@@ -139,10 +149,10 @@ void KNetStatsView::updateStats()
 	
 	if (!mConnected)
 		return;
-	
 	if (carrierFlag == '0') { // carrier down
 		if (mCarrier) {
 			mCarrier = false;
+			QWidget::update();
 			KPassivePopup::message(programName, i18n("%1 is disconnected").arg(mInterface), kapp->miniIcon(), this);
 		}
 		return;
@@ -151,28 +161,27 @@ void KNetStatsView::updateStats()
 		KPassivePopup::message(programName, i18n("%1 is connected").arg(mInterface), kapp->miniIcon(), this);
 	}
 	
-	unsigned int brx = readValue("rx_bytes");
-	unsigned int btx = readValue("tx_bytes");
-	unsigned int prx = readValue("rx_packets");
-	unsigned int ptx = readValue("tx_packets");
+	unsigned int brx = readInterfaceNumValue("rx_bytes");
+	unsigned int btx = readInterfaceNumValue("tx_bytes");
+	unsigned int prx = readInterfaceNumValue("rx_packets");
+	unsigned int ptx = readInterfaceNumValue("tx_packets");
 	
-	
-	QPixmap* newIcon;
-	if (++mSpeedBufferPtr >= SPEED_BUFFER_SIZE)
-		mSpeedBufferPtr = 0;
-	
-	// Calcula as velocidades
-	mSpeedBufferTx[mSpeedBufferPtr] = ((btx - mBTx)*(1000.0f/mView->mUpdateInterval));
-	mSpeedBufferRx[mSpeedBufferPtr] = ((brx - mBRx)*(1000.0f/mView->mUpdateInterval));
-	mSpeedBufferPTx[mSpeedBufferPtr] = ((ptx - mPTx)*(1000.0f/mView->mUpdateInterval));
-	mSpeedBufferPRx[mSpeedBufferPtr] = ((prx - mPRx)*(1000.0f/mView->mUpdateInterval));
-	
-	if (++mSpeedHistoryPtr >= HISTORY_SIZE)
-		mSpeedHistoryPtr = 0;
-	mSpeedHistoryRx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferRx);
-	mSpeedHistoryTx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferTx);
 	
 	if (!mFirstUpdate) { // a primeira velocidade sempre eh absurda, para evitar isso temos o mFirstUpdate
+		if (++mSpeedBufferPtr >= SPEED_BUFFER_SIZE)
+			mSpeedBufferPtr = 0;
+		
+		// Calcula as velocidades
+		mSpeedBufferTx[mSpeedBufferPtr] = ((btx - mBTx)*(1000.0f/mOptions->mUpdateInterval));
+		mSpeedBufferRx[mSpeedBufferPtr] = ((brx - mBRx)*(1000.0f/mOptions->mUpdateInterval));
+		mSpeedBufferPTx[mSpeedBufferPtr] = ((ptx - mPTx)*(1000.0f/mOptions->mUpdateInterval));
+		mSpeedBufferPRx[mSpeedBufferPtr] = ((prx - mPRx)*(1000.0f/mOptions->mUpdateInterval));
+		
+		if (++mSpeedHistoryPtr >= HISTORY_SIZE)
+			mSpeedHistoryPtr = 0;
+		mSpeedHistoryRx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferRx);
+		mSpeedHistoryTx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferTx);
+		
 		mMaxSpeedAge--;
 		
 		if (mSpeedHistoryTx[mSpeedHistoryPtr] > mMaxSpeed) {
@@ -187,7 +196,8 @@ void KNetStatsView::updateStats()
 			calcMaxSpeed();
 	}
 	
-	if (mView->mViewMode == Icon) {
+	if (mOptions->mViewMode == Icon) {
+		QPixmap* newIcon;
 		if (brx == mBRx) {
 			if (btx == mBTx )
 				newIcon = &mIconNone;
@@ -204,7 +214,7 @@ void KNetStatsView::updateStats()
 			mCurrentIcon = newIcon;
 			QWidget::update();
 		}
-	}else if (mView->mViewMode == Graphic || (btx != mBTx && brx != mBRx))
+	}else if (mOptions->mViewMode == Graphic || (btx != mBTx && brx != mBRx))
 		QWidget::update();
 	
 	// Update stats
@@ -217,16 +227,23 @@ void KNetStatsView::updateStats()
 	mBTx = btx;
 	mPRx = prx;
 	mPTx = ptx;
-
 }
 
-unsigned long KNetStatsView::readValue(const char* name) {
+unsigned long KNetStatsView::readInterfaceNumValue(const char* name) {
 	// stdio functions appear to be more fast than QFile?
 	FILE* fp = fopen((mSysDevPath+"statistics/"+name).latin1(), "r");
 	long retval;
 	fscanf(fp, "%lu", &retval);
 	fclose(fp);
 	return retval;
+}
+
+QString KNetStatsView::readInterfaceStringValue(const char* name, int maxlength) {
+	QFile macFile(mSysDevPath+name);
+	macFile.open(IO_ReadOnly);
+	QString value;
+	macFile.readLine(value, maxlength);
+	return value;
 }
 
 void KNetStatsView::resetBuffers() {
@@ -241,8 +258,10 @@ void KNetStatsView::resetBuffers() {
 void KNetStatsView::paintEvent( QPaintEvent* ev )
 {
 	QPainter paint(this);
-	switch(mView->mViewMode) {
+	switch(mOptions->mViewMode) {
 		case Icon:
+			if (!mCarrier || !mConnected)
+				mCurrentIcon = &mIconError;
 			paint.drawPixmap(0, 0, *mCurrentIcon);
 			break;
 		case Text:
@@ -255,46 +274,55 @@ void KNetStatsView::paintEvent( QPaintEvent* ev )
 }
 
 void KNetStatsView::drawText(QPainter& paint) {
-	paint.setFont( mView->mTxtFont );
-	paint.setPen( mView->mTxtUplColor );
-	paint.drawText( rect(), Qt::AlignTop, Statistics::byteFormat(byteSpeedTx(), 1, "", "KB", "MB"));
-	paint.setPen( mView->mTxtDldColor );
-	paint.drawText( rect(), Qt::AlignBottom, Statistics::byteFormat(byteSpeedRx(), 1, "", "KB", "MB"));
+	if (!mCarrier || !mConnected) {
+		paint.drawText(rect(), Qt::AlignCenter, "?");
+	} else {
+		paint.setFont( mOptions->mTxtFont );
+		paint.setPen( mOptions->mTxtUplColor );
+		paint.drawText( rect(), Qt::AlignTop, Statistics::byteFormat(byteSpeedTx(), 1, "", "KB", "MB"));
+		paint.setPen( mOptions->mTxtDldColor );
+		paint.drawText( rect(), Qt::AlignBottom, Statistics::byteFormat(byteSpeedRx(), 1, "", "KB", "MB"));
+	}
 }
 
 void KNetStatsView::drawGraphic(QPainter& paint) {
-	//	paint.setBackgroundColor(Qt::black);
-	QSize size = this->size();
-	//	paint.fillRect(0, 0, size.width(), size.height(), Qt::SolidPattern);
-
-	int step = size.width()/HISTORY_SIZE;
-	if (step < 1)
-		step = 1;
-	const int maxHeight = size.height()-1;
+	if (!mCarrier || !mConnected) {
+		paint.drawText(rect(), Qt::AlignCenter, "X");
+		return;
+	}
 	
-	qDebug("MaxSpeed: %d, age: %d", int(mMaxSpeed), mMaxSpeedAge);
+	QSize size = this->size();
+	
+	if (!mOptions->mChartTransparentBackground) {
+		paint.fillRect(0, 0, size.width(), size.height(), mOptions->mChartBgColor);
+	}
+
+	const double step = size.width()/double(HISTORY_SIZE);
+	const int HEIGHT = size.height()-1;
+	
+	//	qDebug("MaxSpeed: %d, age: %d", int(mMaxSpeed), mMaxSpeedAge);
 	int lastX;
-	int lastRxY = maxHeight - int(maxHeight * (mSpeedHistoryRx[mSpeedHistoryPtr]/mMaxSpeed));
-	int lastTxY = maxHeight - int(maxHeight * (mSpeedHistoryTx[mSpeedHistoryPtr]/mMaxSpeed));
+	int lastRxY = HEIGHT - int(HEIGHT * (mSpeedHistoryRx[mSpeedHistoryPtr]/mMaxSpeed));
+	int lastTxY = HEIGHT - int(HEIGHT * (mSpeedHistoryTx[mSpeedHistoryPtr]/mMaxSpeed));
 	int x = lastX = size.width();
 	int count = 0;
 	for (int i = mSpeedHistoryPtr; count < HISTORY_SIZE; i--) {
 		if (i < 0)
 			i = HISTORY_SIZE-1;
 		
-		int rxY = maxHeight - int(maxHeight * (mSpeedHistoryRx[i]/mMaxSpeed));
-		int txY = maxHeight - int(maxHeight * (mSpeedHistoryTx[i]/mMaxSpeed));
-		paint.setPen(Qt::blue);
+		int rxY = HEIGHT - int(HEIGHT * (mSpeedHistoryRx[i]/mMaxSpeed));
+		int txY = HEIGHT - int(HEIGHT * (mSpeedHistoryTx[i]/mMaxSpeed));
+		paint.setPen(mOptions->mChartDldColor);
 		paint.drawLine(lastX, lastRxY, x, rxY);
-		paint.setPen(Qt::red);
+		paint.setPen(mOptions->mChartUplColor);
 		paint.drawLine(lastX, lastTxY, x, txY);
-		qDebug("%d => %d", i, int(mSpeedHistoryRx[i]));
+		//qDebug("%d => %d", i, int(mSpeedHistoryRx[i]));
 		lastX = x;
 		lastRxY = rxY;
 		lastTxY = txY;
 		
 		count++;
-		x-=step;
+		x = width()-int(step*(count+1));
 	}
 }
 
@@ -303,16 +331,36 @@ void KNetStatsView::mousePressEvent(QMouseEvent* ev)
 	if (ev->button() == Qt::RightButton )
 		mContextMenu->exec(QCursor::pos());
 	else if (ev->button() == Qt::LeftButton)
-		statistics();
+		if (mStatistics->isShown())
+			mStatistics->accept();
+		else
+			mStatistics->show();
 }
 
-
-void KNetStatsView::statistics()
-{
-	if (mStatistics->isShown())
-		mStatistics->accept();
-	else
-		mStatistics->show();
+bool KNetStatsView::openFdSocket() {
+	if (mFdSock > 0)
+		return true;
+	if ((mFdSock = socket(AF_INET, SOCK_DGRAM, 0)) > 0)
+		return true;
+	return false;
 }
+
+QString KNetStatsView::getIp() {
+	if (mFdSock == -1 && !openFdSocket())
+		return "";
+	
+	ioctl(mFdSock, SIOCGIFADDR, &mDevInfo);
+	sockaddr_in sin = ((sockaddr_in&)mDevInfo.ifr_addr);
+	return inet_ntoa(sin.sin_addr);
+}
+
+QString KNetStatsView::getNetmask() {
+	if (mFdSock == -1 && !openFdSocket())
+		return "";
+	ioctl(mFdSock, SIOCGIFNETMASK, &mDevInfo);
+	sockaddr_in mask = ((sockaddr_in&)mDevInfo.ifr_netmask);
+	return inet_ntoa(mask.sin_addr);
+}
+
 
 #include "knetstatsview.moc"

@@ -18,45 +18,62 @@
 *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
 ***************************************************************************/
 #include "statistics.h"
-
+#include "chart.h"
 #include "knetstatsview.h"
+
 #include <klocale.h>
-#include <qtimer.h>
 #include <kapplication.h>
+#include <kactivelabel.h>
+#include <qtimer.h>
+#include <qlayout.h>
+
+
 
 Statistics::Statistics( KNetStatsView* parent, const char *name )
-		: StatisticsBase( parent, name )
-{
-	setCaption( i18n( "Statistics for %1" ).arg( parent->interface() ) );
+: StatisticsBase( parent, name ), mInterface(parent->interface()), mParent(parent) {
+	setCaption( i18n( "Details of %1" ).arg( mInterface ) );
+	
+	QBoxLayout* l = new QHBoxLayout( mChart );
+	l->setAutoAdd( TRUE );
+	Chart* chart = new Chart(mChart, parent->speedHistoryTx(), parent->speedHistoryRx(), parent->historyBufferSize(), parent->historyPointer(), parent->maxSpeed());
+	mMAC->setText(mParent->readInterfaceStringValue("address", 18));
+	mIP->setAlignment(Qt::AlignRight);
+	mMAC->setAlignment(Qt::AlignRight);
+	mNetmask->setAlignment(Qt::AlignRight);
 	update();
 
 	mTimer = new QTimer( this );
 	connect( mTimer, SIGNAL( timeout() ), this, SLOT( update() ) );
+	connect( mTimer, SIGNAL( timeout() ), chart, SLOT( update() ) );
 }
 
-void Statistics::update()
-{
-	KNetStatsView* parent = static_cast<KNetStatsView*>( this->parent() );
-	mBRx->setText( byteFormat( parent->totalBytesRx() ) );
-	mBTx->setText( byteFormat( parent->totalBytesTx() ) );
-	mByteSpeedRx->setText( byteFormat( parent->byteSpeedRx(), 1, " B" )+"/s" );
-	mByteSpeedTx->setText( byteFormat( parent->byteSpeedTx(), 1, " B" )+"/s" );
+void Statistics::update() {
+	mMaxSpeed->setText(byteFormat( *mParent->maxSpeed(), 1, " B" )+"/s");
+	mBRx->setText( byteFormat( mParent->totalBytesRx() ) );
+	mBTx->setText( byteFormat( mParent->totalBytesTx() ) );
+	mByteSpeedRx->setText( byteFormat( mParent->byteSpeedRx(), 1, " B" )+"/s" );
+	mByteSpeedTx->setText( byteFormat( mParent->byteSpeedTx(), 1, " B" )+"/s" );
 
-	mPRx->setText( QString::number( parent->totalPktRx() ) );
-	mPTx->setText( QString::number( parent->totalPktTx() ) );
-	mPktSpeedRx->setText( QString::number( parent->pktSpeedRx(), 'f', 1 )+"pkts/s" );
-	mPktSpeedTx->setText( QString::number( parent->pktSpeedTx(), 'f', 1 )+"pkts/s" );
+	mPRx->setText( QString::number( mParent->totalPktRx() ) );
+	mPTx->setText( QString::number( mParent->totalPktTx() ) );
+	mPktSpeedRx->setText( QString::number( mParent->pktSpeedRx(), 'f', 1 )+"pkts/s" );
+	mPktSpeedTx->setText( QString::number( mParent->pktSpeedTx(), 'f', 1 )+"pkts/s" );
 }
 
-void Statistics::show()
-{
-	mTimer->start( static_cast<KNetStatsView*>(parent())->updateInterval() );
+void Statistics::show() {
+	// Update details...
+	mMTU->setText(mParent->readInterfaceStringValue("mtu", 6));
+	mIP->setText( mParent->getIp() );
+	mNetmask->setText( mParent->getNetmask() );
+	
+	mTimer->start( mParent->updateInterval() );
 	StatisticsBase::show();
 }
 
-void Statistics::accept()
-{
+void Statistics::accept() {
 	mTimer->stop();
 	StatisticsBase::accept();
 }
+
+
 #include "statistics.moc"

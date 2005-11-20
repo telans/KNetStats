@@ -73,32 +73,41 @@ KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0) {
 	} else {
 		// inicia as views necessarias.
 		for (QStringList::Iterator i = views.begin(); i != views.end(); ++i) {
-			KNetStatsView* kview = new KNetStatsView(this, *i, getViewOpt(*i));
-			mView[*i] = kview;
+			ViewOptions* options = new ViewOptions;
+			readInterfaceOptions(*i, options);
+			KNetStatsView* kview = new KNetStatsView(this, *i, options);
+			mViews[*i] = kview;
 		}
 	}
 }
 
-// move it to knetstats view constructor?
-ViewOpts* KNetStats::getViewOpt( const QString& interface ) {
+
+void KNetStats::readInterfaceOptions(const QString& interface, ViewOptions* opts) {
+	
 	KConfig* cfg = kapp->config();
-	QFont defaultFont = font();
-
 	KConfigGroupSaver groupSaver(cfg, interface);
-	ViewOpts* view = new ViewOpts;
+	QFont defaultFont = font();
+	
 	// general
-	view->mUpdateInterval = cfg->readNumEntry("UpdateInterval", 300);
-	view->mViewMode = (ViewMode)cfg->readNumEntry("ViewMode", 0);
-	view->mMonitoring = cfg->readBoolEntry("Monitoring", true);
+	opts->mUpdateInterval = cfg->readNumEntry("UpdateInterval", 300);
+	opts->mViewMode = (ViewMode)cfg->readNumEntry("ViewMode", 0);
+	opts->mMonitoring = cfg->readBoolEntry("Monitoring", true);
 	// txt view
-	view->mTxtFont = cfg->readFontEntry("TxtFont", &defaultFont);
-	view->mTxtUplColor = cfg->readColorEntry("TxtUplColor", &Qt::red);
-	view->mTxtDldColor = cfg->readColorEntry("TxtDldColor", &Qt::green);
+	opts->mTxtFont = cfg->readFontEntry("TxtFont", &defaultFont);
+	opts->mTxtUplColor = cfg->readColorEntry("TxtUplColor", &Qt::red);
+	opts->mTxtDldColor = cfg->readColorEntry("TxtDldColor", &Qt::green);
 	// IconView
-	view->mTheme = cfg->readNumEntry("Theme", 0);
-
-	return view;
+	int defaultTheme = 0;
+	if (interface.startsWith("wlan"))
+		defaultTheme = 3;
+	opts->mTheme = cfg->readNumEntry("Theme", defaultTheme);
+	// Graphic
+	opts->mChartUplColor = cfg->readColorEntry("ChartUplColor", &Qt::red);
+	opts->mChartDldColor = cfg->readColorEntry("ChartDldColor", &Qt::blue);
+	opts->mChartBgColor = cfg->readColorEntry("ChartBgColor", &Qt::white);
+	opts->mChartTransparentBackground = cfg->readBoolEntry("ChartUseTransparentBackground", true);
 }
+
 
 QStringList KNetStats::searchInterfaces() {
 	QDir dir("/sys/class/net");
@@ -123,7 +132,7 @@ bool KNetStats::configure() {
 			KMessageBox::error(this, i18n("You don't have any network interface.\nKNetStats will quit now."));
 			return false;
 		}
-
+		
 		mConfigure = new Configure(this, ifs);
 		connect(mConfigure->mOk, SIGNAL(clicked()), this, SLOT(configOk()));
 		connect(mConfigure->mApply, SIGNAL(clicked()), this, SLOT(configApply()));
@@ -135,8 +144,8 @@ bool KNetStats::configure() {
 
 void KNetStats::configOk()
 {
-	if (mConfigure->saveConfig()) {
-		applyConfig( mConfigure->currentConfig() );
+	if (mConfigure->canSaveConfig()) {
+		saveConfig( mConfigure->options() );
 		delete mConfigure;
 		mConfigure = 0;
 	}
@@ -144,40 +153,57 @@ void KNetStats::configOk()
 
 void KNetStats::configApply()
 {
-	if (mConfigure->saveConfig())
-		applyConfig( mConfigure->currentConfig() );
+	if (mConfigure->canSaveConfig())
+		saveConfig( mConfigure->options() );
 }
 
 void KNetStats::configCancel()
 {
 	delete mConfigure;
 	mConfigure = 0;
-
-	if (!mView.size())
+	
+	if (!mViews.size())
 		kapp->quit();
 }
 
-void KNetStats::applyConfig(const ViewsMap& map)
+void KNetStats::saveConfig(const OptionsMap& options)
 {
-	for (ViewsMap::ConstIterator i = map.begin(); i != map.end(); ++i) {
-		if (i.data().mMonitoring) {
-			// Verifica se ja esta sendo monitorada
-			TrayIconMap::Iterator it = mView.find(i.key());
-			if (it == mView.end()) {
-				ViewOpts* view = new ViewOpts(i.data()); // coping data.. hmm... ugly!
-				KNetStatsView* kview = new KNetStatsView(this, i.key(), view);
-				mView[i.key()] = kview;
+	KConfig* cfg = kapp->config();
+	
+	for(OptionsMap::ConstIterator i = options.begin(); i != options.end(); ++i) {
+		KConfigGroupSaver groupSaver(cfg, i.key());
+		const ViewOptions& opt = i.data();
+		// general
+		cfg->writeEntry("UpdateInterval", opt.mUpdateInterval);
+		cfg->writeEntry("ViewMode", opt.mViewMode);
+		cfg->writeEntry("Monitoring", opt.mMonitoring);
+		// txt view
+		cfg->writeEntry("TxtFont", opt.mTxtFont);
+		cfg->writeEntry("TxtUplColor", opt.mTxtUplColor);
+		cfg->writeEntry("TxtDldColor", opt.mTxtDldColor);
+		// IconView
+		cfg->writeEntry("Theme", opt.mTheme);
+		// Graphic view
+		cfg->writeEntry("ChartUplColor", opt.mChartUplColor);
+		cfg->writeEntry("ChartDldColor", opt.mChartDldColor);
+		cfg->writeEntry("ChartBgColor", opt.mChartBgColor);
+		cfg->writeEntry("ChartUseTransparentBackground", opt.mChartTransparentBackground);
+	
+		TrayIconMap::Iterator trayIcon = mViews.find(i.key());
+		if (opt.mMonitoring) {	// Verifica se ja esta sendo monitorada
+			if (trayIcon == mViews.end()) { // nova interface!
+				KNetStatsView* kview = new KNetStatsView(this, i.key(), new ViewOptions(opt));
+				mViews[i.key()] = kview;
 			} else
-				it.data()->setViewOpts( new ViewOpts(i.data()) );
-		} else {
+				trayIcon.data()->setViewOptions( new ViewOptions(opt) );
+		} else
 			// Verificar se existe um trayicon, e apagar o mesmo!
-			TrayIconMap::Iterator it = mView.find(i.key());
-			if (it != mView.end()) {
-				delete it.data();
-				mView.erase(it);
+			if (trayIcon != mViews.end()) {
+				delete trayIcon.data();
+				mViews.erase(trayIcon);
 			}
-		}
 	}
+	cfg->writeEntry("CurrentViews", mViews.keys());
 }
 
 void KNetStats::about()
