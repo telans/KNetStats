@@ -1,7 +1,0 @@
-src/statistics.cpp
-src/main.cpp
-src/knetstats.cpp
-src/knetstatsview.cpp
-src/configure.cpp
-src/uic_statisticsbase.cc
-src/uic_configurebase.cc
