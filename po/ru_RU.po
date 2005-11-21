@@ -44,14 +44,12 @@ msgid "%1 is active"
 msgstr "%1 в активном состоянии"
 
 #: ../src/knetstatsview.cpp:156
-#, fuzzy
 msgid "%1 is disconnected"
-msgstr "%1 в неактивном состоянии"
+msgstr "%1 отключено"
 
 #: ../src/knetstatsview.cpp:161
-#, fuzzy
 msgid "%1 is connected"
-msgstr "%1 в неактивном состоянии"
+msgstr "%1 подключено"
 
 #: ../src/main.cpp:11 ../src/statisticsbase.cpp:225
 msgid "KNetStats"
@@ -82,9 +80,8 @@ msgid "KNetStats translation to other languages"
 msgstr "Перевод KNetStats на другие языки"
 
 #: ../src/statistics.cpp:34
-#, fuzzy
 msgid "Details of %1"
-msgstr "Статистика для интерфейса %1"
+msgstr "Детально по интерфейсу %1"
 
 #: ../src/configurebase.cpp:271
 msgid "Configure KNetStats"
@@ -128,23 +125,23 @@ msgstr "Цвет индикатора исходящих пакетов:"
 
 #: ../src/configurebase.cpp:287
 msgid "Background:"
-msgstr ""
+msgstr "Фон:"
 
 #: ../src/configurebase.cpp:293
 msgid "Transparent background"
-msgstr ""
+msgstr "Прозрачный фон"
 
 #: ../src/configurebase.cpp:296
 msgid "Icon"
-msgstr ""
+msgstr "Иконка"
 
 #: ../src/configurebase.cpp:297
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: ../src/configurebase.cpp:298
 msgid "Chart"
-msgstr ""
+msgstr "Чарт"
 
 #: ../src/configurebase.cpp:299
 msgid "View mode:"
@@ -159,17 +156,16 @@ msgid "ms"
 msgstr "мс"
 
 #: ../src/configurebase.cpp:302
-#, fuzzy
 msgid "To monitor this interface"
 msgstr "Наблюдение за интерфейсом"
 
 #: ../src/statisticsbase.cpp:226
 msgid "? KB/s"
-msgstr ""
+msgstr "? KB/s"
 
 #: ../src/statisticsbase.cpp:227
 msgid "0 KB/s"
-msgstr ""
+msgstr "0 KB/s"
 
 #: ../src/statisticsbase.cpp:228
 msgid "Upload speed:"
@@ -181,7 +177,7 @@ msgstr "Получено:"
 
 #: ../src/statisticsbase.cpp:230
 msgid "Download speed:"
-msgstr "Скорость загрузки:"
+msgstr "Входящая скорость:"
 
 #: ../src/statisticsbase.cpp:231
 msgid "Transmited:"
@@ -193,32 +189,32 @@ msgstr "Байт(а)"
 
 #: ../src/statisticsbase.cpp:233
 msgid "Packets"
-msgstr "Пакетов"
+msgstr "Пакета(ов)"
 
 #: ../src/statisticsbase.cpp:234
 msgid "Statistics"
-msgstr ""
+msgstr "Статистика"
 
 #: ../src/statisticsbase.cpp:235
 msgid "IP:"
-msgstr ""
+msgstr "IP адрес:"
 
 #: ../src/statisticsbase.cpp:236
 msgid "Netmask:"
-msgstr ""
+msgstr "Маска подсети"
 
 #: ../src/statisticsbase.cpp:237
 msgid "MAC:"
-msgstr ""
+msgstr "MAC адрес:"
 
 #: ../src/statisticsbase.cpp:238
 msgid "MTU:"
-msgstr ""
+msgstr "MTU (максимальный размер пакета):"
 
 #: ../src/statisticsbase.cpp:240
-#, fuzzy
+
 msgid "Details"
-msgstr "Статистика для интерфейса %1"
+msgstr "Детально по интерфейсу %1"
 
 #~ msgid "O&k"
 #~ msgstr "О.К."

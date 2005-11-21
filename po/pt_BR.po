@@ -78,7 +78,6 @@ msgid "KNetStats translation to other languages"
 msgstr "Tradução do KNetStats para outras línguas."
 
 #: ../src/statistics.cpp:34
-#, fuzzy
 msgid "Details of %1"
 msgstr "Estatísticas de %1"
 
@@ -140,7 +139,7 @@ msgstr "Texto"
 
 #: ../src/configurebase.cpp:298
 msgid "Chart"
-msgstr ""
+msgstr "Gráfico"
 
 #: ../src/configurebase.cpp:299
 msgid "View mode:"
@@ -160,11 +159,11 @@ msgstr "Monitorar esta interface"
 
 #: ../src/statisticsbase.cpp:226
 msgid "? KB/s"
-msgstr ""
+msgstr "? KB/s"
 
 #: ../src/statisticsbase.cpp:227
 msgid "0 KB/s"
-msgstr ""
+msgstr "0 KB/s"
 
 #: ../src/statisticsbase.cpp:228
 msgid "Upload speed:"
@@ -191,30 +190,28 @@ msgid "Packets"
 msgstr "Pacotes"
 
 #: ../src/statisticsbase.cpp:234
-#, fuzzy
 msgid "Statistics"
-msgstr "&EstatÃ­sticas"
+msgstr "Estatísticas"
 
 #: ../src/statisticsbase.cpp:235
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: ../src/statisticsbase.cpp:236
 msgid "Netmask:"
-msgstr ""
+msgstr "Máscara:"
 
 #: ../src/statisticsbase.cpp:237
 msgid "MAC:"
-msgstr ""
+msgstr "MAC:"
 
 #: ../src/statisticsbase.cpp:238
 msgid "MTU:"
-msgstr ""
+msgstr "MTU:"
 
 #: ../src/statisticsbase.cpp:240
-#, fuzzy
 msgid "Details"
-msgstr "Estatísticas de %1"
+msgstr "Detalhes"
 
 #~ msgid "O&k"
 #~ msgstr "O&k"
