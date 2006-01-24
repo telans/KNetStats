@@ -45,30 +45,30 @@ class KNetStats;
 class KNetStatsView : public KSystemTray
 {
 	Q_OBJECT
-		
+
 	enum {
 		HISTORY_SIZE = 50,	// Tamanho do historico.
 		SPEED_BUFFER_SIZE = 10	// Tamanho do buffer usado para calcular a velocidade
 	};
-		
+
 public:
-	KNetStatsView(KNetStats* parent, const QString& interface, ViewOptions* options);
+	KNetStatsView(KNetStats* parent, const QString& interface);
 	~KNetStatsView();
 
-	void setViewOptions(ViewOptions* view);
+	void updateViewOptions();
 	// read a value from /sys/class/net/interface/name
 	unsigned long readInterfaceNumValue(const char* name);
 	// read a value from /sys/class/net/interface/name
 	QString readInterfaceStringValue(const char* name, int maxlength);
 	QString getIp();
 	QString getNetmask();
-	
+
 	const double* speedHistoryRx() const { return mSpeedHistoryRx; }
 	const double* speedHistoryTx() const { return mSpeedHistoryTx; }
 	const int historyBufferSize() const { return HISTORY_SIZE; }
 	const int* historyPointer() const { return &mSpeedHistoryPtr; }
 	const double* maxSpeed() const { return &mMaxSpeed; }
-	
+
 	///	The current monitored network interface
 	inline const QString& interface() const;
 	///	The current Update Interval in miliseconds
@@ -98,25 +98,25 @@ protected:
 	void paintEvent( QPaintEvent* ev );
 
 private:
-	
+
 	int mFdSock;					// Kernel-knetstats socket
 	struct ifreq mDevInfo;			// info struct about our interface
-	
-	
+
+
 	QString mSysDevPath;			// Path to the device.
 	bool mCarrier;					// Interface carrier is on?
 	bool mConnected;				// Interface exists?
-	
+
 	KPopupMenu* mContextMenu;		// Global ContextMenu
 	Statistics* mStatistics;		// Statistics window
 	QString mInterface;				// Current interface
-	ViewOptions* mOptions;				// View options
+	ViewOptions mOptions;			// View options
 
 	// Icons
 	QPixmap mIconError, mIconNone, mIconTx, mIconRx, mIconBoth;
 	QPixmap* mCurrentIcon;			// Current state
 	QTimer* mTimer;					// Timer
-	
+
 	//	Rx e Tx to bytes and packets
 	unsigned long mBRx, mBTx, mPRx, mPTx;
 	// Statistics
@@ -126,16 +126,16 @@ private:
 	double mSpeedBufferPRx[SPEED_BUFFER_SIZE], mSpeedBufferPTx[SPEED_BUFFER_SIZE];
 	// pointer to current speed buffer position
 	int mSpeedBufferPtr;
-	
+
 	bool mFirstUpdate;
-	
+
 	// History buffer TODO: Make it configurable!
 	double mSpeedHistoryRx[HISTORY_SIZE];
 	double mSpeedHistoryTx[HISTORY_SIZE];
 	int mSpeedHistoryPtr;
 	double mMaxSpeed;
 	int mMaxSpeedAge;
-	
+
 
 	// setup the view.
 	void setup();
@@ -149,7 +149,7 @@ private:
 	inline double calcSpeed(const double* buffer) const;
 
 	bool openFdSocket();
-	
+
 private slots:
 	// Called by the timer to update statistics
 	void updateStats();
@@ -188,12 +188,12 @@ const QString& KNetStatsView::interface() const
 
 int KNetStatsView::updateInterval() const
 {
-	return mOptions->mUpdateInterval;
+	return mOptions.mUpdateInterval;
 }
 
 ViewMode KNetStatsView::viewMode() const
 {
-	return mOptions->mViewMode;
+	return mOptions.mViewMode;
 }
 
 unsigned int KNetStatsView::totalBytesRx() const

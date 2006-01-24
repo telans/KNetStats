@@ -27,6 +27,7 @@
 #include <qcheckbox.h>
 #include <qlabel.h>
 #include <qwidgetstack.h>
+#include <qpopupmenu.h>
 // Kde includes
 #include <kapplication.h>
 #include <klocale.h>
@@ -53,12 +54,13 @@ Configure::Configure(KNetStats* parent, const QStringList& ifs) : ConfigureBase(
 		mInterfaces->insertItem(iconPCI, *it);
 		parent->readInterfaceOptions(*it, &mConfig[*it]);
 	}
-	
+
 	mInterfaces->setCurrentItem(0);
 	changeInterface(mInterfaces->selectedItem());
 
 	connect(mInterfaces, SIGNAL(selectionChanged(QListBoxItem*)), this, SLOT(changeInterface(QListBoxItem*)));
 	connect(mTheme, SIGNAL(activated(int)), this, SLOT(changeTheme(int)));
+	//connect(mInterfaces, SIGNAL(contextMenuRequested(QListBoxItem*, const QPoint&)), this, SLOT(showInterfaceContextMenu(QListBoxItem*, const QPoint&)));
 }
 
 void Configure::changeInterface(QListBoxItem* item) {
@@ -66,7 +68,7 @@ void Configure::changeInterface(QListBoxItem* item) {
 
 	if (!mCurrentItem.isEmpty())
 	{
-		// Salvas as modificações passadas
+		// Salvas as modificaÃ§Ãµes passadas
 		ViewOptions& oldview = mConfig[mCurrentItem];
 		// general options
 		oldview.mMonitoring = mMonitoring->isChecked();
@@ -106,13 +108,13 @@ void Configure::changeInterface(QListBoxItem* item) {
 	mChartDldColor->setColor(view.mChartDldColor);
 	mChartBgColor->setColor(view.mChartBgColor);
 	mChartTransparentBackground->setChecked(view.mChartTransparentBackground);
-	
+
 	mCurrentItem = interface;
 }
 
 bool Configure::canSaveConfig()
 {
-	// Atualiza o cache de opções
+	// update the options
 	changeInterface(mInterfaces->item( mInterfaces->currentItem() ));
 
 	bool ok = false;
@@ -141,4 +143,19 @@ void Configure::changeTheme(int theme)
 	mIconBoth->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_both.png",
 						 KIcon::Panel, ICONSIZE));
 }
+/*
+void Configure::showInterfaceContextMenu(QListBoxItem* item, const QPoint& point) {
+	if (!item && mConfig.size() == 1)
+		return;
+	QPixmap icon = kapp->iconLoader()->loadIcon("editdelete", KIcon::Small, 16);
+	QPopupMenu* menu = new QPopupMenu(this);
+	menu->insertItem(icon, i18n("Renomve Interface"), this, SLOT(removeInterface()));
+	menu->exec(point);
+}
+
+void Configure::removeInterface() {
+	mConfig.erase(mInterfaces->currentText());
+	mInterfaces->removeItem(mInterfaces->currentItem());
+}
+*/
 #include "configure.moc"

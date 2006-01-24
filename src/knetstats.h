@@ -45,15 +45,15 @@ public:
 	*	\return A StringList with the network interface names
 	*/
 	static QStringList searchInterfaces();
+	static void readInterfaceOptions(const QString& interface, ViewOptions* opts);
 
 	/**
 	*	Exists at least 1 view?
 	*/
-	bool allOk() const {
-		return mAllOk;
+	bool canStart() const {
+		return mCanStart;
 	}
-	
-	void readInterfaceOptions(const QString& interface, ViewOptions* opts);
+
 
 public slots:
 	/// Display configure the dialog box
@@ -69,13 +69,13 @@ public slots:
 	void about();
 
 private:
-	bool mAllOk;
+	bool mCanStart;
 	KPopupMenu* mContextMenu; // help menu usado por todos os tray icons
 	Configure* mConfigure;
 	KActionCollection* mActionCollection;
 	typedef QMap<QString, KNetStatsView*> TrayIconMap;
 	TrayIconMap mViews;
-	
+
 	void readOptions();
 	void saveConfig(const OptionsMap& options);
 	void clearOptions(OptionsMap* options);

@@ -43,7 +43,7 @@
 // StdC++ includes
 #include <algorithm>
 
-KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0) {
+KNetStats::KNetStats() : QWidget(0, "knetstats"), mCanStart(true), mConfigure(0) {
 	setIcon(kapp->icon());
 
 	// Cria o contextMenu
@@ -52,7 +52,6 @@ KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0) {
 	mContextMenu->insertTitle( kapp->miniIcon(), kapp->caption() );
 	KAction* configure = KStdAction::preferences(this, SLOT(configure()), mActionCollection, "configure");
 	configure->plug(mContextMenu);
-//	mContextMenu->insertItem( i18n("&Statistics"), this, SLOT(statistics()) );
 	mContextMenu->insertSeparator();
 	KHelpMenu* helpmenu = new KHelpMenu(this, QString::null, false);
 	mContextMenu->insertItem( i18n("&Help"), helpmenu->menu() );
@@ -63,19 +62,17 @@ KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0) {
 
 	connect(helpmenu, SIGNAL(showAboutApplication()), this, SLOT(about()));
 
-	// lê arquivo de configuração
+	// read the current views from config file
 	KConfig* cfg = kapp->config();
 	QStringList views = cfg->readListEntry("CurrentViews");
 
-	if (!views.size()) {	// no views... =/, mostra tela de configuração
+	if (!views.size()) {	// no views... =/, display the configuration dialog
 		if (!this->configure())
-			mAllOk = false;
+			mCanStart = false;
 	} else {
-		// inicia as views necessarias.
+		// start the views
 		for (QStringList::Iterator i = views.begin(); i != views.end(); ++i) {
-			ViewOptions* options = new ViewOptions;
-			readInterfaceOptions(*i, options);
-			KNetStatsView* kview = new KNetStatsView(this, *i, options);
+			KNetStatsView* kview = new KNetStatsView(this, *i);
 			mViews[*i] = kview;
 		}
 	}
@@ -83,17 +80,16 @@ KNetStats::KNetStats() : QWidget(0, "knetstats"), mAllOk(true), mConfigure(0) {
 
 
 void KNetStats::readInterfaceOptions(const QString& interface, ViewOptions* opts) {
-	
+
 	KConfig* cfg = kapp->config();
 	KConfigGroupSaver groupSaver(cfg, interface);
-	QFont defaultFont = font();
-	
+
 	// general
 	opts->mUpdateInterval = cfg->readNumEntry("UpdateInterval", 300);
 	opts->mViewMode = (ViewMode)cfg->readNumEntry("ViewMode", 0);
 	opts->mMonitoring = cfg->readBoolEntry("Monitoring", true);
 	// txt view
-	opts->mTxtFont = cfg->readFontEntry("TxtFont", &defaultFont);
+	opts->mTxtFont = cfg->readFontEntry("TxtFont");
 	opts->mTxtUplColor = cfg->readColorEntry("TxtUplColor", &Qt::red);
 	opts->mTxtDldColor = cfg->readColorEntry("TxtDldColor", &Qt::green);
 	// IconView
@@ -111,10 +107,15 @@ void KNetStats::readInterfaceOptions(const QString& interface, ViewOptions* opts
 
 QStringList KNetStats::searchInterfaces() {
 	QDir dir("/sys/class/net");
-	QStringList list = dir.entryList(QDir::Dirs);
-	list.pop_front(); // removes "." and ".." entriess
-	list.pop_front();
-	return list;
+	if (!dir.exists()) {
+		KMessageBox::error(0, i18n("You need kernel 2.6.x with support to the /sys filesystem."));
+		return QStringList();
+	} else {
+		QStringList list = dir.entryList(QDir::Dirs);
+		list.pop_front(); // removes "." and ".." entriess
+		list.pop_front();
+		return list;
+	}
 }
 
 bool KNetStats::configure() {
@@ -126,13 +127,12 @@ bool KNetStats::configure() {
 		ifs += kapp->config()->readListEntry("AllViews");
 		ifs.sort();
 		ifs.erase( std::unique(ifs.begin(), ifs.end()), ifs.end() );
-		kapp->config()->writeEntry("AllViews", ifs);
 
 		if (!ifs.size()) {
 			KMessageBox::error(this, i18n("You don't have any network interface.\nKNetStats will quit now."));
 			return false;
 		}
-		
+
 		mConfigure = new Configure(this, ifs);
 		connect(mConfigure->mOk, SIGNAL(clicked()), this, SLOT(configOk()));
 		connect(mConfigure->mApply, SIGNAL(clicked()), this, SLOT(configApply()));
@@ -161,7 +161,7 @@ void KNetStats::configCancel()
 {
 	delete mConfigure;
 	mConfigure = 0;
-	
+
 	if (!mViews.size())
 		kapp->quit();
 }
@@ -169,8 +169,10 @@ void KNetStats::configCancel()
 void KNetStats::saveConfig(const OptionsMap& options)
 {
 	KConfig* cfg = kapp->config();
-	
+
+	QStringList ifs;
 	for(OptionsMap::ConstIterator i = options.begin(); i != options.end(); ++i) {
+		ifs.push_back(i.key());
 		KConfigGroupSaver groupSaver(cfg, i.key());
 		const ViewOptions& opt = i.data();
 		// general
@@ -188,21 +190,22 @@ void KNetStats::saveConfig(const OptionsMap& options)
 		cfg->writeEntry("ChartDldColor", opt.mChartDldColor);
 		cfg->writeEntry("ChartBgColor", opt.mChartBgColor);
 		cfg->writeEntry("ChartUseTransparentBackground", opt.mChartTransparentBackground);
-	
+
 		TrayIconMap::Iterator trayIcon = mViews.find(i.key());
-		if (opt.mMonitoring) {	// Verifica se ja esta sendo monitorada
-			if (trayIcon == mViews.end()) { // nova interface!
-				KNetStatsView* kview = new KNetStatsView(this, i.key(), new ViewOptions(opt));
+		if (opt.mMonitoring) {	// check if we are already monitoring this interface.
+			if (trayIcon == mViews.end()) { // new interface!
+				KNetStatsView* kview = new KNetStatsView(this, i.key());
 				mViews[i.key()] = kview;
 			} else
-				trayIcon.data()->setViewOptions( new ViewOptions(opt) );
+				trayIcon.data()->updateViewOptions();
 		} else
-			// Verificar se existe um trayicon, e apagar o mesmo!
+			// Check if a try icon exist and remove then!
 			if (trayIcon != mViews.end()) {
 				delete trayIcon.data();
 				mViews.erase(trayIcon);
 			}
 	}
+	cfg->writeEntry("AllViews", ifs);
 	cfg->writeEntry("CurrentViews", mViews.keys());
 }
 

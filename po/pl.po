@@ -1,14 +1,14 @@
 # Polish translation of KNetStats.
-# Copyright (C) 2004 Hugo Parente Lima
+# Copyright (C) 2004-2005 Hugo Parente Lima
 # This file is distributed under the same license as the KNetStats package.
 # Wiktor Wandachowicz <wiktorw@people.pl>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: KNetStats 1.3-beta2\n"
+"Project-Id-Version: knetstats-1.5_beta\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-11-20 03:07+0000\n"
-"PO-Revision-Date: 2005-03-05 09:11+0100\n"
+"PO-Revision-Date: 2005-12-03 18:07+0100\n"
 "Last-Translator: Wiktor Wandachowicz <wiktorw@people.pl>\n"
 "Language-Team: pl <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,21 +33,19 @@ msgstr "Monitorowanie %1"
 
 #: ../src/knetstatsview.cpp:139
 msgid "%1 is inactive"
-msgstr "%1 jest nieaktywne"
+msgstr "%1 - nieaktywne"
 
 #: ../src/knetstatsview.cpp:142
 msgid "%1 is active"
-msgstr "%1 jest aktywne"
+msgstr "%1 - aktywne"
 
 #: ../src/knetstatsview.cpp:156
-#, fuzzy
 msgid "%1 is disconnected"
-msgstr "%1 jest nieaktywne"
+msgstr "%1 - brak połączenia"
 
 #: ../src/knetstatsview.cpp:161
-#, fuzzy
 msgid "%1 is connected"
-msgstr "%1 jest nieaktywne"
+msgstr "%1 - połączono"
 
 #: ../src/main.cpp:11 ../src/statisticsbase.cpp:225
 msgid "KNetStats"
@@ -78,9 +76,8 @@ msgid "KNetStats translation to other languages"
 msgstr "Tłumaczenie KNetStats na inne języki"
 
 #: ../src/statistics.cpp:34
-#, fuzzy
 msgid "Details of %1"
-msgstr "Statystyki dla %1"
+msgstr "Szczegóły dla %1"
 
 #: ../src/configurebase.cpp:271
 msgid "Configure KNetStats"
@@ -124,23 +121,23 @@ msgstr "Kolor dla wysyłania:"
 
 #: ../src/configurebase.cpp:287
 msgid "Background:"
-msgstr ""
+msgstr "Kolor tła:"
 
 #: ../src/configurebase.cpp:293
 msgid "Transparent background"
-msgstr ""
+msgstr "Przezroczyste tło"
 
 #: ../src/configurebase.cpp:296
 msgid "Icon"
-msgstr ""
+msgstr "Ikona"
 
 #: ../src/configurebase.cpp:297
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: ../src/configurebase.cpp:298
 msgid "Chart"
-msgstr ""
+msgstr "Wykres"
 
 #: ../src/configurebase.cpp:299
 msgid "View mode:"
@@ -155,17 +152,16 @@ msgid "ms"
 msgstr "ms"
 
 #: ../src/configurebase.cpp:302
-#, fuzzy
 msgid "To monitor this interface"
 msgstr "Monitoruj ten interfejs"
 
 #: ../src/statisticsbase.cpp:226
 msgid "? KB/s"
-msgstr ""
+msgstr "? KB/s"
 
 #: ../src/statisticsbase.cpp:227
 msgid "0 KB/s"
-msgstr ""
+msgstr "0 KB/s"
 
 #: ../src/statisticsbase.cpp:228
 msgid "Upload speed:"
@@ -192,30 +188,28 @@ msgid "Packets"
 msgstr "Pakiety"
 
 #: ../src/statisticsbase.cpp:234
-#, fuzzy
 msgid "Statistics"
-msgstr "&Statystyki"
+msgstr "&Statystyka"
 
 #: ../src/statisticsbase.cpp:235
 msgid "IP:"
-msgstr ""
+msgstr "Adres IP:"
 
 #: ../src/statisticsbase.cpp:236
 msgid "Netmask:"
-msgstr ""
+msgstr "Maska podsieci:"
 
 #: ../src/statisticsbase.cpp:237
 msgid "MAC:"
-msgstr ""
+msgstr "Adres sprzętowy (MAC):"
 
 #: ../src/statisticsbase.cpp:238
 msgid "MTU:"
-msgstr ""
+msgstr "Maks. jednostka transmisji (MTU):"
 
 #: ../src/statisticsbase.cpp:240
-#, fuzzy
 msgid "Details"
-msgstr "Statystyki dla %1"
+msgstr "Szczegóły"
 
 #~ msgid "O&k"
 #~ msgstr "O&k"

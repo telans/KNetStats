@@ -52,7 +52,7 @@
 
 // Linux headers
 #include <unistd.h>
-#include <sys/socket.h> 
+#include <sys/socket.h>
 #include <sys/ioctl.h>
 
 
@@ -61,8 +61,8 @@
 
 extern const char* programName;
 
-KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOptions* options)
-: mSysDevPath("/sys/class/net/"+interface+"/"), KSystemTray(parent, 0), mInterface(interface), mOptions(options) {
+KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface)
+: mSysDevPath("/sys/class/net/"+interface+"/"), KSystemTray(parent, 0), mInterface(interface) {
 	mFdSock = 0;
 	mFirstUpdate = true;
 	mMaxSpeedAge = 0;
@@ -72,16 +72,17 @@ KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOp
 	mTotalBytesRx = mTotalBytesTx = mTotalPktRx = mTotalPktTx = 0;
 	mSpeedBufferPtr = mSpeedHistoryPtr = 0;
 	mStatistics = 0;
-	
+
+	KNetStats::readInterfaceOptions(interface, &mOptions);
 	resetBuffers();
 	openFdSocket();
 	memset(&mDevInfo, 0, sizeof(mDevInfo));
 	strcpy(mDevInfo.ifr_name, mInterface.latin1());
-	
+
 	setTextFormat(Qt::PlainText);
 	mContextMenu = parent->contextMenu();
 	show();
-	
+
 	// Timer
 	mTimer = new QTimer(this, "timer");
 	connect(mTimer, SIGNAL(timeout()), this, SLOT(updateStats(void)));
@@ -92,46 +93,44 @@ KNetStatsView::KNetStatsView(KNetStats* parent, const QString& interface, ViewOp
 }
 
 KNetStatsView::~KNetStatsView() {
-	delete mOptions;
 	if (mFdSock != -1)
 		shutdown(mFdSock, SHUT_RDWR);
-	
+
 }
 
 void KNetStatsView::setup() {
-	if (mOptions->mViewMode == Text)
-		setFont(mOptions->mTxtFont);
-	else if (mOptions->mViewMode == Icon) {
+	if (mOptions.mViewMode == Text)
+		setFont(mOptions.mTxtFont);
+	else if (mOptions.mViewMode == Icon) {
 		// Load Icons
 		KIconLoader* loader = kapp->iconLoader();
-		mIconError = loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_error.png",
+		mIconError = loader->loadIcon("theme"+QString::number(mOptions.mTheme)+"_error.png",
 							KIcon::Panel, ICONSIZE);
-		mIconNone = loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_none.png",
+		mIconNone = loader->loadIcon("theme"+QString::number(mOptions.mTheme)+"_none.png",
 							KIcon::Panel, ICONSIZE);
-		mIconTx = loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_tx.png",
+		mIconTx = loader->loadIcon("theme"+QString::number(mOptions.mTheme)+"_tx.png",
 						KIcon::Panel, ICONSIZE);
-		mIconRx =loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_rx.png",
+		mIconRx =loader->loadIcon("theme"+QString::number(mOptions.mTheme)+"_rx.png",
 						KIcon::Panel, ICONSIZE);
-		mIconBoth = loader->loadIcon("theme"+QString::number(mOptions->mTheme)+"_both.png",
+		mIconBoth = loader->loadIcon("theme"+QString::number(mOptions.mTheme)+"_both.png",
 							KIcon::Panel, ICONSIZE);
 		mCurrentIcon = &mIconNone;
 	}
-	mTimer->start(mOptions->mUpdateInterval);
+	mTimer->start(mOptions.mUpdateInterval);
 	updateStats();
 	QWidget::update();
 	mFirstUpdate = false;
 }
 
-void KNetStatsView::setViewOptions( ViewOptions* opts ) {
-	delete mOptions;
-	mOptions = opts;
+void KNetStatsView::updateViewOptions() {
+	KNetStats::readInterfaceOptions(mInterface, &mOptions);
 	setup();
 }
 
 void KNetStatsView::updateStats()
 {
 	FILE* fp = fopen((mSysDevPath+"carrier").latin1(), "r");
-	
+
 	if (!fp && mConnected) { // interface caiu...
 		mConnected = false;
 		resetBuffers();
@@ -146,7 +145,7 @@ void KNetStatsView::updateStats()
 		carrierFlag = fgetc(fp);
 		fclose(fp);
 	}
-	
+
 	if (!mConnected)
 		return;
 	if (carrierFlag == '0') { // carrier down
@@ -160,30 +159,30 @@ void KNetStatsView::updateStats()
 		mCarrier = true;
 		KPassivePopup::message(programName, i18n("%1 is connected").arg(mInterface), kapp->miniIcon(), this);
 	}
-	
+
 	unsigned int brx = readInterfaceNumValue("rx_bytes");
 	unsigned int btx = readInterfaceNumValue("tx_bytes");
 	unsigned int prx = readInterfaceNumValue("rx_packets");
 	unsigned int ptx = readInterfaceNumValue("tx_packets");
-	
-	
+
+
 	if (!mFirstUpdate) { // a primeira velocidade sempre eh absurda, para evitar isso temos o mFirstUpdate
 		if (++mSpeedBufferPtr >= SPEED_BUFFER_SIZE)
 			mSpeedBufferPtr = 0;
-		
+
 		// Calcula as velocidades
-		mSpeedBufferTx[mSpeedBufferPtr] = ((btx - mBTx)*(1000.0f/mOptions->mUpdateInterval));
-		mSpeedBufferRx[mSpeedBufferPtr] = ((brx - mBRx)*(1000.0f/mOptions->mUpdateInterval));
-		mSpeedBufferPTx[mSpeedBufferPtr] = ((ptx - mPTx)*(1000.0f/mOptions->mUpdateInterval));
-		mSpeedBufferPRx[mSpeedBufferPtr] = ((prx - mPRx)*(1000.0f/mOptions->mUpdateInterval));
-		
+		mSpeedBufferTx[mSpeedBufferPtr] = ((btx - mBTx)*(1000.0f/mOptions.mUpdateInterval));
+		mSpeedBufferRx[mSpeedBufferPtr] = ((brx - mBRx)*(1000.0f/mOptions.mUpdateInterval));
+		mSpeedBufferPTx[mSpeedBufferPtr] = ((ptx - mPTx)*(1000.0f/mOptions.mUpdateInterval));
+		mSpeedBufferPRx[mSpeedBufferPtr] = ((prx - mPRx)*(1000.0f/mOptions.mUpdateInterval));
+
 		if (++mSpeedHistoryPtr >= HISTORY_SIZE)
 			mSpeedHistoryPtr = 0;
 		mSpeedHistoryRx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferRx);
 		mSpeedHistoryTx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferTx);
-		
+
 		mMaxSpeedAge--;
-		
+
 		if (mSpeedHistoryTx[mSpeedHistoryPtr] > mMaxSpeed) {
 			mMaxSpeed = mSpeedHistoryTx[mSpeedHistoryPtr];
 			mMaxSpeedAge = HISTORY_SIZE;
@@ -195,8 +194,8 @@ void KNetStatsView::updateStats()
 		if (mMaxSpeedAge < 1)
 			calcMaxSpeed();
 	}
-	
-	if (mOptions->mViewMode == Icon) {
+
+	if (mOptions.mViewMode == Icon) {
 		QPixmap* newIcon;
 		if (brx == mBRx) {
 			if (btx == mBTx )
@@ -214,9 +213,9 @@ void KNetStatsView::updateStats()
 			mCurrentIcon = newIcon;
 			QWidget::update();
 		}
-	}else if (mOptions->mViewMode == Graphic || (btx != mBTx && brx != mBRx))
+	}else if (mOptions.mViewMode == Graphic || (btx != mBTx && brx != mBRx))
 		QWidget::update();
-	
+
 	// Update stats
 	mTotalBytesRx += brx - mBRx;
 	mTotalBytesTx += btx - mBTx;
@@ -258,7 +257,7 @@ void KNetStatsView::resetBuffers() {
 void KNetStatsView::paintEvent( QPaintEvent* ev )
 {
 	QPainter paint(this);
-	switch(mOptions->mViewMode) {
+	switch(mOptions.mViewMode) {
 		case Icon:
 			if (!mCarrier || !mConnected)
 				mCurrentIcon = &mIconError;
@@ -277,10 +276,10 @@ void KNetStatsView::drawText(QPainter& paint) {
 	if (!mCarrier || !mConnected) {
 		paint.drawText(rect(), Qt::AlignCenter, "?");
 	} else {
-		paint.setFont( mOptions->mTxtFont );
-		paint.setPen( mOptions->mTxtUplColor );
+		paint.setFont( mOptions.mTxtFont );
+		paint.setPen( mOptions.mTxtUplColor );
 		paint.drawText( rect(), Qt::AlignTop, Statistics::byteFormat(byteSpeedTx(), 1, "", "KB", "MB"));
-		paint.setPen( mOptions->mTxtDldColor );
+		paint.setPen( mOptions.mTxtDldColor );
 		paint.drawText( rect(), Qt::AlignBottom, Statistics::byteFormat(byteSpeedRx(), 1, "", "KB", "MB"));
 	}
 }
@@ -290,14 +289,14 @@ void KNetStatsView::drawGraphic(QPainter& paint) {
 		paint.drawText(rect(), Qt::AlignCenter, "X");
 		return;
 	}
-	
+
 	QSize size = this->size();
-	
-	if (!mOptions->mChartTransparentBackground)
-		paint.fillRect(0, 0, size.width(), size.height(), mOptions->mChartBgColor);
+
+	if (!mOptions.mChartTransparentBackground)
+		paint.fillRect(0, 0, size.width(), size.height(), mOptions.mChartBgColor);
 
 	const int HEIGHT = size.height()-1;
-	
+
 	//	qDebug("MaxSpeed: %d, age: %d", int(mMaxSpeed), mMaxSpeedAge);
 	int lastX;
 	int lastRxY = HEIGHT - int(HEIGHT * (mSpeedHistoryRx[mSpeedHistoryPtr]/mMaxSpeed));
@@ -307,18 +306,18 @@ void KNetStatsView::drawGraphic(QPainter& paint) {
 	for (int i = mSpeedHistoryPtr; count < width(); i--) {
 		if (i < 0)
 			i = HISTORY_SIZE-1;
-		
+
 		int rxY = HEIGHT - int(HEIGHT * (mSpeedHistoryRx[i]/mMaxSpeed));
 		int txY = HEIGHT - int(HEIGHT * (mSpeedHistoryTx[i]/mMaxSpeed));
-		paint.setPen(mOptions->mChartDldColor);
+		paint.setPen(mOptions.mChartDldColor);
 		paint.drawLine(lastX, lastRxY, x, rxY);
-		paint.setPen(mOptions->mChartUplColor);
+		paint.setPen(mOptions.mChartUplColor);
 		paint.drawLine(lastX, lastTxY, x, txY);
 		//qDebug("%d => %d", i, int(mSpeedHistoryRx[i]));
 		lastX = x;
 		lastRxY = rxY;
 		lastTxY = txY;
-		
+
 		count++;
 		x = width()-int(count+1);
 	}
@@ -346,7 +345,7 @@ bool KNetStatsView::openFdSocket() {
 QString KNetStatsView::getIp() {
 	if (mFdSock == -1 && !openFdSocket())
 		return "";
-	
+
 	ioctl(mFdSock, SIOCGIFADDR, &mDevInfo);
 	sockaddr_in sin = ((sockaddr_in&)mDevInfo.ifr_addr);
 	return inet_ntoa(sin.sin_addr);

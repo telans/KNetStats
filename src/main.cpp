@@ -32,10 +32,10 @@ int main( int argc, char** argv )
 
 	KCmdLineArgs::init( argc, argv, &aboutData );
 	KApplication::disableAutoDcopRegistration();
-	
+
 	KApplication app;
 	KNetStats knetstats;
-	if (!knetstats.allOk())
+	if (!knetstats.canStart())
 		return 1;
 	return app.exec();
 }

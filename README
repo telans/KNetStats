@@ -3,7 +3,7 @@ INSTALLATION
 type as root:
 ./scons install
 
-Note.: We use SCons as building tool, so you need Python installed on your system.
+Note.: We use SCons/BKSys as building tool, so you need Python installed on your system.
 
 RUNNING
 =======
@@ -18,17 +18,7 @@ For more info. visit: http://knetstats.sf.net
 UNINSTALL
 =========
 Type:
-rm -f /usr/bin/knetstats /usr/share/applications/knetstats.desktop
-rm -f $HOME/.kde/share/config/knetstats.rc
-rm -rdf /usr/share/apps/knetstats/
-rm /usr/share/locale/pt_BR/LC_MESSAGES/knetstats.mo
-rm /usr/share/locale/ky_KG/LC_MESSAGES/knetstats.mo
-rm /usr/share/locale/it/LC_MESSAGES/knetstats.mo
-rm /usr/share/locale/es/LC_MESSAGES/knetstats.mo
-rm /usr/share/locale/de/LC_MESSAGES/knetstats.mo
-rm /usr/share/locale/pl/LC_MESSAGES/knetstats.mo
-rm /usr/share/locale/ru_RU/LC_MESSAGES/knetstats.mo
-
+./scons -c install
 
 --
-Hugo P.L.
+Hugo Parente Lima

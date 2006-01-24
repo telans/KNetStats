@@ -1,4 +1,16 @@
+v1.5
+
+- Added "Chart view".
+- New Statistics dialog (show IP address, MAC address, etc).
+- Using bksys as building tool.
+- Carrier on/off detection.
+- Reading interface date from /sys/class/net/INTERFACE/statistics instead of parse /proc/dev/net.
+- New translation to romanian
+
+Note to BSD users: This version is not compatible with BSD, it uses some linux-only stuff. A BSD-compatible version is plained in a near future.
+
 v1.3.1
+
 - Minor fix for Mandriva Linux (former Mandrake Linux). Env is now set for uic during build.
 
 v1.3
@@ -10,6 +22,7 @@ v1.3
 - Added smooth speed meter.
 
 v1.2.1
+
 - Added Russian translation (Edward Romantsov).
 - Added Polish translation (Wiktor Wandachowicz).
 

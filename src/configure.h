@@ -85,7 +85,8 @@ private:
 protected slots:
 	void changeInterface(QListBoxItem* item);
 	void changeTheme(int theme);
-
+	//void showInterfaceContextMenu(QListBoxItem* item, const QPoint& point);
+	//void removeInterface();
 };
 
 #endif

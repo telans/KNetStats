@@ -8,13 +8,12 @@ msgstr ""
 "Project-Id-Version: bg\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-11-20 03:07+0000\n"
-"PO-Revision-Date: 2005-06-14 10:11+0300\n"
+"PO-Revision-Date: 2005-11-24 10:49+0300\n"
 "Last-Translator: Petar Toushkov <peter.toushkov@mail.bg>\n"
 "Language-Team:  lastmanstanding\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
 
 #: ../src/configure.cpp:126
 msgid "You need to select at least one interface to monitor."
@@ -41,14 +40,12 @@ msgid "%1 is active"
 msgstr "%1 e в активно състояние"
 
 #: ../src/knetstatsview.cpp:156
-#, fuzzy
 msgid "%1 is disconnected"
-msgstr "%1 не е в активно състояние"
+msgstr "%1 няма връзка"
 
 #: ../src/knetstatsview.cpp:161
-#, fuzzy
 msgid "%1 is connected"
-msgstr "%1 не е в активно състояние"
+msgstr "%1 има връзка"
 
 #: ../src/main.cpp:11 ../src/statisticsbase.cpp:225
 msgid "KNetStats"
@@ -79,9 +76,8 @@ msgid "KNetStats translation to other languages"
 msgstr "Превод на KNetStats и на други езици"
 
 #: ../src/statistics.cpp:34
-#, fuzzy
 msgid "Details of %1"
-msgstr "Статистика за %1"
+msgstr "Подробности за %1"
 
 #: ../src/configurebase.cpp:271
 msgid "Configure KNetStats"
@@ -125,23 +121,23 @@ msgstr "Цвят изпращане:"
 
 #: ../src/configurebase.cpp:287
 msgid "Background:"
-msgstr ""
+msgstr "Фон:"
 
 #: ../src/configurebase.cpp:293
 msgid "Transparent background"
-msgstr ""
+msgstr "Прозрачен фон"
 
 #: ../src/configurebase.cpp:296
 msgid "Icon"
-msgstr ""
+msgstr "Икона"
 
 #: ../src/configurebase.cpp:297
 msgid "Text"
-msgstr ""
+msgstr "Текст"
 
 #: ../src/configurebase.cpp:298
 msgid "Chart"
-msgstr ""
+msgstr "Графика"
 
 #: ../src/configurebase.cpp:299
 msgid "View mode:"
@@ -156,17 +152,16 @@ msgid "ms"
 msgstr "мс"
 
 #: ../src/configurebase.cpp:302
-#, fuzzy
 msgid "To monitor this interface"
 msgstr "Наблюдение на този &интерфейс"
 
 #: ../src/statisticsbase.cpp:226
 msgid "? KB/s"
-msgstr ""
+msgstr "? КВ/сек."
 
 #: ../src/statisticsbase.cpp:227
 msgid "0 KB/s"
-msgstr ""
+msgstr "0 КВ/сек."
 
 #: ../src/statisticsbase.cpp:228
 msgid "Upload speed:"
@@ -194,35 +189,33 @@ msgstr "Пакети"
 
 #: ../src/statisticsbase.cpp:234
 msgid "Statistics"
-msgstr ""
+msgstr "Статистика"
 
 #: ../src/statisticsbase.cpp:235
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: ../src/statisticsbase.cpp:236
 msgid "Netmask:"
-msgstr ""
+msgstr "Мр. маска:"
 
 #: ../src/statisticsbase.cpp:237
 msgid "MAC:"
-msgstr ""
+msgstr "MAC адрес:"
 
 #: ../src/statisticsbase.cpp:238
 msgid "MTU:"
-msgstr ""
+msgstr "MTU:"
 
 #: ../src/statisticsbase.cpp:240
-#, fuzzy
 msgid "Details"
-msgstr "Статистика за %1"
+msgstr "Подробности"
 
 #~ msgid "O&k"
 #~ msgstr "&О'Кей"
 
-#, fuzzy
 #~ msgid "Upload color"
-#~ msgstr "Цвят изпращане:"
+#~ msgstr "Цвят изпращане"
 
 #~ msgid "&Help"
 #~ msgstr "Помо&щ"

@@ -5,7 +5,8 @@ NORMAL="\033[0m"
 which scons > /dev/null
 if [ $? -eq 0 ]
 then
-	if [ ! -d 'scons-local-0.96.1' ]
+	scons $1 $2 $3 $4 $5
+else if [ ! -d 'scons-local-0.96.1' ]
 	then
 		tar xjvf scons-mini.tar.bz2
 		echo ""
