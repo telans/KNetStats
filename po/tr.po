@@ -1,0 +1,222 @@
+# translation of knetstats.pot to Turkish
+# Copyright (C) 2006
+# This file is distributed under the same license as the knetstats package.
+#
+# Furkan Duman <coderlord@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: knetstats\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-01-25 20:42+0200\n"
+"PO-Revision-Date: 2006-01-25 20:59+0200\n"
+"Last-Translator: Furkan Duman <coderlord@gmail.com>\n"
+"Language-Team: Turkish <tr@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11\n"
+
+#: ../src/configure.cpp:128
+msgid "You need to select at least one interface to monitor."
+msgstr "İzlemek için en azından bir ara birim seçmeniz gerekir."
+
+#: ../src/knetstats.cpp:111
+msgid "You need kernel 2.6.x with support to the /sys filesystem."
+msgstr "/sys dosya sistemi desteğine sahip 2.6.x çekirdeğine ihtiyacınız var."
+
+#: ../src/knetstats.cpp:132
+msgid ""
+"You don't have any network interface.\n"
+"KNetStats will quit now."
+msgstr ""
+"Hiçbir ağ arabirimine sahip değilsiniz.\n"
+"KNetStats şimdi sonlanacak."
+
+#: ../src/knetstatsview.cpp:90
+msgid "Monitoring %1"
+msgstr "%1 izleniyor"
+
+#: ../src/knetstatsview.cpp:138
+msgid "%1 is inactive"
+msgstr "%1 etkin değil"
+
+#: ../src/knetstatsview.cpp:141
+msgid "%1 is active"
+msgstr "%1 etkin"
+
+#: ../src/knetstatsview.cpp:155
+msgid "%1 is disconnected"
+msgstr "%1 bağlantısı kesildi"
+
+#: ../src/knetstatsview.cpp:160
+msgid "%1 is connected"
+msgstr "%1 bağlandı"
+
+#: ../src/main.cpp:11 ../src/statisticsbase.cpp:227
+msgid "KNetStats"
+msgstr "KNetStats"
+
+#: ../src/main.cpp:17
+msgid "A network device monitor."
+msgstr "Bir ağ aygıtı izleyicisi."
+
+#: ../src/main.cpp:23
+msgid "_: NAME OF TRANSLATORS"
+msgstr "Furkan Duman"
+
+#: ../src/main.cpp:23
+msgid "_: EMAIL OF TRANSLATORS"
+msgstr "coderlord@gmail.com"
+
+#: ../src/main.cpp:27
+msgid "SCons help, Debian packages, etc."
+msgstr "SCons yardımı, Debian paketleri, vs."
+
+#: ../src/main.cpp:28
+msgid "Icon themes"
+msgstr "Simge temaları"
+
+#: ../src/main.cpp:31
+msgid "KNetStats translation to other languages"
+msgstr "KNetStats'in diğer dillere çevrilmesi"
+
+#: ../src/statistics.cpp:34
+msgid "Details of %1"
+msgstr "%1'in ayrıntıları"
+
+#: ../src/configurebase.cpp:271
+msgid "Configure KNetStats"
+msgstr "KNetStats Ayarları"
+
+#: ../src/configurebase.cpp:272
+msgid "Ok"
+msgstr "Tamam"
+
+#: ../src/configurebase.cpp:276
+msgid "Theme:"
+msgstr "Tema:"
+
+#: ../src/configurebase.cpp:278
+msgid "Classic"
+msgstr "Klasik"
+
+#: ../src/configurebase.cpp:279
+msgid "Modem"
+msgstr "Modem"
+
+#: ../src/configurebase.cpp:280
+msgid "Network"
+msgstr "Ağ"
+
+#: ../src/configurebase.cpp:281
+msgid "Wireless"
+msgstr "Kablosuz"
+
+#: ../src/configurebase.cpp:282
+msgid "Kppp"
+msgstr "Kppp"
+
+#: ../src/configurebase.cpp:284 ../src/configurebase.cpp:290
+msgid "Download color:"
+msgstr "İndirme rengi:"
+
+#: ../src/configurebase.cpp:286 ../src/configurebase.cpp:289
+msgid "Upload color:"
+msgstr "Yükleme rengi:"
+
+#: ../src/configurebase.cpp:287
+msgid "Background:"
+msgstr "Arka fon:"
+
+#: ../src/configurebase.cpp:293
+msgid "Transparent background"
+msgstr "Saydam arka fon"
+
+#: ../src/configurebase.cpp:296
+msgid "Icon"
+msgstr "Simge"
+
+#: ../src/configurebase.cpp:297
+msgid "Text"
+msgstr "Metin"
+
+#: ../src/configurebase.cpp:298
+msgid "Chart"
+msgstr "Çizelge"
+
+#: ../src/configurebase.cpp:299
+msgid "View mode:"
+msgstr "Görünüm biçimi:"
+
+#: ../src/configurebase.cpp:300
+msgid "Update interval:"
+msgstr "Güncellenme aralığı:"
+
+#: ../src/configurebase.cpp:301
+msgid "ms"
+msgstr "ms"
+
+#: ../src/configurebase.cpp:302
+msgid "To monitor this interface"
+msgstr "Bu arabirimi izle"
+
+#: ../src/statisticsbase.cpp:228
+msgid "? KB/s"
+msgstr "? KB/s"
+
+#: ../src/statisticsbase.cpp:229
+msgid "0 KB/s"
+msgstr "0 KB/s"
+
+#: ../src/statisticsbase.cpp:230
+msgid "Upload speed:"
+msgstr "Yükleme hızı:"
+
+#: ../src/statisticsbase.cpp:231
+msgid "Received:"
+msgstr "Alınan:"
+
+#: ../src/statisticsbase.cpp:232
+msgid "Download speed:"
+msgstr "İndirme hızı:"
+
+#: ../src/statisticsbase.cpp:233
+msgid "Transmited:"
+msgstr "Gönderilen:"
+
+#: ../src/statisticsbase.cpp:234
+msgid "Bytes"
+msgstr "Byte"
+
+#: ../src/statisticsbase.cpp:235
+msgid "Packets"
+msgstr "Paket"
+
+#: ../src/statisticsbase.cpp:236
+msgid "&Statistics"
+msgstr "İ&statistik"
+
+#: ../src/statisticsbase.cpp:237
+msgid "IP:"
+msgstr "IP:"
+
+#: ../src/statisticsbase.cpp:238
+msgid "Netmask:"
+msgstr "Ağ maskesi:"
+
+#: ../src/statisticsbase.cpp:239
+msgid "MAC:"
+msgstr "MAC:"
+
+#: ../src/statisticsbase.cpp:240
+msgid "MTU:"
+msgstr "MTU:"
+
+#: ../src/statisticsbase.cpp:243
+msgid "Deta&ils"
+msgstr "Ayrın&tılar"
+
+#: ../src/statisticsbase.cpp:244
+msgid "O&k"
+msgstr "&Tamam"
+
