@@ -40,14 +40,12 @@ msgid "%1 is active"
 msgstr "%1 是活动的"
 
 #: ../src/knetstatsview.cpp:156
-#, fuzzy
 msgid "%1 is disconnected"
-msgstr "%1 是不活动的"
+msgstr "%1 是已经断开"
 
 #: ../src/knetstatsview.cpp:161
-#, fuzzy
 msgid "%1 is connected"
-msgstr "%1 是不活动的"
+msgstr "%1 是连接的"
 
 #: ../src/main.cpp:11 ../src/statisticsbase.cpp:225
 msgid "KNetStats"
@@ -78,9 +76,8 @@ msgid "KNetStats translation to other languages"
 msgstr "KNetStats翻译到其它语言"
 
 #: ../src/statistics.cpp:34
-#, fuzzy
 msgid "Details of %1"
-msgstr "%1 的统计数据"
+msgstr "%1 的详细数据"
 
 #: ../src/configurebase.cpp:271
 msgid "Configure KNetStats"
@@ -124,23 +121,23 @@ msgstr "上传颜色："
 
 #: ../src/configurebase.cpp:287
 msgid "Background:"
-msgstr ""
+msgstr "背景"
 
 #: ../src/configurebase.cpp:293
 msgid "Transparent background"
-msgstr ""
+msgstr "传输背景"
 
 #: ../src/configurebase.cpp:296
 msgid "Icon"
-msgstr ""
+msgstr "图标"
 
 #: ../src/configurebase.cpp:297
 msgid "Text"
-msgstr ""
+msgstr "文本"
 
 #: ../src/configurebase.cpp:298
 msgid "Chart"
-msgstr ""
+msgstr "图表"
 
 #: ../src/configurebase.cpp:299
 msgid "View mode:"
@@ -155,17 +152,16 @@ msgid "ms"
 msgstr "毫秒"
 
 #: ../src/configurebase.cpp:302
-#, fuzzy
 msgid "To monitor this interface"
-msgstr "监视这个界面(&I)"
+msgstr "监视这个界面"
 
 #: ../src/statisticsbase.cpp:226
 msgid "? KB/s"
-msgstr ""
+msgstr "? KB/s"
 
 #: ../src/statisticsbase.cpp:227
 msgid "0 KB/s"
-msgstr ""
+msgstr "0 KB/s"
 
 #: ../src/statisticsbase.cpp:228
 msgid "Upload speed:"
@@ -193,65 +189,24 @@ msgstr "包"
 
 #: ../src/statisticsbase.cpp:234
 msgid "Statistics"
-msgstr ""
+msgstr "统计"
 
 #: ../src/statisticsbase.cpp:235
 msgid "IP:"
-msgstr ""
+msgstr "IP:"
 
 #: ../src/statisticsbase.cpp:236
 msgid "Netmask:"
-msgstr ""
+msgstr "掩码:"
 
 #: ../src/statisticsbase.cpp:237
 msgid "MAC:"
-msgstr ""
+msgstr "MAC:"
 
 #: ../src/statisticsbase.cpp:238
 msgid "MTU:"
-msgstr ""
+msgstr "MTU:"
 
 #: ../src/statisticsbase.cpp:240
-#, fuzzy
 msgid "Details"
-msgstr "%1 的统计数据"
-
-#~ msgid "O&k"
-#~ msgstr "好(&K)"
-
-#, fuzzy
-#~ msgid "Upload color"
-#~ msgstr "上传颜色："
-
-#~ msgid "&Help"
-#~ msgstr "帮助(&H)"
-
-#~ msgid "Error opening /proc/net/dev!"
-#~ msgstr "打开 /proc/net/dev 错误！"
-
-#~ msgid "Appl&y"
-#~ msgstr "应用(&Y)"
-
-#~ msgid "Ca&ncel"
-#~ msgstr "取消(&N)"
-
-#~ msgid "Appearance"
-#~ msgstr "外观"
-
-#~ msgid "Medium color:"
-#~ msgstr "中速颜色："
-
-#~ msgid "Lower color:"
-#~ msgstr "低速颜色："
-
-#~ msgid "High color:"
-#~ msgstr "高速颜色："
-
-#~ msgid "Configuration"
-#~ msgstr "配置"
-
-#~ msgid "Icon (Activity)"
-#~ msgstr "图标 (活动的)"
-
-#~ msgid "Text (Speed)"
-#~ msgstr "文本 (速度)"
+msgstr "详细"
