@@ -9,6 +9,7 @@ Statistics::Statistics(KNetStatsView *parent)
 //	setCaption( i18n( "Details of %1" ).arg( mInterface ) );
 
 	setupUi(this);
+	this->setWindowTitle(QString("Monitoring Interface %1 - KNetStats").arg(parent->interface().name()));
 	auto *chart = new Chart(parent->speedHistoryTx(), parent->speedHistoryRx(), parent->historyBufferSize(),
 							parent->historyPointer(), parent->maxSpeed(),
 							parent->getViewOptions());
