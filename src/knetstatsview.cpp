@@ -137,6 +137,7 @@ void KNetStatsView::updateStats() {
 
 		if (newIcon != mCurrentIcon) {
 			mCurrentIcon = newIcon;
+			trayIcon->setIcon(*mCurrentIcon);
 		}
 	} else if (mOptions.mViewMode == Graphic || (btx != mBTx && brx != mBRx)) {
 //		updateTrayIconAndStats();
