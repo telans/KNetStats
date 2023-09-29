@@ -1,0 +1,31 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file>knetstats-32.png</file>
+    <file>img/icon_pci.png</file>
+    <file>img/theme0_both.png</file>
+    <file>img/theme0_error.png</file>
+    <file>img/theme0_none.png</file>
+    <file>img/theme0_rx.png</file>
+    <file>img/theme0_tx.png</file>
+    <file>img/theme1_both.png</file>
+    <file>img/theme1_error.png</file>
+    <file>img/theme1_none.png</file>
+    <file>img/theme1_rx.png</file>
+    <file>img/theme1_tx.png</file>
+    <file>img/theme2_both.png</file>
+    <file>img/theme2_error.png</file>
+    <file>img/theme2_none.png</file>
+    <file>img/theme2_rx.png</file>
+    <file>img/theme2_tx.png</file>
+    <file>img/theme3_both.png</file>
+    <file>img/theme3_error.png</file>
+    <file>img/theme3_none.png</file>
+    <file>img/theme3_rx.png</file>
+    <file>img/theme3_tx.png</file>
+    <file>img/theme4_both.png</file>
+    <file>img/theme4_error.png</file>
+    <file>img/theme4_none.png</file>
+    <file>img/theme4_rx.png</file>
+    <file>img/theme4_tx.png</file>
+</qresource>
+</RCC>
