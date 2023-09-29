@@ -1,161 +1,123 @@
-/***************************************************************************
- *   Copyright (C) 2004 by Hugo Parente Lima                               *
- *   hugo_pl@users.sourceforge.net                                         *
- *                                                                         *
- *   This program is free software; you can redistribute it and/or modify  *
- *   it under the terms of the GNU General Public License as published by  *
- *   the Free Software Foundation; either version 2 of the License, or     *
- *   (at your option) any later version.                                   *
- *                                                                         *
- *   This program is distributed in the hope that it will be useful,       *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- *   GNU General Public License for more details.                          *
- *                                                                         *
- *   You should have received a copy of the GNU General Public License     *
- *   along with this program; if not, write to the                         *
- *   Free Software Foundation, Inc.,                                       *
- *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
- ***************************************************************************/
+#include <QListWidget>
+#include <QNetworkInterface>
+#include <QMessageBox>
+#include <QColorDialog>
 
 #include "configure.h"
 #include "knetstats.h"
 
-// Qt includes
-#include <qstringlist.h>
-#include <qlistbox.h>
-#include <qcheckbox.h>
-#include <qlabel.h>
-#include <qwidgetstack.h>
-#include <qpopupmenu.h>
-// Kde includes
-#include <kapplication.h>
-#include <klocale.h>
-#include <kiconloader.h>
-#include <kconfig.h>
-#include <kfontrequester.h>
-#include <knuminput.h>
-#include <kcolorbutton.h>
-#include <kcombobox.h>
-#include <kmessagebox.h>
-#include <kpushbutton.h>
+#include "ui_configurebase.h"
 
-
-Configure::Configure(KNetStats* parent, const QStringList& ifs) : ConfigureBase(parent) {
-	KConfig* cfg = kapp->config();
-
-	// Load configuration
-	KIconLoader* loader = kapp->iconLoader();
-
-	QPixmap iconPCI = loader->loadIcon("icon_pci.png", KIcon::Small, 16);
-
+Configure::Configure(QWidget *parent, const QList<QNetworkInterface> &ifs) : QDialog(parent), Ui::ConfigureBase() {
+	setupUi(this);
+	QIcon iconPCI = QIcon(":/img/icon_pci.png");
+	mInterfaces->setViewMode(QListWidget::ListMode);
 	// Clone the configuration.
-	for (QStringList::ConstIterator it = ifs.begin(); it != ifs.end(); ++it) {
-		mInterfaces->insertItem(iconPCI, *it);
-		parent->readInterfaceOptions(*it, &mConfig[*it]);
+	for (auto &it: ifs) {
+		auto *item = new QListWidgetItem(iconPCI, it.name());
+		mInterfaces->insertItem(it.index(), item);
+		KNetStats::readInterfaceConfig(it.name(), &mConfig[it.name()]);
 	}
 
-	mInterfaces->setCurrentItem(0);
-	changeInterface(mInterfaces->selectedItem());
+	mInterfaces->setCurrentRow(0);
+	changeInterface(mInterfaces->currentItem());
 
-	connect(mInterfaces, SIGNAL(selectionChanged(QListBoxItem*)), this, SLOT(changeInterface(QListBoxItem*)));
+	connect(mChartUplColor, &QPushButton::clicked, this, &Configure::openColorDialog);
+	connect(mChartDldColor, &QPushButton::clicked, this, &Configure::openColorDialog);
+	connect(mChartBgColor, &QPushButton::clicked, this, &Configure::openColorDialog);
+	connect(mTxtUplColor, &QPushButton::clicked, this, &Configure::openColorDialog);
+	connect(mTxtDldColor, &QPushButton::clicked, this, &Configure::openColorDialog);
+
+	connect(mInterfaces, SIGNAL(itemClicked(QListWidgetItem * )), this, SLOT(changeInterface(QListWidgetItem * )));
 	connect(mTheme, SIGNAL(activated(int)), this, SLOT(changeTheme(int)));
-	//connect(mInterfaces, SIGNAL(contextMenuRequested(QListBoxItem*, const QPoint&)), this, SLOT(showInterfaceContextMenu(QListBoxItem*, const QPoint&)));
 }
 
-void Configure::changeInterface(QListBoxItem* item) {
+void Configure::changeInterface(QListWidgetItem *item) {
 	QString interface = item->text();
 
-	if (!mCurrentItem.isEmpty())
-	{
-		// Salvas as modificações passadas
-		ViewOptions& oldview = mConfig[mCurrentItem];
+	if (!mCurrentItem.isEmpty()) {
+		// Save the previous options
+		ViewOptions &oldview = mConfig[mCurrentItem];
 		// general options
 		oldview.mMonitoring = mMonitoring->isChecked();
 		oldview.mUpdateInterval = mUpdateInterval->value();
-		oldview.mViewMode = (ViewMode) mViewMode->currentItem();
+		oldview.mViewMode = (ViewMode) mViewMode->currentIndex();
 		// txt view options
-		oldview.mTxtUplColor = mTxtUplColor->color();
-		oldview.mTxtDldColor = mTxtDldColor->color();
-		oldview.mTxtFont = mTxtFont->font();
+		oldview.mTxtUplColor = mTxtUplColor->styleSheet();
+		oldview.mTxtDldColor = mTxtDldColor->styleSheet();
+//		oldview.mTxtFont = mTxtFont->font();
 		// icon view
-		oldview.mTheme = mTheme->currentItem();
+		oldview.mTheme = mTheme->currentIndex();
 		// chart view
-		oldview.mChartUplColor = mChartUplColor->color();
-		oldview.mChartDldColor = mChartDldColor->color();
-		oldview.mChartBgColor = mChartBgColor->color();
-		oldview.mChartTransparentBackground = mChartTransparentBackground->isChecked();
+		oldview.mChartUplColor = mChartUplColor->styleSheet();
+		oldview.mChartDldColor = mChartDldColor->styleSheet();
+		oldview.mChartBgColor = mChartBgColor->styleSheet();
+		oldview.mChartTransparentBackground = bChartTransparentBg->isChecked();
 	}
 
 	if (interface == mCurrentItem)
 		return;
-	// Carrega as opt. da nova interface
-	ViewOptions& view = mConfig[interface];
+	// Load the new interface options
+	ViewOptions &view = mConfig[interface];
 	// general
 	mMonitoring->setChecked(view.mMonitoring);
 	mUpdateInterval->setValue(view.mUpdateInterval);
-	mViewMode->setCurrentItem(view.mViewMode);
-	mWdgStack->raiseWidget(view.mViewMode);
+	mViewMode->setCurrentIndex(view.mViewMode);
 	// txt options
-	mTxtUplColor->setColor(view.mTxtUplColor);
-	mTxtDldColor->setColor(view.mTxtDldColor);
-	mTxtFont->setFont( view.mTxtFont );
+	mTxtUplColor->setStyleSheet(view.mTxtUplColor);
+	mTxtDldColor->setStyleSheet(view.mTxtDldColor);
+//	mTxtFont->setFont(view.mTxtFont);
 	// icon options
-	mTheme->setCurrentItem(view.mTheme);
+	mTheme->setCurrentIndex(view.mTheme);
 	changeTheme(view.mTheme);
 	// chart options
-	mChartUplColor->setColor(view.mChartUplColor);
-	mChartDldColor->setColor(view.mChartDldColor);
-	mChartBgColor->setColor(view.mChartBgColor);
-	mChartTransparentBackground->setChecked(view.mChartTransparentBackground);
+	mChartUplColor->setStyleSheet(view.mChartUplColor);
+	mChartDldColor->setStyleSheet(view.mChartDldColor);
+	mChartBgColor->setStyleSheet(view.mChartBgColor);
+	bChartTransparentBg->setChecked(view.mChartTransparentBackground);
 
 	mCurrentItem = interface;
 }
 
-bool Configure::canSaveConfig()
-{
+bool Configure::canSaveConfig() {
 	// update the options
-	changeInterface(mInterfaces->item( mInterfaces->currentItem() ));
+	changeInterface(mInterfaces->item(mInterfaces->currentRow()));
 
 	bool ok = false;
-	for(OptionsMap::ConstIterator i = mConfig.begin(); i != mConfig.end(); ++i)
-		if (i.data().mMonitoring) {
+	for (OptionsMap::ConstIterator i = mConfig.begin(); i != mConfig.end(); ++i)
+		if (i.value().mMonitoring) {
 			ok = true;
 			break;
 		}
 
-	if (!ok)
-		KMessageBox::error(this, i18n("You need to select at least one interface to monitor."));
+	if (!ok) {
+		QMessageBox msg(this);
+		msg.setIcon(QMessageBox::Icon::Information);
+		msg.setText("Error");
+		msg.setInformativeText("You need to select at least one interface to monitor.");
+		msg.exec();
+	}
+
 	return ok;
 }
 
-void Configure::changeTheme(int theme)
-{
-	KIconLoader* loader = kapp->iconLoader();
-	mIconError->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_error.png",
-						  KIcon::Panel, ICONSIZE));
-	mIconNone->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_none.png",
-						 KIcon::Panel, ICONSIZE));
-	mIconTx->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_tx.png",
-					   KIcon::Panel, ICONSIZE));
-	mIconRx->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_rx.png",
-					   KIcon::Panel, ICONSIZE));
-	mIconBoth->setPixmap(loader->loadIcon("theme"+QString::number(theme)+"_both.png",
-						 KIcon::Panel, ICONSIZE));
-}
-/*
-void Configure::showInterfaceContextMenu(QListBoxItem* item, const QPoint& point) {
-	if (!item && mConfig.size() == 1)
-		return;
-	QPixmap icon = kapp->iconLoader()->loadIcon("editdelete", KIcon::Small, 16);
-	QPopupMenu* menu = new QPopupMenu(this);
-	menu->insertItem(icon, i18n("Renomve Interface"), this, SLOT(removeInterface()));
-	menu->exec(point);
+void Configure::changeTheme(int theme) {
+	mIconError->setPixmap(QPixmap(":/img/theme" + QString::number(theme) + "_error.png"));
+	mIconNone->setPixmap(QPixmap(":/img/theme" + QString::number(theme) + "_none.png"));
+	mIconTx->setPixmap(QPixmap(":/img/theme" + QString::number(theme) + "_tx.png"));
+	mIconRx->setPixmap(QPixmap(":/img/theme" + QString::number(theme) + "_rx.png"));
+	mIconBoth->setPixmap(QPixmap(":/img/theme" + QString::number(theme) + "_both.png"));
 }
 
-void Configure::removeInterface() {
-	mConfig.erase(mInterfaces->currentText());
-	mInterfaces->removeItem(mInterfaces->currentItem());
+void Configure::openColorDialog() {
+	QColor color = QColorDialog::getColor();
+
+	if (color.isValid()) {
+		QString s("background: #"
+				  + QString(color.red() < 16 ? "0" : "") + QString::number(color.red(), 16)
+				  + QString(color.green() < 16 ? "0" : "") + QString::number(color.green(), 16)
+				  + QString(color.blue() < 16 ? "0" : "") + QString::number(color.blue(), 16) + ";");
+		mChartUplColor->setStyleSheet(s);
+		mChartUplColor->update();
+	}
 }
-*/
-#include "configure.moc"
