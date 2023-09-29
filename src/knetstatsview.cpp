@@ -13,7 +13,7 @@ KNetStatsView::KNetStatsView(KNetStats *parent, const QString &interface)
 		: mSysDevPath("/sys/class/net/" + interface + "/"),
 		  mInterface(QNetworkInterface::interfaceFromName(interface)) {
 	mFirstUpdate = true;
-	mConnected = mCarrier = true;
+	mCarrier = true;
 
 	mTimer = new QTimer(this);
 	mStatistics = new Statistics(this);
@@ -31,7 +31,7 @@ KNetStatsView::KNetStatsView(KNetStats *parent, const QString &interface)
 
 	trayIcon->setToolTip(QString("Monitoring %1").arg(mInterface.name()));
 	trayIcon->setContextMenu(mContextMenu);
-	connect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateTrayIconAndStats);
+	connect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateStats);
 	connect(trayIcon, &QSystemTrayIcon::activated, this, &KNetStatsView::iconActivated);
 }
 
@@ -48,6 +48,8 @@ void KNetStatsView::setupTrayIcon() {
 		mCurrentIcon = &mIconNone;
 	}
 	mTimer->start(mOptions.mUpdateInterval);
+	trayIcon->setIcon(*mCurrentIcon);
+	trayIcon->show();
 }
 
 void KNetStatsView::updateViewOptions() {
@@ -59,16 +61,6 @@ void KNetStatsView::updateStats() {
 	FILE *fp = fopen((mSysDevPath + "carrier").toLatin1(), "r");
 	int carrierFlag = 0;
 
-	if (!fp && mConnected) { // interface caiu...
-		mConnected = false;
-		resetBuffers();
-		mCurrentIcon = &mIconError;
-		trayIcon->showMessage(programName, QString("%1 is inactive").arg(mInterface.name()));
-	} else if (fp && !mConnected) {
-		mConnected = true;
-		trayIcon->showMessage(programName, QString("%1 is active").arg(mInterface.name()));
-	}
-
 	if (fp) {
 		carrierFlag = fgetc(fp);
 		// /sys/net/<>/carrier can immediately read EOF if the network state is DOWN. Pin it to 0.
@@ -76,25 +68,25 @@ void KNetStatsView::updateStats() {
 		fclose(fp);
 	}
 
-	if (!mConnected)
-		return;
-	if (carrierFlag == 0) { // carrier down
+	if (carrierFlag == '0') { // carrier down
 		if (mCarrier) {
 			mCarrier = false;
-			mCurrentIcon = &mIconError;
-			trayIcon->showMessage(programName, QString("%1 is disconnected").arg(mInterface.name()));
+			trayIcon->showMessage(programName, QString("%1 is down!").arg(mInterface.name()));
+			QApplication::processEvents();
+			trayIcon->hide();
 		}
 		return;
 	} else if (!mCarrier) { // carrier up
 		mCarrier = true;
-		trayIcon->showMessage(programName, QString("%1 is connected").arg(mInterface.name()));
+		trayIcon->showMessage(programName, QString("%1 is up!").arg(mInterface.name()));
+		QApplication::processEvents();
+		trayIcon->show();
 	}
 
 	unsigned long long brx = readInterfaceNumValue("rx_bytes");
 	unsigned long long btx = readInterfaceNumValue("tx_bytes");
 	unsigned long long prx = readInterfaceNumValue("rx_packets");
 	unsigned long long ptx = readInterfaceNumValue("tx_packets");
-
 
 	if (!mFirstUpdate) { // a primeira velocidade sempre eh absurda, para evitar isso temos o mFirstUpdate
 		if (++mSpeedBufferPtr == SPEED_BUFFER_SIZE)
@@ -158,18 +150,6 @@ void KNetStatsView::updateStats() {
 	mBTx = btx;
 	mPRx = prx;
 	mPTx = ptx;
-}
-
-void KNetStatsView::updateTrayIconAndStats() {
-	trayIcon->setIcon(*mCurrentIcon);
-	if (!(mInterface.flags() & QNetworkInterface::IsUp)) {
-		trayIcon->hide();
-		return;
-	} else {
-		trayIcon->show();
-	}
-
-	updateStats();
 }
 
 unsigned long long KNetStatsView::readInterfaceNumValue(const char *name) {

@@ -70,7 +70,6 @@ protected:
 private:
 	QString mSysDevPath;            // Path to the device.
 	bool mCarrier;                    // Interface carrier is on?
-	bool mConnected;                // Interface exists?
 
 	QSystemTrayIcon *trayIcon;
 	QMenu *mContextMenu;        // Global ContextMenu
@@ -124,8 +123,6 @@ private slots:
 	void updateStats();
 
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
-
-	void updateTrayIconAndStats();
 };
 
 void KNetStatsView::calcMaxSpeed() {
