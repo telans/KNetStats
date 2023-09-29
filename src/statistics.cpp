@@ -6,7 +6,7 @@
 #include <QMenu>
 
 Statistics::Statistics(KNetStatsView *parent)
-		: Ui::StatisticsBase(), mParent(parent) {
+		: QDialog(parent), Ui::StatisticsBase(), mParent(parent) {
 
 	setupUi(this);
 	this->setWindowTitle(QString("Monitoring Interface %1 - KNetStats").arg(parent->interface().name()));
@@ -14,9 +14,10 @@ Statistics::Statistics(KNetStatsView *parent)
 							parent->historyPointer(), parent->maxSpeed(),
 							parent->getViewOptions());
 	mChart->addWidget(chart);
-	update();
+	this->update();
 
 	mTimer = new QTimer(this);
+	mTimer->setInterval(mParent->getViewOptions()->mUpdateInterval);
 	connect(tabWidget, &QTabWidget::tabBarClicked, this, &Statistics::updateTabSize);
 	connect(mTimer, &QTimer::timeout, this, &Statistics::updateStatistics);
 	connect(mTimer, &QTimer::timeout, chart, qOverload<>(&Chart::repaint));
@@ -34,6 +35,22 @@ void Statistics::updateStatistics() {
 	mPTx->setText(QString::number(mParent->totalPktTx()));
 	mPktSpeedRx->setText(QString::number(mParent->pktSpeedRx(), 'f', 1) + "pkts/s");
 	mPktSpeedTx->setText(QString::number(mParent->pktSpeedTx(), 'f', 1) + "pkts/s");
+
+	auto interface = QNetworkInterface::interfaceFromName(mParent->interface().name());
+	mMTU->setNum(interface.maximumTransmissionUnit());
+	if (interface.flags() & QNetworkInterface::IsRunning) {
+		QString ipStr, netmaskStr;
+		for (const QNetworkAddressEntry &addr: interface.addressEntries()) {
+			ipStr += addr.ip().toString() + "\n";
+			netmaskStr += addr.netmask().toString() + "\n";
+		}
+		mIP->setText(ipStr.remove(QRegExp("\\n$")));
+		mNetmask->setText(netmaskStr.remove(QRegExp("\\n$")));
+	} else {
+		mIP->setText("Not Connected");
+		mNetmask->setText("Not Connected");
+	}
+	mMAC->setText(interface.hardwareAddress());
 }
 
 void Statistics::updateTabSize(int tabIndex) {
@@ -47,28 +64,11 @@ void Statistics::updateTabSize(int tabIndex) {
 }
 
 void Statistics::showWindow() {
-	// Update details...
-	mMTU->setNum(mParent->interface().maximumTransmissionUnit());
-	if (mParent->interface().flags() &
-		(QNetworkInterface::InterfaceFlag::IsUp | QNetworkInterface::InterfaceFlag::IsRunning)) {
-		QString ipStr, netmaskStr;
-		for (const QNetworkAddressEntry &addr: mParent->interface().addressEntries()) {
-			ipStr += addr.ip().toString() + "\n";
-			netmaskStr += addr.netmask().toString() + "\n";
-		}
-		mIP->setText(ipStr.remove(QRegExp("\\n$")));
-		mNetmask->setText(netmaskStr.remove(QRegExp("\\n$")));
-	} else {
-		mIP->setText("Not Connected");
-		mNetmask->setText("Not Connected");
-	}
-	mMAC->setText(mParent->interface().hardwareAddress());
-
 	mTimer->start(mParent->updateInterval());
-	show();
+	this->show();
 }
 
 void Statistics::hideWindow() {
 	mTimer->stop();
-	hide();
+	this->hide();
 }

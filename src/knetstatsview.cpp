@@ -64,23 +64,25 @@ void KNetStatsView::updateStats() {
 	if (fp) {
 		carrierFlag = fgetc(fp);
 		// /sys/net/<>/carrier can immediately read EOF if the network state is DOWN. Pin it to 0.
-		carrierFlag = (carrierFlag < 0) ? 0 : carrierFlag;
+		carrierFlag = (carrierFlag < 0) ? '0' : carrierFlag;
 		fclose(fp);
 	}
 
 	if (carrierFlag == '0') { // carrier down
 		if (mCarrier) {
 			mCarrier = false;
-			trayIcon->showMessage(programName, QString("%1 is down!").arg(mInterface.name()));
+			trayIcon->showMessage(programName, QString("%1 is down!").arg(mInterface.name()),
+								  QSystemTrayIcon::Information, 3000);
 			QApplication::processEvents();
 			trayIcon->hide();
 		}
 		return;
 	} else if (!mCarrier) { // carrier up
 		mCarrier = true;
-		trayIcon->showMessage(programName, QString("%1 is up!").arg(mInterface.name()));
-		QApplication::processEvents();
 		trayIcon->show();
+		trayIcon->showMessage(programName, QString("%1 is up!").arg(mInterface.name()),
+							  QSystemTrayIcon::Information, 3000);
+		QApplication::processEvents();
 	}
 
 	unsigned long long brx = readInterfaceNumValue("rx_bytes");
