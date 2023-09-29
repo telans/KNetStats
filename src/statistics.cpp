@@ -38,8 +38,13 @@ void Statistics::update() {
 void Statistics::show() {
 	// Update details...
 	mMTU->setNum(mParent->interface().maximumTransmissionUnit());
-	mIP->setText(mParent->interface().addressEntries()[0].ip().toString());
-	mNetmask->setText(mParent->interface().addressEntries()[0].netmask().toString());
+	if (mParent->interface().flags() & (QNetworkInterface::InterfaceFlag::IsUp | QNetworkInterface::InterfaceFlag::IsRunning)) {
+		mIP->setText(mParent->interface().addressEntries()[0].ip().toString());
+		mNetmask->setText(mParent->interface().addressEntries()[0].netmask().toString());
+	} else {
+		mIP->setText("Not Connected");
+		mNetmask->setText("Not Connected");
+	}
 	mMAC->setText(mParent->interface().hardwareAddress());
 
 	mTimer->start(mParent->updateInterval());
