@@ -25,6 +25,8 @@ public slots:
 private slots:
 
 	void updateStatistics();
+
+	void updateTabSize(int tabIndex);
 };
 
 #endif

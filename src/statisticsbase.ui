@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>431</width>
-    <height>414</height>
+    <width>459</width>
+    <height>462</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -167,6 +167,12 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="tab_2">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
       <attribute name="title">
        <string>&amp;Statistics</string>
       </attribute>
