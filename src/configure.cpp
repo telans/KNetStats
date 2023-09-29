@@ -20,9 +20,8 @@ Configure::Configure(QWidget *parent, const QList<QNetworkInterface> &ifs) : QDi
 
 	mInterfaces->setCurrentRow(0);
 	changeInterface(mInterfaces->currentItem());
-
-	connect(mInterfaces, SIGNAL(itemClicked(QListWidgetItem * )), this, SLOT(changeInterface(QListWidgetItem * )));
-	connect(mTheme, SIGNAL(activated(int)), this, SLOT(changeTheme(int)));
+	connect(mInterfaces, &QListWidget::itemClicked, this, &Configure::changeInterface);
+	connect(mTheme, qOverload<int>(&QComboBox::activated), this, &Configure::changeTheme);
 }
 
 void Configure::changeInterface(QListWidgetItem *item) {

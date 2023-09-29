@@ -6,9 +6,7 @@
 Chart::Chart(const double *uploadBuffer, const double *downloadBuffer, int bufferSize, const int *ptr,
 			 const double *maxspeed, const ViewOptions *interfaceOptions)
 		: QWidget(nullptr), mUplBuffer(uploadBuffer), mDldBuffer(downloadBuffer), mBufferSize(bufferSize), mPtr(ptr),
-		  mMaxSpeed(maxspeed), mInterfaceOptions(interfaceOptions) {
-	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-}
+		  mMaxSpeed(maxspeed), mInterfaceOptions(interfaceOptions) {}
 
 void Chart::paintEvent(QPaintEvent *event) {
 	QPainter paint(this);

@@ -13,7 +13,7 @@ public:
 		  const double *maxspeed, const ViewOptions *interfaceOptions);
 
 protected:
-	void paintEvent(QPaintEvent *event);
+	void paintEvent(QPaintEvent *event) override;
 
 private:
 	const double *mUplBuffer;

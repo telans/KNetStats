@@ -104,7 +104,7 @@ private:
 
 
 	// set up the view.
-	void setup();
+	void setupTrayIcon();
 
 	void drawText(QPainter &paint);
 
@@ -117,17 +117,15 @@ private:
 	inline void calcMaxSpeed();
 
 	// calc the speed using a speed buffer
-	inline double calcSpeed(const double *buffer) const;
+	static inline double calcSpeed(const double *buffer);
 
 private slots:
 
-	// Called by the timer to update statistics
 	void updateStats();
 
-//	void showContextMenu(const QPoint &pos);
-	void updateIcon();
-
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
+	void updateTrayIconAndStats();
 };
 
 void KNetStatsView::calcMaxSpeed() {
@@ -147,7 +145,7 @@ void KNetStatsView::calcMaxSpeed() {
 	mMaxSpeedAge = (mSpeedHistoryPtr > ptr) ? (mSpeedHistoryPtr - ptr) : (mSpeedHistoryPtr + HISTORY_SIZE - ptr);
 }
 
-double KNetStatsView::calcSpeed(const double *buffer) const {
+double KNetStatsView::calcSpeed(const double *buffer) {
 	double total = 0.0;
 	for (int i = 0; i < SPEED_BUFFER_SIZE; ++i)
 		total += buffer[i];

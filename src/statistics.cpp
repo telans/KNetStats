@@ -1,6 +1,7 @@
 #include "statistics.h"
 #include "chart.h"
 #include "knetstatsview.h"
+#include <QNetworkInterface>
 #include <QTimer>
 #include <QMenu>
 
@@ -16,13 +17,12 @@ Statistics::Statistics(KNetStatsView *parent)
 	update();
 
 	mTimer = new QTimer(this);
-	connect(mTimer, SIGNAL(timeout()), this, SLOT(update()));
-	connect(mTimer, SIGNAL(timeout()), chart, SLOT(update()));
-
-	connect(mOk, SIGNAL(clicked(bool)), this, SLOT(accept()));
+	connect(mTimer, &QTimer::timeout, this, &Statistics::updateStatistics);
+	connect(mTimer, &QTimer::timeout, chart, qOverload<>(&Chart::repaint));
+	connect(mOk, &QPushButton::clicked, this, &Statistics::hideWindow);
 }
 
-void Statistics::update() {
+void Statistics::updateStatistics() {
 	mMaxSpeed->setText(this->locale().formattedDataSize(*mParent->maxSpeed()) + +"/s");
 	mBRx->setText(this->locale().formattedDataSize(mParent->totalBytesRx()));
 	mBTx->setText(this->locale().formattedDataSize(mParent->totalBytesTx()));
@@ -35,7 +35,7 @@ void Statistics::update() {
 	mPktSpeedTx->setText(QString::number(mParent->pktSpeedTx(), 'f', 1) + "pkts/s");
 }
 
-void Statistics::show() {
+void Statistics::showWindow() {
 	// Update details...
 	mMTU->setNum(mParent->interface().maximumTransmissionUnit());
 	if (mParent->interface().flags() & (QNetworkInterface::InterfaceFlag::IsUp | QNetworkInterface::InterfaceFlag::IsRunning)) {
@@ -48,10 +48,10 @@ void Statistics::show() {
 	mMAC->setText(mParent->interface().hardwareAddress());
 
 	mTimer->start(mParent->updateInterval());
-	QWidget::show();
+	show();
 }
 
-void Statistics::accept() {
+void Statistics::hideWindow() {
 	mTimer->stop();
-	QDialog::accept();
+	hide();
 }

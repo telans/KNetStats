@@ -63,9 +63,9 @@ bool KNetStats::configure() {
 		}
 
 		mConfigure = new Configure(this, ifs);
-		connect(mConfigure->mOk, SIGNAL(clicked()), this, SLOT(configOk()));
-		connect(mConfigure->mApply, SIGNAL(clicked()), this, SLOT(configApply()));
-		connect(mConfigure->mCancel, SIGNAL(clicked()), this, SLOT(configCancel()));
+		connect(mConfigure->mOk, &QPushButton::clicked, this, &KNetStats::configOk);
+		connect(mConfigure->mApply, &QPushButton::clicked, this, &KNetStats::configApply);
+		connect(mConfigure->mCancel, &QPushButton::clicked, this, &KNetStats::configCancel);
 		mConfigure->show();
 	}
 	return true;

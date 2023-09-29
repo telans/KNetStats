@@ -12,19 +12,19 @@ Q_OBJECT
 public:
 	explicit Statistics(KNetStatsView *parent);
 
-	void show();
-
 private:
 	QTimer *mTimer;
 	KNetStatsView *mParent;
 
 public slots:
 
-	void accept();
+	void showWindow();
+
+	void hideWindow();
 
 private slots:
 
-	void update();
+	void updateStatistics();
 };
 
 #endif
