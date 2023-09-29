@@ -3,9 +3,9 @@
 #include <QBrush>
 
 Chart::Chart(const double *uploadBuffer, const double *downloadBuffer, int bufferSize, const int *ptr,
-			 const double *maxspeed)
+			 const double *maxspeed, const QString *uploadColor, const QString *downloadColor)
 		: QWidget(nullptr), mUplBuffer(uploadBuffer), mDldBuffer(downloadBuffer), mBufferSize(bufferSize), mPtr(ptr),
-		  mMaxSpeed(maxspeed) {
+		  mMaxSpeed(maxspeed), mChartUplColor(uploadColor), mChartDldColor(downloadColor) {
 	setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
@@ -30,9 +30,9 @@ void Chart::paintEvent(QPaintEvent *event) {
 			i = mBufferSize - 1;
 		int rxY = HEIGHT - int(HEIGHT * (mDldBuffer[i] / (*mMaxSpeed)));
 		int txY = HEIGHT - int(HEIGHT * (mUplBuffer[i] / (*mMaxSpeed)));
-		paint.setPen(Qt::green);
+		paint.setPen(*mChartDldColor);
 		paint.drawLine(lastX, lastRxY, x, rxY);
-		paint.setPen(Qt::red);
+		paint.setPen(*mChartUplColor);
 		paint.drawLine(lastX, lastTxY, x, txY);
 		//qDebug("%d => %d", i, int(mSpeedHistoryRx[i]));
 		lastX = x;

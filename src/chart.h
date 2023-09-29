@@ -9,7 +9,7 @@ class Chart : public QWidget {
 	Q_OBJECT
 public:
 	Chart(const double *uploadBuffer, const double *downloadBuffer, int bufferSize, const int *ptr,
-		  const double *maxspeed);
+		  const double *maxspeed, const QString *uploadColor, const QString *downloadColor);
 
 protected:
 	void paintEvent(QPaintEvent *event);
@@ -20,6 +20,8 @@ private:
 	const int mBufferSize;
 	const int *mPtr;
 	const double *mMaxSpeed;
+	const QString *mChartUplColor;
+	const QString *mChartDldColor;
 };
 
 #endif
