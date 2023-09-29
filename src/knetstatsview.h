@@ -59,10 +59,7 @@ public:
 
 	inline double pktSpeedTx() const;
 
-	const QString *chartDldColor() const { return &mOptions.mChartDldColor; }
-
-	const QString *ChartUplColor() const { return &mOptions.mChartUplColor; }
-
+	const ViewOptions *getViewOptions() const { return &mOptions; }
 
 protected:
 

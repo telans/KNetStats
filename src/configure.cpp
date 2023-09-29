@@ -45,7 +45,7 @@ void Configure::changeInterface(QListWidgetItem *item) {
 		oldview.mChartUplColor = mChartUplColor->color().name();
 		oldview.mChartDldColor = mChartDldColor->color().name();
 		oldview.mChartBgColor = mChartBgColor->color().name();
-		oldview.mChartTransparentBackground = bChartTransparentBg->isChecked();
+		oldview.mChartTransparentBackground = mChartTransparentBackground->isChecked();
 	}
 
 	if (interface == mCurrentItem)
@@ -67,7 +67,7 @@ void Configure::changeInterface(QListWidgetItem *item) {
 	mChartUplColor->setColor(view.mChartUplColor);
 	mChartDldColor->setColor(view.mChartDldColor);
 	mChartBgColor->setColor(view.mChartBgColor);
-	bChartTransparentBg->setChecked(view.mChartTransparentBackground);
+	mChartTransparentBackground->setChecked(view.mChartTransparentBackground);
 
 	mCurrentItem = interface;
 }

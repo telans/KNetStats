@@ -43,7 +43,7 @@ void KNetStats::readInterfaceConfig(const QString &ifName, ViewOptions *opts) {
 	opts->mChartUplColor = settings.value("ChartUplColor", "#FF0000").toString();
 	opts->mChartDldColor = settings.value("ChartDldColor", "#00FF00").toString();
 	opts->mChartBgColor = settings.value("ChartBgColor", "#000000").toString();
-	opts->mChartTransparentBackground = settings.value("ChartUseTransparentBackground", true).toBool();
+	opts->mChartTransparentBackground = settings.value("ChartUseTransparentBackground", false).toBool();
 	settings.endGroup();
 }
 

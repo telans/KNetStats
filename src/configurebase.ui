@@ -411,7 +411,7 @@
              </layout>
             </item>
             <item>
-             <widget class="QCheckBox" name="bChartTransparentBg">
+             <widget class="QCheckBox" name="mChartTransparentBackground">
               <property name="text">
                <string>Transparent Background</string>
               </property>

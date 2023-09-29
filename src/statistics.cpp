@@ -10,8 +10,8 @@ Statistics::Statistics(KNetStatsView *parent)
 
 	setupUi(this);
 	auto *chart = new Chart(parent->speedHistoryTx(), parent->speedHistoryRx(), parent->historyBufferSize(),
-							parent->historyPointer(), parent->maxSpeed(), parent->ChartUplColor(),
-							parent->chartDldColor());
+							parent->historyPointer(), parent->maxSpeed(),
+							parent->getViewOptions());
 	mChart->addWidget(chart);
 	update();
 
