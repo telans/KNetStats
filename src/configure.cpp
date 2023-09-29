@@ -1,7 +1,6 @@
 #include <QListWidget>
 #include <QNetworkInterface>
 #include <QMessageBox>
-#include <QColorDialog>
 
 #include "configure.h"
 #include "knetstats.h"
@@ -22,12 +21,6 @@ Configure::Configure(QWidget *parent, const QList<QNetworkInterface> &ifs) : QDi
 	mInterfaces->setCurrentRow(0);
 	changeInterface(mInterfaces->currentItem());
 
-	connect(mChartUplColor, &QPushButton::clicked, this, &Configure::openColorDialog);
-	connect(mChartDldColor, &QPushButton::clicked, this, &Configure::openColorDialog);
-	connect(mChartBgColor, &QPushButton::clicked, this, &Configure::openColorDialog);
-	connect(mTxtUplColor, &QPushButton::clicked, this, &Configure::openColorDialog);
-	connect(mTxtDldColor, &QPushButton::clicked, this, &Configure::openColorDialog);
-
 	connect(mInterfaces, SIGNAL(itemClicked(QListWidgetItem * )), this, SLOT(changeInterface(QListWidgetItem * )));
 	connect(mTheme, SIGNAL(activated(int)), this, SLOT(changeTheme(int)));
 }
@@ -39,19 +32,19 @@ void Configure::changeInterface(QListWidgetItem *item) {
 		// Save the previous options
 		ViewOptions &oldview = mConfig[mCurrentItem];
 		// general options
-		oldview.mMonitoring = mMonitoring->isChecked();
+		oldview.mMonitoring = mMonitoringInterface->isChecked();
 		oldview.mUpdateInterval = mUpdateInterval->value();
 		oldview.mViewMode = (ViewMode) mViewMode->currentIndex();
 		// txt view options
-		oldview.mTxtUplColor = mTxtUplColor->styleSheet();
-		oldview.mTxtDldColor = mTxtDldColor->styleSheet();
-//		oldview.mTxtFont = mTxtFont->font();
+		oldview.mTxtUplColor = mTxtUplColor->color().name();
+		oldview.mTxtDldColor = mTxtDldColor->color().name();
+		oldview.mTxtFont = mTxtFont->font();
 		// icon view
 		oldview.mTheme = mTheme->currentIndex();
 		// chart view
-		oldview.mChartUplColor = mChartUplColor->styleSheet();
-		oldview.mChartDldColor = mChartDldColor->styleSheet();
-		oldview.mChartBgColor = mChartBgColor->styleSheet();
+		oldview.mChartUplColor = mChartUplColor->color().name();
+		oldview.mChartDldColor = mChartDldColor->color().name();
+		oldview.mChartBgColor = mChartBgColor->color().name();
 		oldview.mChartTransparentBackground = bChartTransparentBg->isChecked();
 	}
 
@@ -60,20 +53,20 @@ void Configure::changeInterface(QListWidgetItem *item) {
 	// Load the new interface options
 	ViewOptions &view = mConfig[interface];
 	// general
-	mMonitoring->setChecked(view.mMonitoring);
+	mMonitoringInterface->setChecked(view.mMonitoring);
 	mUpdateInterval->setValue(view.mUpdateInterval);
 	mViewMode->setCurrentIndex(view.mViewMode);
 	// txt options
-	mTxtUplColor->setStyleSheet(view.mTxtUplColor);
-	mTxtDldColor->setStyleSheet(view.mTxtDldColor);
-//	mTxtFont->setFont(view.mTxtFont);
+	mTxtUplColor->setColor(view.mTxtUplColor);
+	mTxtDldColor->setColor(view.mTxtDldColor);
+	mTxtFont->setFont(view.mTxtFont);
 	// icon options
 	mTheme->setCurrentIndex(view.mTheme);
 	changeTheme(view.mTheme);
 	// chart options
-	mChartUplColor->setStyleSheet(view.mChartUplColor);
-	mChartDldColor->setStyleSheet(view.mChartDldColor);
-	mChartBgColor->setStyleSheet(view.mChartBgColor);
+	mChartUplColor->setColor(view.mChartUplColor);
+	mChartDldColor->setColor(view.mChartDldColor);
+	mChartBgColor->setColor(view.mChartBgColor);
 	bChartTransparentBg->setChecked(view.mChartTransparentBackground);
 
 	mCurrentItem = interface;
@@ -107,17 +100,4 @@ void Configure::changeTheme(int theme) {
 	mIconTx->setPixmap(QPixmap(":/img/theme" + QString::number(theme) + "_tx.png"));
 	mIconRx->setPixmap(QPixmap(":/img/theme" + QString::number(theme) + "_rx.png"));
 	mIconBoth->setPixmap(QPixmap(":/img/theme" + QString::number(theme) + "_both.png"));
-}
-
-void Configure::openColorDialog() {
-	QColor color = QColorDialog::getColor();
-
-	if (color.isValid()) {
-		QString s("background: #"
-				  + QString(color.red() < 16 ? "0" : "") + QString::number(color.red(), 16)
-				  + QString(color.green() < 16 ? "0" : "") + QString::number(color.green(), 16)
-				  + QString(color.blue() < 16 ? "0" : "") + QString::number(color.blue(), 16) + ";");
-		mChartUplColor->setStyleSheet(s);
-		mChartUplColor->update();
-	}
 }

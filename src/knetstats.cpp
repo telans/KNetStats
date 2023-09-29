@@ -33,16 +33,16 @@ void KNetStats::readInterfaceConfig(const QString &ifName, ViewOptions *opts) {
 	opts->mViewMode = (ViewMode) settings.value("ViewMode", 0).toInt();
 	opts->mMonitoring = settings.value("Monitoring", true).toBool();
 	// txt view
-//	opts->mTxtFont = settings.value("TxtFont").value<QFont>();
-	opts->mTxtUplColor = settings.value("TxtUplColor", "background: #FF0000").toString();
-	opts->mTxtDldColor = settings.value("TxtDldColor", "background: #00FF00").toString();
+	opts->mTxtFont = settings.value("TxtFont").value<QFont>();
+	opts->mTxtUplColor = settings.value("TxtUplColor", "#FF0000").toString();
+	opts->mTxtDldColor = settings.value("TxtDldColor", "#0000FF").toString();
 	// IconView
 	int defaultTheme = ifName.startsWith("wlan") ? 3 : 0;
 	opts->mTheme = settings.value("Theme", defaultTheme).toInt();
 	// Graphic
-	opts->mChartUplColor = settings.value("ChartUplColor", "background: #FF0000").toString();
-	opts->mChartDldColor = settings.value("ChartDldColor", "background: #0000FF").toString();
-	opts->mChartBgColor = settings.value("ChartBgColor", "background: #FFFFFF").toString();
+	opts->mChartUplColor = settings.value("ChartUplColor", "#FF0000").toString();
+	opts->mChartDldColor = settings.value("ChartDldColor", "#00FF00").toString();
+	opts->mChartBgColor = settings.value("ChartBgColor", "#000000").toString();
 	opts->mChartTransparentBackground = settings.value("ChartUseTransparentBackground", true).toBool();
 	settings.endGroup();
 }
@@ -105,7 +105,7 @@ void KNetStats::saveConfig(const OptionsMap &options) {
 		settings.setValue("ViewMode", (int) opt.mViewMode);
 		settings.setValue("Monitoring", opt.mMonitoring);
 		// txt view
-//		settings.setValue("TxtFont", opt.mTxtFont);
+		settings.setValue("TxtFont", opt.mTxtFont);
 		settings.setValue("TxtUplColor", opt.mTxtUplColor);
 		settings.setValue("TxtDldColor", opt.mTxtDldColor);
 		// IconView

@@ -45,9 +45,9 @@ void KNetStatsView::updateIcon() {
 }
 
 void KNetStatsView::setup() {
-	/*if (mOptions.mViewMode == Text)
+	if (mOptions.mViewMode == Text)
 		mOptions.mTxtFont.setFamily(mOptions.mTxtFont.defaultFamily());
-	else */if (mOptions.mViewMode == Icon) {
+	else if (mOptions.mViewMode == Icon) {
 		// Load Icons
 		mIconError = QIcon(":/img/theme" + QString::number(mOptions.mTheme) + "_error.png");
 		mIconNone = QIcon(":/img/theme" + QString::number(mOptions.mTheme) + "_none.png");

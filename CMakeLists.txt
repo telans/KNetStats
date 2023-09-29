@@ -6,10 +6,17 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 set(QT_MIN_VERSION "5.15.0")
 
-find_package (Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
+find_package (ECM ${KF_MIN_VERSION} REQUIRED NO_MODULE)
+set (CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
+
+find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
         Core
         Widgets
         Network
+)
+
+find_package(KF5 REQUIRED COMPONENTS
+        WidgetsAddons
 )
 
 set(CMAKE_AUTOMOC on)
@@ -33,4 +40,5 @@ target_link_libraries(knetstats PRIVATE
         Qt5::Core
         Qt5::Widgets
         Qt5::Network
+        KF5::WidgetsAddons
 )

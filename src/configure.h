@@ -19,7 +19,7 @@ struct ViewOptions {
 	ViewMode mViewMode;
 	bool mMonitoring;
 	// txt view
-//	QFont mTxtFont;
+	QFont mTxtFont;
 	QString mTxtUplColor;
 	QString mTxtDldColor;
 	// icon view
@@ -48,12 +48,9 @@ protected slots:
 
 	void changeTheme(int theme);
 
-	void openColorDialog();
-
 private:
 	QString mCurrentItem;
 	OptionsMap mConfig;
-
 };
 
 #endif
