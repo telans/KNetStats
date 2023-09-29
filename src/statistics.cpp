@@ -6,7 +6,6 @@
 
 Statistics::Statistics(KNetStatsView *parent)
 		: Ui::StatisticsBase(), mParent(parent) {
-//	setCaption( i18n( "Details of %1" ).arg( mInterface ) );
 
 	setupUi(this);
 	this->setWindowTitle(QString("Monitoring Interface %1 - KNetStats").arg(parent->interface().name()));

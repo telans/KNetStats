@@ -19,6 +19,8 @@ Q_OBJECT
 public:
 	KNetStatsView(KNetStats *parent, const QString &interface);
 
+	~KNetStatsView() { delete mStatistics; }
+
 	void updateViewOptions();
 
 	// read a value from /sys/class/net/interface/name
