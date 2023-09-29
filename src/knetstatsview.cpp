@@ -48,7 +48,6 @@ void KNetStatsView::setupTrayIcon() {
 		mCurrentIcon = &mIconNone;
 	}
 	mTimer->start(mOptions.mUpdateInterval);
-	mFirstUpdate = false;
 }
 
 void KNetStatsView::updateViewOptions() {
@@ -98,8 +97,10 @@ void KNetStatsView::updateStats() {
 
 
 	if (!mFirstUpdate) { // a primeira velocidade sempre eh absurda, para evitar isso temos o mFirstUpdate
-		if (++mSpeedBufferPtr >= SPEED_BUFFER_SIZE)
+		if (++mSpeedBufferPtr == SPEED_BUFFER_SIZE)
 			mSpeedBufferPtr = 0;
+		if (++mSpeedHistoryPtr == HISTORY_SIZE)
+			mSpeedHistoryPtr = 0;
 
 		// Calcula as velocidades
 		mSpeedBufferTx[mSpeedBufferPtr] = ((btx - mBTx) * (1000.0f / mOptions.mUpdateInterval));
@@ -107,8 +108,6 @@ void KNetStatsView::updateStats() {
 		mSpeedBufferPTx[mSpeedBufferPtr] = ((ptx - mPTx) * (1000.0f / mOptions.mUpdateInterval));
 		mSpeedBufferPRx[mSpeedBufferPtr] = ((prx - mPRx) * (1000.0f / mOptions.mUpdateInterval));
 
-		if (++mSpeedHistoryPtr >= HISTORY_SIZE)
-			mSpeedHistoryPtr = 0;
 		mSpeedHistoryRx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferRx);
 		mSpeedHistoryTx[mSpeedHistoryPtr] = calcSpeed(mSpeedBufferTx);
 
@@ -124,6 +123,8 @@ void KNetStatsView::updateStats() {
 		}
 		if (mMaxSpeedAge < 1)
 			calcMaxSpeed();
+	} else {
+		mFirstUpdate = false;
 	}
 
 	if (mOptions.mViewMode == Icon) {
@@ -160,6 +161,7 @@ void KNetStatsView::updateStats() {
 }
 
 void KNetStatsView::updateTrayIconAndStats() {
+	trayIcon->setIcon(*mCurrentIcon);
 	if (!(mInterface.flags() & QNetworkInterface::IsUp)) {
 		trayIcon->hide();
 		return;
@@ -168,7 +170,6 @@ void KNetStatsView::updateTrayIconAndStats() {
 	}
 
 	updateStats();
-	trayIcon->setIcon(*mCurrentIcon);
 }
 
 unsigned long long KNetStatsView::readInterfaceNumValue(const char *name) {

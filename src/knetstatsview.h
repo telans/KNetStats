@@ -92,13 +92,13 @@ private:
 	double mSpeedBufferPRx[SPEED_BUFFER_SIZE]{}, mSpeedBufferPTx[SPEED_BUFFER_SIZE]{};
 	// pointer to current speed buffer position
 	int mSpeedBufferPtr{};
+	int mSpeedHistoryPtr{};
 
 	bool mFirstUpdate;
 
 	// History buffer TODO: Make it configurable!
 	double mSpeedHistoryRx[HISTORY_SIZE]{};
 	double mSpeedHistoryTx[HISTORY_SIZE]{};
-	int mSpeedHistoryPtr{};
 	double mMaxSpeed{};
 	int mMaxSpeedAge{};
 
