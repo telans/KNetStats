@@ -59,6 +59,8 @@ void Statistics::updateStatistics() {
 }
 
 void Statistics::updateTabSize(int tabIndex) {
+	if (tabIndex == -1)
+			return;
 	for (int i = 0; i < tabWidget->count(); i++) {
 		if (i != tabIndex)
 			tabWidget->widget(i)->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
