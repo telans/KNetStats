@@ -53,7 +53,14 @@ public:
 	// calc the speed using a speed buffer
 	static inline double calcSpeed(const double *buffer);
 
-	inline bool interfaceIsValid() { return opendir(mSysDevPath.toLatin1()); };
+	inline bool interfaceIsValid() {
+		bool ret = false;
+		DIR *dir = opendir(mSysDevPath.toLatin1());
+		if (dir)
+			ret = true;
+		closedir(dir);
+		return ret;
+	};
 
 	inline bool trayIconVisible() { return mTrayIcon->isVisible(); }
 
