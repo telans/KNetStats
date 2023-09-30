@@ -9,19 +9,10 @@
 
 #include "ui_configurebase.h"
 
-enum ViewMode {
-	Icon, Text, Graphic
-};
-
 struct ViewOptions {
 	// general
 	int mUpdateInterval;
-	ViewMode mViewMode;
 	bool mMonitoring;
-	// txt view
-	QFont mTxtFont;
-	QString mTxtUplColor;
-	QString mTxtDldColor;
 	// icon view
 	int mTheme;
 	// chart view

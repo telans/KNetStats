@@ -48,13 +48,11 @@ public:
 	///	The current Update Interval in miliseconds
 	inline int updateInterval() const;
 
-	/// We are in textmode?
-	inline ViewMode viewMode() const;
-
 	const ViewOptions *getViewOptions() const { return &mOptions; }
 
 	// calc the speed using a speed buffer
 	static inline double calcSpeed(const double *buffer);
+
 	inline bool interfaceIsValid() { return opendir(mSysDevPath.toLatin1()); };
 protected:
 
@@ -77,14 +75,8 @@ private:
 
 	void updateStats();
 
-
-	void drawText(QPainter &paint);
-
-	void drawGraphic(QPainter &paint);
-
 	// calc tha max. speed stored in the history buffer
 	inline void calcMaxSpeed();
-
 
 private slots:
 
@@ -123,10 +115,6 @@ double KNetStatsView::calcSpeed(const double *buffer) {
 
 int KNetStatsView::updateInterval() const {
 	return mOptions.mUpdateInterval;
-}
-
-ViewMode KNetStatsView::viewMode() const {
-	return mOptions.mViewMode;
 }
 
 #endif

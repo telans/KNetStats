@@ -33,11 +33,6 @@ void Configure::changeInterface(QListWidgetItem *item) {
 		// general options
 		oldview.mMonitoring = mMonitoringInterface->isChecked();
 		oldview.mUpdateInterval = mUpdateInterval->value();
-		oldview.mViewMode = (ViewMode) mViewMode->currentIndex();
-		// txt view options
-		oldview.mTxtUplColor = mTxtUplColor->color().name();
-		oldview.mTxtDldColor = mTxtDldColor->color().name();
-		oldview.mTxtFont = mTxtFont->font();
 		// icon view
 		oldview.mTheme = mTheme->currentIndex();
 		// chart view
@@ -51,24 +46,18 @@ void Configure::changeInterface(QListWidgetItem *item) {
 		return;
 	// Load the new interface options
 	ViewOptions &view = mConfig[interface];
-	// general
+	// General options
 	mMonitoringInterface->setChecked(view.mMonitoring);
 	mUpdateInterval->setValue(view.mUpdateInterval);
-	mViewMode->setCurrentIndex(view.mViewMode);
-	// txt options
-	mTxtUplColor->setColor(view.mTxtUplColor);
-	mTxtDldColor->setColor(view.mTxtDldColor);
-	mTxtFont->setFont(view.mTxtFont);
-	// icon options
 	mTheme->setCurrentIndex(view.mTheme);
-	changeTheme(view.mTheme);
-	// chart options
+	// Chart Options
 	mChartUplColor->setColor(view.mChartUplColor);
 	mChartDldColor->setColor(view.mChartDldColor);
 	mChartBgColor->setColor(view.mChartBgColor);
 	mChartTransparentBackground->setChecked(view.mChartTransparentBackground);
-
 	mCurrentItem = interface;
+
+	changeTheme(view.mTheme);
 }
 
 bool Configure::canSaveConfig() {

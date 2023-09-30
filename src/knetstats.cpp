@@ -26,20 +26,14 @@ KNetStats::KNetStats() : QDialog(nullptr, Qt::Window), mCanStart(true), mConfigu
 
 void KNetStats::readInterfaceConfig(const QString &ifName, ViewOptions *opts) {
 	QSettings settings;
-	settings.beginGroup(ifName);
-
-	// general
-	opts->mUpdateInterval = settings.value("UpdateInterval", 300).toInt();
-	opts->mViewMode = (ViewMode) settings.value("ViewMode", 0).toInt();
-	opts->mMonitoring = settings.value("Monitoring", true).toBool();
-	// txt view
-	opts->mTxtFont = settings.value("TxtFont").value<QFont>();
-	opts->mTxtUplColor = settings.value("TxtUplColor", "#FF0000").toString();
-	opts->mTxtDldColor = settings.value("TxtDldColor", "#0000FF").toString();
-	// IconView
 	int defaultTheme = ifName.startsWith("wlan") ? 3 : 0;
+
+	settings.beginGroup(ifName);
+	// General Settings
+	opts->mUpdateInterval = settings.value("UpdateInterval", 300).toInt();
+	opts->mMonitoring = settings.value("Monitoring", true).toBool();
 	opts->mTheme = settings.value("Theme", defaultTheme).toInt();
-	// Graphic
+	// Graph Settings
 	opts->mChartUplColor = settings.value("ChartUplColor", "#FF0000").toString();
 	opts->mChartDldColor = settings.value("ChartDldColor", "#00FF00").toString();
 	opts->mChartBgColor = settings.value("ChartBgColor", "#000000").toString();
@@ -94,30 +88,26 @@ void KNetStats::configCancel() {
 
 void KNetStats::saveConfig(const OptionsMap &options) {
 	QSettings settings;
-
 	QStringList ifs;
+
 	for (OptionsMap::ConstIterator i = options.begin(); i != options.end(); ++i) {
-		ifs.push_back(i.key());
-		settings.beginGroup(i.key());
+		TrayIconMap::Iterator trayIcon = mViews.find(i.key());
 		const ViewOptions &opt = i.value();
-		// general
+
+		ifs.push_back(i.key());
+
+		settings.beginGroup(i.key());
+		// General Options
 		settings.setValue("UpdateInterval", opt.mUpdateInterval);
-		settings.setValue("ViewMode", (int) opt.mViewMode);
 		settings.setValue("Monitoring", opt.mMonitoring);
-		// txt view
-		settings.setValue("TxtFont", opt.mTxtFont);
-		settings.setValue("TxtUplColor", opt.mTxtUplColor);
-		settings.setValue("TxtDldColor", opt.mTxtDldColor);
-		// IconView
 		settings.setValue("Theme", opt.mTheme);
-		// Graphic view
+		// Chart Options
 		settings.setValue("ChartUplColor", opt.mChartUplColor);
 		settings.setValue("ChartDldColor", opt.mChartDldColor);
 		settings.setValue("ChartBgColor", opt.mChartBgColor);
 		settings.setValue("ChartUseTransparentBackground", opt.mChartTransparentBackground);
 		settings.endGroup();
 
-		TrayIconMap::Iterator trayIcon = mViews.find(i.key());
 		if (opt.mMonitoring) {    // check if we are already monitoring this interface.
 			if (trayIcon == mViews.end()) { // new interface!
 				auto *kview = new KNetStatsView(this, i.key());

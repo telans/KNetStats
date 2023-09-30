@@ -7,7 +7,7 @@
 class QPaintEvent;
 
 class Chart : public QWidget {
-	Q_OBJECT
+Q_OBJECT
 public:
 	Chart(const ViewOptions *interfaceOptions, const double *uploadBuffer, const double *downloadBuffer,
 		  const double *maxspeed, const int *ptr, int bufferSize) : QWidget() {

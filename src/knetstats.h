@@ -10,13 +10,8 @@ class KNetStatsView;
 class KNetStats : public QDialog {
 Q_OBJECT
 public:
-	/// Constructor
 	KNetStats();
 
-	/**
-	*	\brief Search for network interfaces parsing /proc/net/dev
-	*	\return A StringList with the network interface names
-	*/
 	static void readInterfaceConfig(const QString &ifName, ViewOptions *opts);
 
 	/**
@@ -41,10 +36,10 @@ public slots:
 	void configCancel();
 
 private:
-	bool mCanStart;
 	Configure *mConfigure;
 	typedef QHash<QString, KNetStatsView *> TrayIconMap;
 	TrayIconMap mViews;
+	bool mCanStart;
 
 	void saveConfig(const OptionsMap &options);
 };
