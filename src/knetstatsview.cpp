@@ -10,23 +10,19 @@
 extern const char *programName;
 
 KNetStatsView::KNetStatsView(KNetStats *parent, const QString &interface)
-		: mSysDevPath("/sys/class/net/" + interface + "/"),
-		  mInterface(QNetworkInterface::interfaceFromName(interface)) {
+		: mSysDevPath("/sys/class/net/" + interface + "/") {
+	mInterface = interface;
 	mFirstUpdate = true;
 	mCarrier = true;
 
 	mTimer = new QTimer(this);
 	mStatistics = new Statistics(this);
-	trayIcon = new QSystemTrayIcon(this);
-
+	mTrayIcon = new QSystemTrayIcon(this);
 	mContextMenu = new QMenu(this);
 	mContextMenu->addAction("Configure Interfaces", parent, &KNetStats::configure);
-	mContextMenu->addAction("Quit KNetStats", this, []() {
-		QApplication::quit();
-	});
+	mContextMenu->addAction("Quit KNetStats", parent, []() { QApplication::quit(); });
 
 	KNetStats::readInterfaceConfig(interface, &mOptions);
-	resetBuffers();
 	setupTrayIcon();
 
 	trayIcon->setToolTip(QString("Monitoring %1").arg(mInterface.name()));
@@ -71,17 +67,19 @@ void KNetStatsView::updateStats() {
 	if (carrierFlag == '0') { // carrier down
 		if (mCarrier) {
 			mCarrier = false;
-			trayIcon->showMessage(programName, QString("%1 is down!").arg(mInterface.name()),
-								  QSystemTrayIcon::Information, 3000);
+			mTrayIcon->showMessage(programName, QString("%1 is down!").arg(mInterface),
+								   QSystemTrayIcon::Information,
+								   3000);
 			QApplication::processEvents();
-			trayIcon->hide();
+			mTrayIcon->hide();
 		}
 		return;
 	} else if (!mCarrier) { // carrier up
 		mCarrier = true;
-		trayIcon->show();
-		trayIcon->showMessage(programName, QString("%1 is up!").arg(mInterface.name()),
-							  QSystemTrayIcon::Information, 3000);
+		mTrayIcon->show();
+		mTrayIcon->showMessage(programName, QString("%1 is up!").arg(mInterface),
+							   QSystemTrayIcon::Information,
+							   3000);
 		QApplication::processEvents();
 	}
 
@@ -137,7 +135,7 @@ void KNetStatsView::updateStats() {
 
 		if (newIcon != mCurrentIcon) {
 			mCurrentIcon = newIcon;
-			trayIcon->setIcon(*mCurrentIcon);
+			mTrayIcon->setIcon(*mCurrentIcon);
 		}
 	} else if (mOptions.mViewMode == Graphic || (btx != mBTx && brx != mBRx)) {
 //		updateTrayIconAndStats();
@@ -164,15 +162,17 @@ unsigned long long KNetStatsView::readInterfaceNumValue(const char *name) {
 	return retval;
 }
 
-void KNetStatsView::resetBuffers() {
-	memset(mSpeedHistoryRx, 0, sizeof(double) * HISTORY_SIZE);
-	memset(mSpeedHistoryTx, 0, sizeof(double) * HISTORY_SIZE);
-	memset(mSpeedBufferRx, 0, sizeof(double) * SPEED_BUFFER_SIZE);
-	memset(mSpeedBufferTx, 0, sizeof(double) * SPEED_BUFFER_SIZE);
-	memset(mSpeedBufferPRx, 0, sizeof(double) * SPEED_BUFFER_SIZE);
-	memset(mSpeedBufferPTx, 0, sizeof(double) * SPEED_BUFFER_SIZE);
+void KNetStatsView::iconActivated(QSystemTrayIcon::ActivationReason reason) {
+	if (reason == QSystemTrayIcon::ActivationReason::Trigger) {
+		if (mStatistics->isVisible())
+			mStatistics->hideWindow();
+		else
+			mStatistics->showWindow();
+	} else if (reason == QSystemTrayIcon::ActivationReason::Context) {
+		mContextMenu->exec();
+	}
 }
-//
+
 //void KNetStatsView::paintEvent(QPaintEvent *ev) {
 //	QPainter paint(this);
 //	switch (mOptions.mViewMode) {
@@ -240,14 +240,3 @@ void KNetStatsView::resetBuffers() {
 //		x = width() - int(count + 1);
 //	}
 //}
-
-void KNetStatsView::iconActivated(QSystemTrayIcon::ActivationReason reason) {
-	if (reason == QSystemTrayIcon::ActivationReason::Trigger) {
-		if (mStatistics->isVisible())
-			mStatistics->hideWindow();
-		else
-			mStatistics->showWindow();
-	} else if (reason == QSystemTrayIcon::ActivationReason::Context) {
-		mContextMenu->exec();
-	}
-}

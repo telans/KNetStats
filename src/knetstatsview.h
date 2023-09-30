@@ -11,76 +11,11 @@
 class KNetStatsView : public QWidget {
 Q_OBJECT
 
-	enum {
+public:
+	enum BUFFER_SIZES {
 		HISTORY_SIZE = 50,    // Tamanho do historico.
 		SPEED_BUFFER_SIZE = 10    // Tamanho do buffer usado para calcular a velocidade
 	};
-
-public:
-	KNetStatsView(KNetStats *parent, const QString &interface);
-
-	~KNetStatsView() { delete mStatistics; }
-
-	void updateViewOptions();
-
-	// read a value from /sys/class/net/interface/name
-	unsigned long long readInterfaceNumValue(const char *name);
-
-	const double *speedHistoryRx() const { return mSpeedHistoryRx; }
-
-	const double *speedHistoryTx() const { return mSpeedHistoryTx; }
-
-	const int historyBufferSize() const { return HISTORY_SIZE; }
-
-	const int *historyPointer() const { return &mSpeedHistoryPtr; }
-
-	const double *maxSpeed() const { return &mMaxSpeed; }
-
-	///	The current monitored network interface
-	inline const QNetworkInterface &interface() const;
-
-	///	The current Update Interval in miliseconds
-	inline int updateInterval() const;
-
-	/// We are in textmode?
-	inline ViewMode viewMode() const;
-
-	inline unsigned long long totalBytesRx() const;
-
-	inline unsigned long long totalBytesTx() const;
-
-	inline unsigned long long totalPktRx() const;
-
-	inline unsigned long long totalPktTx() const;
-
-	inline double byteSpeedRx() const;
-
-	inline double byteSpeedTx() const;
-
-	inline double pktSpeedRx() const;
-
-	inline double pktSpeedTx() const;
-
-	const ViewOptions *getViewOptions() const { return &mOptions; }
-
-protected:
-
-//	void paintEvent(QPaintEvent *ev);
-
-private:
-	QString mSysDevPath;            // Path to the device.
-	bool mCarrier;                    // Interface carrier is on?
-
-	QSystemTrayIcon *trayIcon;
-	QMenu *mContextMenu;        // Global ContextMenu
-	Statistics *mStatistics;        // Statistics window
-	QNetworkInterface mInterface;                // Current interface
-	ViewOptions mOptions;            // View options
-
-	// Icons
-	QIcon mIconError, mIconNone, mIconTx, mIconRx, mIconBoth;
-	QIcon *mCurrentIcon{};            // Current state
-	QTimer *mTimer;                    // Timer
 
 	//	Rx e Tx to bytes and packets
 	unsigned long long mBRx{}, mBTx{}, mPRx{}, mPTx{};
@@ -93,14 +28,45 @@ private:
 	int mSpeedBufferPtr{};
 	int mSpeedHistoryPtr{};
 
-	bool mFirstUpdate;
-
 	// History buffer TODO: Make it configurable!
 	double mSpeedHistoryRx[HISTORY_SIZE]{};
 	double mSpeedHistoryTx[HISTORY_SIZE]{};
 	double mMaxSpeed{};
 	int mMaxSpeedAge{};
+	QString mInterface;                // Current interface
 
+	KNetStatsView(KNetStats *parent, const QString &interface);
+
+	~KNetStatsView() override { delete mStatistics; }
+
+	void updateViewOptions();
+
+	// read a value from /sys/class/net/interface/name
+	unsigned long long readInterfaceNumValue(const char *name);
+
+	///	The current Update Interval in miliseconds
+	inline int updateInterval() const;
+
+	/// We are in textmode?
+	inline ViewMode viewMode() const;
+
+	const ViewOptions *getViewOptions() const { return &mOptions; }
+
+protected:
+
+//	void paintEvent(QPaintEvent *ev);
+private:
+	QString mSysDevPath;            // Path to the device.
+	bool mCarrier;                    // Interface carrier is on?
+	QSystemTrayIcon *mTrayIcon;
+	QMenu *mContextMenu;
+	Statistics *mStatistics;        // Statistics window
+	ViewOptions mOptions;            // View options
+	// Icons
+	QIcon mIconError, mIconNone, mIconTx, mIconRx, mIconBoth;
+	QIcon *mCurrentIcon{};            // Current state
+	QTimer *mTimer;                    // Timer
+	bool mFirstUpdate;
 
 	// set up the view.
 	void setupTrayIcon();
@@ -109,14 +75,9 @@ private:
 
 	void drawGraphic(QPainter &paint);
 
-	// Reset speed and history buffers
-	void resetBuffers();
-
 	// calc tha max. speed stored in the history buffer
 	inline void calcMaxSpeed();
 
-	// calc the speed using a speed buffer
-	static inline double calcSpeed(const double *buffer);
 
 private slots:
 
@@ -149,48 +110,12 @@ double KNetStatsView::calcSpeed(const double *buffer) {
 	return total / SPEED_BUFFER_SIZE;
 }
 
-const QNetworkInterface &KNetStatsView::interface() const {
-	return mInterface;
-}
-
 int KNetStatsView::updateInterval() const {
 	return mOptions.mUpdateInterval;
 }
 
 ViewMode KNetStatsView::viewMode() const {
 	return mOptions.mViewMode;
-}
-
-unsigned long long KNetStatsView::totalBytesRx() const {
-	return mTotalBytesRx;
-}
-
-unsigned long long KNetStatsView::totalBytesTx() const {
-	return mTotalBytesTx;
-}
-
-unsigned long long KNetStatsView::totalPktRx() const {
-	return mTotalPktRx;
-}
-
-unsigned long long KNetStatsView::totalPktTx() const {
-	return mTotalPktTx;
-}
-
-double KNetStatsView::byteSpeedRx() const {
-	return mSpeedHistoryRx[mSpeedHistoryPtr];
-}
-
-double KNetStatsView::byteSpeedTx() const {
-	return mSpeedHistoryTx[mSpeedHistoryPtr];
-}
-
-double KNetStatsView::pktSpeedRx() const {
-	return calcSpeed(mSpeedBufferPRx);
-}
-
-double KNetStatsView::pktSpeedTx() const {
-	return calcSpeed(mSpeedBufferPTx);
 }
 
 #endif

@@ -2,8 +2,6 @@
 #define STATISTICS_H
 
 #include "ui_statisticsbase.h"
-#include <qstring.h>
-#include <QNetworkInterface>
 
 class KNetStatsView;
 

@@ -9,10 +9,11 @@ Statistics::Statistics(KNetStatsView *parent)
 		: QDialog(parent), Ui::StatisticsBase(), mParent(parent) {
 
 	setupUi(this);
-	this->setWindowTitle(QString("Monitoring Interface %1 - KNetStats").arg(parent->interface().name()));
-	auto *chart = new Chart(parent->speedHistoryTx(), parent->speedHistoryRx(), parent->historyBufferSize(),
-							parent->historyPointer(), parent->maxSpeed(),
-							parent->getViewOptions());
+	this->setWindowTitle(QString("Monitoring Interface %1 - KNetStats").arg(parent->mInterface));
+
+	auto *chart = new Chart(parent->getViewOptions(), parent->mSpeedHistoryTx, parent->mSpeedHistoryRx,
+							&parent->mMaxSpeed,
+							&parent->mSpeedHistoryPtr, KNetStatsView::HISTORY_SIZE);
 	mChart->addWidget(chart);
 	this->update();
 
@@ -25,18 +26,18 @@ Statistics::Statistics(KNetStatsView *parent)
 }
 
 void Statistics::updateStatistics() {
-	mMaxSpeed->setText(this->locale().formattedDataSize(*mParent->maxSpeed()) + +"/s");
-	mBRx->setText(this->locale().formattedDataSize(mParent->totalBytesRx()));
-	mBTx->setText(this->locale().formattedDataSize(mParent->totalBytesTx()));
-	mByteSpeedRx->setText(this->locale().formattedDataSize(mParent->byteSpeedRx()) + "/s");
-	mByteSpeedTx->setText(this->locale().formattedDataSize(mParent->byteSpeedTx()) + "/s");
+	mMaxSpeed->setText(this->locale().formattedDataSize(mParent->mMaxSpeed) + +"/s");
+	mBRx->setText(this->locale().formattedDataSize(mParent->mTotalBytesRx));
+	mBTx->setText(this->locale().formattedDataSize(mParent->mTotalBytesTx));
+	mByteSpeedRx->setText(this->locale().formattedDataSize(mParent->mSpeedHistoryRx[mParent->mSpeedHistoryPtr]) + "/s");
+	mByteSpeedTx->setText(this->locale().formattedDataSize(mParent->mSpeedHistoryTx[mParent->mSpeedHistoryPtr]) + "/s");
 
-	mPRx->setText(QString::number(mParent->totalPktRx()));
-	mPTx->setText(QString::number(mParent->totalPktTx()));
-	mPktSpeedRx->setText(QString::number(mParent->pktSpeedRx(), 'f', 1) + "pkts/s");
-	mPktSpeedTx->setText(QString::number(mParent->pktSpeedTx(), 'f', 1) + "pkts/s");
+	mPRx->setText(QString::number(mParent->mTotalPktRx));
+	mPTx->setText(QString::number(mParent->mTotalPktTx));
+	mPktSpeedRx->setText(QString::number(KNetStatsView::calcSpeed(mParent->mSpeedBufferPTx), 'f', 1) + "pkts /s");
+	mPktSpeedTx->setText(QString::number(KNetStatsView::calcSpeed(mParent->mSpeedBufferPRx), 'f', 1) + "pkts /s");
 
-	auto interface = QNetworkInterface::interfaceFromName(mParent->interface().name());
+	auto interface = QNetworkInterface::interfaceFromName(mParent->mInterface);
 	mMTU->setNum(interface.maximumTransmissionUnit());
 	if (interface.flags() & QNetworkInterface::IsRunning) {
 		QString ipStr, netmaskStr;
