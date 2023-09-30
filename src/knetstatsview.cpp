@@ -185,7 +185,10 @@ void KNetStatsView::updateStats() {
 
 unsigned long long KNetStatsView::readInterfaceNumValue(const char *name) {
 	// stdio functions appear to be more fast than QFile?
+	// TODO: Simplify this
 	FILE *fp = fopen((mSysDevPath + "statistics/" + name).toLatin1(), "r");
+	if (ferror(fp))
+		return 0;
 	unsigned long long retval;
 	fscanf(fp, "%llu", &retval);
 	fclose(fp);
