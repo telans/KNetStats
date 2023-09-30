@@ -12,8 +12,8 @@ extern const char *programName;
 KNetStatsView::KNetStatsView(KNetStats *parent, const QString &interface)
 		: mSysDevPath("/sys/class/net/" + interface + "/") {
 	mInterface = interface;
+	mCarrier = interfaceIsValid();
 	mFirstUpdate = true;
-	mCarrier = true;
 
 	mTimer = new QTimer(this);
 	mStatistics = new Statistics(this);
@@ -24,11 +24,20 @@ KNetStatsView::KNetStatsView(KNetStats *parent, const QString &interface)
 
 	KNetStats::readInterfaceConfig(interface, &mOptions);
 	setupTrayIcon();
+	setupView();
 
-	trayIcon->setToolTip(QString("Monitoring %1").arg(mInterface.name()));
-	trayIcon->setContextMenu(mContextMenu);
+	mTimer->start(mOptions.mUpdateInterval);
+	connect(mTrayIcon, &QSystemTrayIcon::activated, this, &KNetStatsView::iconActivated);
+}
+
+void KNetStatsView::setupView() {
+	if (!interfaceIsValid()) {
+		connect(mTimer, &QTimer::timeout, this, &KNetStatsView::checkMissingInterface);
+		return;
+	}
+
+	mTrayIcon->show();
 	connect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateStats);
-	connect(trayIcon, &QSystemTrayIcon::activated, this, &KNetStatsView::iconActivated);
 }
 
 void KNetStatsView::setupTrayIcon() {
@@ -43,17 +52,43 @@ void KNetStatsView::setupTrayIcon() {
 		mIconBoth = QIcon(":/img/theme" + QString::number(mOptions.mTheme) + "_both.png");
 		mCurrentIcon = &mIconNone;
 	}
-	mTimer->start(mOptions.mUpdateInterval);
-	trayIcon->setIcon(*mCurrentIcon);
-	trayIcon->show();
+	mTrayIcon->setToolTip(QString("Monitoring %1").arg(mInterface));
+	mTrayIcon->setContextMenu(mContextMenu);
+	mTrayIcon->setIcon(*mCurrentIcon);
+}
+
+void KNetStatsView::checkMissingInterface() {
+	if (interfaceIsValid()) {
+		mTrayIcon->show();
+		mTrayIcon->showMessage(programName, QString("Interface %1 reappeared!").arg(mInterface),
+							   QSystemTrayIcon::Information,
+							   3000);
+		disconnect(mTimer, &QTimer::timeout, this, &KNetStatsView::checkMissingInterface);
+		connect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateStats);
+	}
+}
+
+void KNetStatsView::interfaceMissing() {
+	mTrayIcon->showMessage(programName, QString("Interface %1 disappeared!").arg(mInterface),
+						   QSystemTrayIcon::Information,
+						   3000);
+	QApplication::processEvents();
+	mTrayIcon->hide();
+	disconnect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateStats);
+	connect(mTimer, &QTimer::timeout, this, &KNetStatsView::checkMissingInterface);
 }
 
 void KNetStatsView::updateViewOptions() {
-	KNetStats::readInterfaceConfig(mInterface.name(), &mOptions);
+	KNetStats::readInterfaceConfig(mInterface, &mOptions);
 	setupTrayIcon();
 }
 
 void KNetStatsView::updateStats() {
+	if (!interfaceIsValid()) {
+		interfaceMissing();
+		return;
+	}
+
 	FILE *fp = fopen((mSysDevPath + "carrier").toLatin1(), "r");
 	int carrierFlag = 0;
 

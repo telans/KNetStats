@@ -39,6 +39,7 @@ void Statistics::updateStatistics() {
 
 	auto interface = QNetworkInterface::interfaceFromName(mParent->mInterface);
 	mMTU->setNum(interface.maximumTransmissionUnit());
+	mMAC->setText(interface.hardwareAddress());
 	if (interface.flags() & QNetworkInterface::IsRunning) {
 		QString ipStr, netmaskStr;
 		for (const QNetworkAddressEntry &addr: interface.addressEntries()) {
@@ -47,11 +48,14 @@ void Statistics::updateStatistics() {
 		}
 		mIP->setText(ipStr.remove(QRegExp("\\n$")));
 		mNetmask->setText(netmaskStr.remove(QRegExp("\\n$")));
-	} else {
-		mIP->setText("Not Connected");
-		mNetmask->setText("Not Connected");
+		return;
 	}
-	mMAC->setText(interface.hardwareAddress());
+	mIP->setText("Not Connected");
+	mNetmask->setText("Not Connected");
+	if (!mParent->interfaceIsValid()) {
+		mMTU->setText("N/A");
+		mMAC->setText("N/A");
+	}
 }
 
 void Statistics::updateTabSize(int tabIndex) {

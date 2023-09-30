@@ -9,8 +9,9 @@ int main(int argc, char **argv) {
 	QResource::registerResource("knetstats.rcc");
 	QApplication::setOrganizationName("KNetStats");
 	QApplication::setApplicationName("KNetStats");
+	QApplication::setWindowIcon(QIcon(":/images/knetstats-32.png"));
+	QApplication::setQuitOnLastWindowClosed(false);
 	QApplication app(argc, argv);
-	app.setWindowIcon(QIcon(":/images/knetstats-32.png"));
 	KNetStats knetstats;
 
 	if (!knetstats.canStart())

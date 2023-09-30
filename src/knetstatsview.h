@@ -4,6 +4,7 @@
 #include <arpa/inet.h>
 #include <linux/netdevice.h>
 #include <QSystemTrayIcon>
+#include <dirent.h>
 #include "configure.h"
 #include "knetstats.h"
 #include "statistics.h"
@@ -52,6 +53,9 @@ public:
 
 	const ViewOptions *getViewOptions() const { return &mOptions; }
 
+	// calc the speed using a speed buffer
+	static inline double calcSpeed(const double *buffer);
+	inline bool interfaceIsValid() { return opendir(mSysDevPath.toLatin1()); };
 protected:
 
 //	void paintEvent(QPaintEvent *ev);
@@ -71,6 +75,9 @@ private:
 	// set up the view.
 	void setupTrayIcon();
 
+	void updateStats();
+
+
 	void drawText(QPainter &paint);
 
 	void drawGraphic(QPainter &paint);
@@ -81,9 +88,13 @@ private:
 
 private slots:
 
-	void updateStats();
+	void setupView();
+
+	void checkMissingInterface();
 
 	void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
+	void interfaceMissing();
 };
 
 void KNetStatsView::calcMaxSpeed() {
