@@ -1,24 +1,29 @@
+REQUIREMENTS
+============
+* cmake, g++
+* Qt >=5.15 with development packages
+* extra-cmake-modules
+* kf5-kwidgetsaddons development package
+
+For Fedora Linux
+sudo dnf install cmake gcc-c++ extra-cmake-modules kf5-kwidgetsaddons-devel qt5-qtbase-devel
+
+
 INSTALLATION
 ============
-type as root:
-./scons install
+tar xf knetstats.tar.gz
+cd knetstats
+mkdir BUILD && cd BUILD && cmake .. && make -j`nproc`
 
-Note.: We use SCons/BKSys as building tool, so you need Python installed on your system.
 
 RUNNING
 =======
 To run knetstats, type:
 knetstats
 
+
 CONTACT
 =======
-Any doubts or suggestions, hugo_pl@users.sourceforge.net
-For more info. visit: http://knetstats.sf.net
+@telans
 
-UNINSTALL
-=========
-Type:
-./scons -c install
-
---
-Hugo Parente Lima
+The initial KDE 3 idea and implementation courtesy of Hugo Parente Lima.
