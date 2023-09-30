@@ -82,7 +82,7 @@ void KNetStats::readInterfaceConfig(const QString &ifName, ViewOptions *opts) {
 
 	settings.beginGroup(ifName);
 	// General Settings
-	opts->mUpdateInterval = settings.value("UpdateInterval", 300).toInt();
+	opts->mUpdateInterval = settings.value("UpdateInterval", 500).toInt();
 	opts->mMonitoring = settings.value("Monitoring", true).toBool();
 	opts->mTheme = settings.value("Theme", defaultTheme).toInt();
 	// Graph Settings
