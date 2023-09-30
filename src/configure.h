@@ -27,7 +27,7 @@ typedef QMap<QString, ViewOptions> OptionsMap;
 class Configure : public QDialog, public Ui::ConfigureBase {
 Q_OBJECT
 public:
-	explicit Configure(QWidget *parent, const QList<QNetworkInterface> &ifs);
+	explicit Configure(QWidget *parent);
 
 	bool canSaveConfig();
 
@@ -42,6 +42,11 @@ protected slots:
 private:
 	QString mCurrentItem;
 	OptionsMap mConfig;
+	QIcon *mInterfaceIcon;
+
+private slots:
+
+	void refreshInterfaces();
 };
 
 #endif

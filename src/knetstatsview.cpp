@@ -10,7 +10,7 @@
 extern const char *programName;
 
 KNetStatsView::KNetStatsView(KNetStats *parent, const QString &interface)
-		: mSysDevPath("/sys/class/net/" + interface + "/") {
+		: mParent(parent), mSysDevPath("/sys/class/net/" + interface + "/") {
 	mInterface = interface;
 	mCarrier = interfaceIsValid();
 	mFirstUpdate = true;
@@ -19,7 +19,7 @@ KNetStatsView::KNetStatsView(KNetStats *parent, const QString &interface)
 	mStatistics = new Statistics(this);
 	mTrayIcon = new QSystemTrayIcon(this);
 	mContextMenu = new QMenu(this);
-	mContextMenu->addAction("Configure Interfaces", parent, &KNetStats::configure);
+	mContextMenu->addAction("Configure Interfaces", parent, &KNetStats::showConfigure);
 	mContextMenu->addAction("Quit KNetStats", parent, []() { QApplication::quit(); });
 
 	KNetStats::readInterfaceConfig(interface, &mOptions);
@@ -61,6 +61,7 @@ void KNetStatsView::checkMissingInterface() {
 							   3000);
 		disconnect(mTimer, &QTimer::timeout, this, &KNetStatsView::checkMissingInterface);
 		connect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateStats);
+		mParent->checkTrayIconsAvailable();
 	}
 }
 
@@ -72,6 +73,7 @@ void KNetStatsView::interfaceMissing() {
 	mTrayIcon->hide();
 	disconnect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateStats);
 	connect(mTimer, &QTimer::timeout, this, &KNetStatsView::checkMissingInterface);
+	mParent->checkTrayIconsAvailable();
 }
 
 void KNetStatsView::updateViewOptions() {
@@ -98,20 +100,21 @@ void KNetStatsView::updateStats() {
 	if (carrierFlag == '0') { // carrier down
 		if (mCarrier) {
 			mCarrier = false;
-			mTrayIcon->showMessage(programName, QString("%1 is down!").arg(mInterface),
+			mTrayIcon->showMessage(programName, QString("Interface %1 is down!").arg(mInterface),
 								   QSystemTrayIcon::Information,
 								   3000);
 			QApplication::processEvents();
 			mTrayIcon->hide();
+			mParent->checkTrayIconsAvailable();
 		}
 		return;
 	} else if (!mCarrier) { // carrier up
 		mCarrier = true;
 		mTrayIcon->show();
-		mTrayIcon->showMessage(programName, QString("%1 is up!").arg(mInterface),
+		mTrayIcon->showMessage(programName, QString("Interface %1 is up!").arg(mInterface),
 							   QSystemTrayIcon::Information,
 							   3000);
-		QApplication::processEvents();
+		mParent->checkTrayIconsAvailable();
 	}
 
 	unsigned long long brx = readInterfaceNumValue("rx_bytes");

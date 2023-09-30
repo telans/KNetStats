@@ -7,24 +7,42 @@
 
 #include "ui_configurebase.h"
 
-Configure::Configure(QWidget *parent, const QList<QNetworkInterface> &ifs) : QDialog(parent), Ui::ConfigureBase() {
+Configure::Configure(QWidget *parent) : QDialog(parent), Ui::ConfigureBase() {
 	setupUi(this);
-	QIcon iconPCI = QIcon(":/img/icon_pci.png");
+	mInterfaceIcon = new QIcon(":/img/icon_pci.png");
 	mInterfaces->setViewMode(QListWidget::ListMode);
-	// Clone the configuration.
-	for (auto &it: ifs) {
-		auto *item = new QListWidgetItem(iconPCI, it.name());
-		mInterfaces->insertItem(it.index(), item);
-		KNetStats::readInterfaceConfig(it.name(), &mConfig[it.name()]);
-	}
 
-	mInterfaces->setCurrentRow(0);
-	changeInterface(mInterfaces->currentItem());
+	refreshInterfaces();
+	connect(this->mRefreshBtn, &QPushButton::clicked, this, &Configure::refreshInterfaces);
 	connect(mInterfaces, &QListWidget::itemClicked, this, &Configure::changeInterface);
 	connect(mTheme, qOverload<int>(&QComboBox::activated), this, &Configure::changeTheme);
 }
 
+void Configure::refreshInterfaces() {
+	int currentRow = mInterfaces->currentRow();
+
+	while (mInterfaces->count() > 0) {
+		auto interface = mInterfaces->takeItem(0);
+		delete interface;
+	}
+
+	auto interfaces = QNetworkInterface::allInterfaces();
+	for (auto &it: interfaces) {
+		auto *item = new QListWidgetItem(*mInterfaceIcon, it.name());
+		mInterfaces->insertItem(it.index(), item);
+		KNetStats::readInterfaceConfig(it.name(), &mConfig[it.name()]);
+	}
+
+	auto *item = mInterfaces->item(currentRow);
+	if (!item)
+		item = mInterfaces->item(0);
+	mInterfaces->setCurrentItem(item);
+	changeInterface(item);
+}
+
 void Configure::changeInterface(QListWidgetItem *item) {
+	if (!item)
+		return;
 	QString interface = item->text();
 
 	if (!mCurrentItem.isEmpty()) {

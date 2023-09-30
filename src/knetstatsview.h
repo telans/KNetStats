@@ -54,10 +54,11 @@ public:
 	static inline double calcSpeed(const double *buffer);
 
 	inline bool interfaceIsValid() { return opendir(mSysDevPath.toLatin1()); };
-protected:
 
-//	void paintEvent(QPaintEvent *ev);
+	inline bool trayIconVisible() { return mTrayIcon->isVisible(); }
+
 private:
+	KNetStats *mParent;
 	QString mSysDevPath;            // Path to the device.
 	bool mCarrier;                    // Interface carrier is on?
 	QSystemTrayIcon *mTrayIcon;

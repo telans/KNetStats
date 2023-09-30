@@ -4,6 +4,7 @@
 #include <set>
 #include "configure.h"
 #include <QSettings>
+#include <QSystemTrayIcon>
 
 class KNetStatsView;
 
@@ -14,17 +15,11 @@ public:
 
 	static void readInterfaceConfig(const QString &ifName, ViewOptions *opts);
 
-	/**
-	*	Exists at least 1 view?
-	*/
-	bool canStart() const {
-		return mCanStart;
-	}
+	void checkTrayIconsAvailable();
 
 public slots:
 
-	/// Display configure the dialog box
-	bool configure();
+	void showConfigure() { mConfigure->show(); };
 
 	/// Configure dialog OK button
 	void configOk();
@@ -36,10 +31,14 @@ public slots:
 	void configCancel();
 
 private:
-	Configure *mConfigure;
 	typedef QHash<QString, KNetStatsView *> TrayIconMap;
+	QSystemTrayIcon *mBackupTrayIcon;
 	TrayIconMap mViews;
-	bool mCanStart;
+	Configure *mConfigure;
+
+	void setupConfigure();
+
+	void setupBackupTrayIcon();
 
 	void saveConfig(const OptionsMap &options);
 };

@@ -1,6 +1,7 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource>
     <file>knetstats-32.png</file>
+    <file>img/interfaces_missing.png</file>
     <file>img/icon_pci.png</file>
     <file>img/theme0_both.png</file>
     <file>img/theme0_error.png</file>

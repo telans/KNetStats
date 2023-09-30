@@ -7,14 +7,17 @@
 #include <QSettings>
 #include <QMessageBox>
 
-KNetStats::KNetStats() : QDialog(nullptr, Qt::Window), mCanStart(true), mConfigure(nullptr) {
+extern const char *programName;
+
+KNetStats::KNetStats() : QDialog(nullptr, Qt::Window), mConfigure(nullptr) {
 	// read the current views from config file
 	QSettings settings;
 	QStringList views = settings.value("CurrentViews", QStringList()).toStringList();
 
+	setupConfigure();
+	setupBackupTrayIcon();
 	if (views.empty()) {    // no views... =/, display the configuration dialog
-		if (!this->configure())
-			mCanStart = false;
+		mConfigure->show();
 	} else {
 		// start the views
 		for (auto &view: views) {
@@ -22,6 +25,52 @@ KNetStats::KNetStats() : QDialog(nullptr, Qt::Window), mCanStart(true), mConfigu
 			mViews[view] = kview;
 		}
 	}
+}
+
+void KNetStats::checkTrayIconsAvailable() {
+	for (auto view: mViews) {
+		if (view->trayIconVisible()) {
+			mBackupTrayIcon->hide();
+			return;
+		}
+	}
+	mBackupTrayIcon->show();
+}
+
+void KNetStats::setupConfigure() {
+	if (QNetworkInterface::allInterfaces().empty()) {
+		QMessageBox msg(this);
+		msg.setIcon(QMessageBox::Icon::Information);
+		msg.setText("Error");
+		msg.setInformativeText("Could not find any network interfaces!");
+		msg.exec();
+		mBackupTrayIcon->show();
+		mBackupTrayIcon->showMessage(programName, QString("Could not find any network interfaces!"),
+									 QSystemTrayIcon::Information,
+									 3000);
+	}
+
+	mConfigure = new Configure(this);
+	connect(mConfigure->mOk, &QPushButton::clicked, this, &KNetStats::configOk);
+	connect(mConfigure->mApply, &QPushButton::clicked, this, &KNetStats::configApply);
+	connect(mConfigure->mCancel, &QPushButton::clicked, this, &KNetStats::configCancel);
+}
+
+void KNetStats::setupBackupTrayIcon() {
+	mBackupTrayIcon = new QSystemTrayIcon(QIcon(":/img/interfaces_missing.png"), this);
+	mBackupTrayIcon->setToolTip("All Interfaces Unavailable");
+	auto *mContextMenu = new QMenu(this);
+	mContextMenu->addAction("Configure Interfaces", this, &KNetStats::showConfigure);
+	mContextMenu->addAction("Quit KNetStats", this, []() { QApplication::quit(); });
+	mBackupTrayIcon->setContextMenu(mContextMenu);
+
+	connect(mBackupTrayIcon, &QSystemTrayIcon::activated, this, [this]() {
+		if (mConfigure->isVisible()) {
+			mConfigure->hide();
+			return;
+		}
+		mConfigure->show();
+	});
 }
 
 void KNetStats::readInterfaceConfig(const QString &ifName, ViewOptions *opts) {
@@ -39,30 +88,6 @@ void KNetStats::readInterfaceConfig(const QString &ifName, ViewOptions *opts) {
 	opts->mChartBgColor = settings.value("ChartBgColor", "#000000").toString();
 	opts->mChartTransparentBackground = settings.value("ChartUseTransparentBackground", false).toBool();
 	settings.endGroup();
-}
-
-bool KNetStats::configure() {
-	if (mConfigure)
-		mConfigure->show();
-	else {
-		QList<QNetworkInterface> ifs = QNetworkInterface::allInterfaces();
-
-		if (ifs.empty()) {
-			QMessageBox msg(this);
-			msg.setIcon(QMessageBox::Icon::Information);
-			msg.setText("Error");
-			msg.setInformativeText("Could not find any network interfaces.\nKNetStats will quit now.");
-			msg.exec();
-			return false;
-		}
-
-		mConfigure = new Configure(this, ifs);
-		connect(mConfigure->mOk, &QPushButton::clicked, this, &KNetStats::configOk);
-		connect(mConfigure->mApply, &QPushButton::clicked, this, &KNetStats::configApply);
-		connect(mConfigure->mCancel, &QPushButton::clicked, this, &KNetStats::configCancel);
-		mConfigure->show();
-	}
-	return true;
 }
 
 void KNetStats::configOk() {

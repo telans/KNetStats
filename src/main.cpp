@@ -14,7 +14,5 @@ int main(int argc, char **argv) {
 	QApplication app(argc, argv);
 	KNetStats knetstats;
 
-	if (!knetstats.canStart())
-		return 1;
 	return QApplication::exec();
 }
