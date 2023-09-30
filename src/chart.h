@@ -9,19 +9,26 @@ class QPaintEvent;
 class Chart : public QWidget {
 	Q_OBJECT
 public:
-	Chart(const double *uploadBuffer, const double *downloadBuffer, int bufferSize, const int *ptr,
-		  const double *maxspeed, const ViewOptions *interfaceOptions);
+	Chart(const ViewOptions *interfaceOptions, const double *uploadBuffer, const double *downloadBuffer,
+		  const double *maxspeed, const int *ptr, int bufferSize) : QWidget() {
+		mUplBuffer = uploadBuffer;
+		mDldBuffer = downloadBuffer;
+		mBufferSize = bufferSize;
+		mPtr = ptr;
+		mMaxSpeed = maxspeed;
+		mInterfaceOptions = interfaceOptions;
+	};
 
 protected:
 	void paintEvent(QPaintEvent *event) override;
 
 private:
+	const ViewOptions *mInterfaceOptions;
 	const double *mUplBuffer;
 	const double *mDldBuffer;
-	const int mBufferSize;
-	const int *mPtr;
 	const double *mMaxSpeed;
-	const ViewOptions *mInterfaceOptions;
+	const int *mPtr;
+	int mBufferSize;
 };
 
 #endif
