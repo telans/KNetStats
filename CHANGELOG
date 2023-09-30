@@ -1,3 +1,12 @@
+vNEXT
+- Almost a complete rewrite using only Qt5 and KF5WidgetsAddons
+- Changed the build system from scons to CMake
+- Network information is now updated dynamically
+- Added IPv6 information
+- Fixed interfaces detection
+- Dropped alternate tray view modes (not supported by Qt5)
+- A ton of tiny fixes
+
 v1.5
 
 - Added "Chart view".
