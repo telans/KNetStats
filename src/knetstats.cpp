@@ -51,9 +51,12 @@ void KNetStats::setupConfigure() {
 	}
 
 	mConfigure = new Configure(this);
-	connect(mConfigure->mOk, &QPushButton::clicked, this, &KNetStats::configOk);
+	connect(mConfigure->mOk, &QPushButton::clicked, this, [this]() {
+		configApply();
+		mConfigure->hide();
+	});
 	connect(mConfigure->mApply, &QPushButton::clicked, this, &KNetStats::configApply);
-	connect(mConfigure->mCancel, &QPushButton::clicked, this, &KNetStats::configCancel);
+	connect(mConfigure->mCancel, &QPushButton::clicked, this, [this]() { mConfigure->hide(); });
 }
 
 void KNetStats::setupBackupTrayIcon() {
@@ -90,25 +93,9 @@ void KNetStats::readInterfaceConfig(const QString &ifName, ViewOptions *opts) {
 	settings.endGroup();
 }
 
-void KNetStats::configOk() {
-	if (mConfigure->canSaveConfig()) {
-		saveConfig(mConfigure->options());
-		delete mConfigure;
-		mConfigure = nullptr;
-	}
-}
-
 void KNetStats::configApply() {
 	if (mConfigure->canSaveConfig())
 		saveConfig(mConfigure->options());
-}
-
-void KNetStats::configCancel() {
-	delete mConfigure;
-	mConfigure = nullptr;
-
-	if (mViews.empty())
-		QApplication::quit();
 }
 
 void KNetStats::saveConfig(const OptionsMap &options) {
@@ -146,6 +133,7 @@ void KNetStats::saveConfig(const OptionsMap &options) {
 				mViews.erase(trayIcon);
 			}
 		}
+		checkTrayIconsAvailable();
 	}
 
 	settings.setValue("AllViews", ifs);

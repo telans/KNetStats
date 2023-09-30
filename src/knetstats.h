@@ -21,14 +21,8 @@ public slots:
 
 	void showConfigure() { mConfigure->show(); };
 
-	/// Configure dialog OK button
-	void configOk();
-
 	/// Configure dialog Apply button
 	void configApply();
-
-	/// Configure dialog Cancel button
-	void configCancel();
 
 private:
 	typedef QHash<QString, KNetStatsView *> TrayIconMap;
