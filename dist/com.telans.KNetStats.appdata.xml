@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id>com.telans.KNetStats</id>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-2.0</project_license>
+	<name>KNetStats</name>
+	<summary>Simple network interface &amp; statistics viewer</summary>
+	<description>
+		<p>KNetStats is a simple Qt network interface viewer with an associated tray icon to monitor activity. It displays and graphs data transmission information for easy visualisation. It also displays information such as associated IPs and MAC addresses.</p>
+	</description>
+    <categories>
+        <category>Network</category>
+        <category>Utility</category>
+    </categories>
+	<launchable type="desktop-id">com.telans.KNetStats.desktop</launchable>
+	<screenshots>
+		<screenshot type="default">
+			<image>https://raw.githubusercontent.com/telans/KNetStats/main/.github/screenshots/StatisticsWindow.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/telans/KNetStats/main/.github/screenshots/ConfigureWindow.png</image>
+		</screenshot>
+		<screenshot>
+			<image>https://raw.githubusercontent.com/telans/KNetStats/main/.github/screenshots/TrayIcons.png</image>
+		</screenshot>
+	</screenshots>
+	<url type="homepage">https://github.com/telans/KNetStats</url>
+	<developer_name>telans</developer_name>
+    <releases>
+    </releases>
+	<provides>
+		<binary>knetstats</binary>
+	</provides>
+</component>
