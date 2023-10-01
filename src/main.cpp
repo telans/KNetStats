@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
 	QResource::registerResource("knetstats.rcc");
 	QApplication::setOrganizationName("KNetStats");
 	QApplication::setApplicationName("KNetStats");
-	QApplication::setWindowIcon(QIcon(":/images/knetstats-32.png"));
+	QApplication::setDesktopFileName("com.telans.KNetStats");
 	QApplication::setQuitOnLastWindowClosed(false);
 	QApplication app(argc, argv);
 	KNetStats knetstats;

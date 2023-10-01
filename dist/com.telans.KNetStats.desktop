@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=KNetStats
+GenericName=Network Interface & Statistics Viewer
+Type=Application
+Exec=knetstats
+Icon=com.telans.KNetStats
+StartupNotify=true
+StartupWMClass=knetstats
+Comment=Simple network interface & statistics viewer
+Categories=Qt;Network;Utility;
+Terminal=false
