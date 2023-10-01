@@ -64,7 +64,7 @@ jobs:
       run: |
         echo "Installing Build Dependencies"
         sudo apt-get update
-        sudo apt-get install qtbase5-dev libkf5widgetsaddons5 extra-cmake-modules
+        sudo apt-get install qtbase5-dev libkf5widgetsaddons-dev extra-cmake-modules
 
     - name: Build KNetStats
       uses: github/codeql-action/autobuild@v2
