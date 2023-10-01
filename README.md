@@ -20,14 +20,15 @@
 
 ## Installation:
 
-If you wish to install a prebuilt release, please check the <a href=https://github.com/telans/KNetStats/releases>Releases page</a>. Otherwise, building instructions are provided below:
+If you wish to install a prebuilt release, please check the <a href=https://github.com/telans/KNetStats/releases>Releases page</a>. An AUR package exists under the name <a href="https://aur.archlinux.org/packages/knetstats">knetstats</a>. \
+Otherwise, building instructions are provided below:
 
 ### Prerequisites:
 
 An RPM SPEC file (untested) and an Arch PKGBUILD is provided within `dist/`. You can use those to install KNetStats on the appropriate distros.
 
 Manually building KNetStats requires Git and the following packages to be installed
- - Ubuntu: `cmake g++ qtbase5-dev libkf5widgetsaddons5 extra-cmake-modules`
+ - Ubuntu: `cmake g++ qtbase5-dev libkf5widgetsaddons-dev extra-cmake-modules`
  - Fedora: `cmake gcc-c++ qt5-qtbase-devel kf5-kwidgetsaddons-devel extra-cmake-modules`
  - Arch Linux: `cmake qt5-base kwidgetsaddons extra-cmake-modules`
 

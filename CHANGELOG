@@ -1,11 +1,11 @@
-vNEXT
-- Almost a complete rewrite using only Qt5 and KF5WidgetsAddons
-- Changed the build system from scons to CMake
-- Network information is now updated dynamically
-- Added IPv6 information
-- Fixed interfaces detection
-- Dropped alternate tray view modes (not supported by Qt5)
-- A ton of tiny fixes
+v2.0.0.alpha
+
+- Almost a complete rewrite porting to Qt5 and KF5WidgetsAddons
+- Changed the build system from Scons to CMake
+- Network details are now updated dynamically
+- Support for all address types, such as IPv6 information
+- Dropped alternate tray view modes i.e. text (would require working around QSystemTrayIcon)
+- Many smaller bug fixes and QoL updates
 
 v1.5
 
