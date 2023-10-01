@@ -30,7 +30,7 @@ private:
 	TrayIconMap mViews;
 	Configure *mConfigure;
 
-	void setupConfigure();
+	void setup();
 
 	void setupBackupTrayIcon();
 

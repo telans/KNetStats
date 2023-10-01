@@ -14,8 +14,7 @@ KNetStats::KNetStats() : QDialog(nullptr, Qt::Window), mConfigure(nullptr) {
 	QSettings settings;
 	QStringList views = settings.value("CurrentViews", QStringList()).toStringList();
 
-	setupConfigure();
-	setupBackupTrayIcon();
+	setup();
 	if (views.empty()) {    // no views... =/, display the configuration dialog
 		mConfigure->show();
 	} else {
@@ -25,6 +24,7 @@ KNetStats::KNetStats() : QDialog(nullptr, Qt::Window), mConfigure(nullptr) {
 			mViews[view] = kview;
 		}
 	}
+	checkTrayIconsAvailable();
 }
 
 void KNetStats::checkTrayIconsAvailable() {
@@ -37,20 +37,19 @@ void KNetStats::checkTrayIconsAvailable() {
 	mBackupTrayIcon->show();
 }
 
-void KNetStats::setupConfigure() {
+void KNetStats::setup() {
+	mConfigure = new Configure(this);
+	setupBackupTrayIcon();
+
 	if (QNetworkInterface::allInterfaces().empty()) {
 		QMessageBox msg(this);
-		msg.setIcon(QMessageBox::Icon::Information);
-		msg.setText("Error");
+		msg.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+		msg.setIcon(QMessageBox::Icon::Warning);
+		msg.setText("Warning:");
 		msg.setInformativeText("Could not find any network interfaces!");
 		msg.exec();
-		mBackupTrayIcon->show();
-		mBackupTrayIcon->showMessage(programName, QString("Could not find any network interfaces!"),
-									 QSystemTrayIcon::Information,
-									 3000);
 	}
 
-	mConfigure = new Configure(this);
 	connect(mConfigure->mOk, &QPushButton::clicked, this, [this]() {
 		configApply();
 		mConfigure->hide();
@@ -84,6 +83,7 @@ void KNetStats::readInterfaceConfig(const QString &ifName, ViewOptions *opts) {
 	// General Settings
 	opts->mUpdateInterval = settings.value("UpdateInterval", 500).toInt();
 	opts->mMonitoring = settings.value("Monitoring", true).toBool();
+	opts->mNotifications = settings.value("DisplayNotifications", true).toBool();
 	opts->mTheme = settings.value("Theme", defaultTheme).toInt();
 	// Graph Settings
 	opts->mChartUplColor = settings.value("ChartUplColor", "#FF0000").toString();
@@ -112,6 +112,7 @@ void KNetStats::saveConfig(const OptionsMap &options) {
 		// General Options
 		settings.setValue("UpdateInterval", opt.mUpdateInterval);
 		settings.setValue("Monitoring", opt.mMonitoring);
+		settings.setValue("DisplayNotifications", opt.mNotifications);
 		settings.setValue("Theme", opt.mTheme);
 		// Chart Options
 		settings.setValue("ChartUplColor", opt.mChartUplColor);

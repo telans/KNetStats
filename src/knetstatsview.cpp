@@ -57,19 +57,21 @@ void KNetStatsView::setupTrayIcon() {
 void KNetStatsView::checkMissingInterface() {
 	if (interfaceIsValid()) {
 		mTrayIcon->show();
-		mTrayIcon->showMessage(programName, QString("Interface %1 reappeared!").arg(mInterface),
-							   QSystemTrayIcon::Information,
-							   3000);
+		if (mOptions.mNotifications)
+			mTrayIcon->showMessage(programName, QString("Interface %1 reappeared!").arg(mInterface),
+								   QSystemTrayIcon::Information,
+								   3000);
 		disconnect(mTimer, &QTimer::timeout, this, &KNetStatsView::checkMissingInterface);
 		connect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateStats);
-		mParent->checkTrayIconsAvailable();
 	}
+	mParent->checkTrayIconsAvailable();
 }
 
 void KNetStatsView::interfaceMissing() {
-	mTrayIcon->showMessage(programName, QString("Interface %1 disappeared!").arg(mInterface),
-						   QSystemTrayIcon::Information,
-						   3000);
+	if (mOptions.mNotifications)
+		mTrayIcon->showMessage(programName, QString("Interface %1 disappeared!").arg(mInterface),
+							   QSystemTrayIcon::Information,
+							   3000);
 	QApplication::processEvents();
 	mTrayIcon->hide();
 	disconnect(mTimer, &QTimer::timeout, this, &KNetStatsView::updateStats);
@@ -101,9 +103,10 @@ void KNetStatsView::updateStats() {
 	if (carrierFlag == '0') { // carrier down
 		if (mCarrier) {
 			mCarrier = false;
-			mTrayIcon->showMessage(programName, QString("Interface %1 is down!").arg(mInterface),
-								   QSystemTrayIcon::Information,
-								   3000);
+			if (mOptions.mNotifications)
+				mTrayIcon->showMessage(programName, QString("Interface %1 is down!").arg(mInterface),
+									   QSystemTrayIcon::Information,
+									   3000);
 			QApplication::processEvents();
 			mTrayIcon->hide();
 			mParent->checkTrayIconsAvailable();
@@ -112,9 +115,10 @@ void KNetStatsView::updateStats() {
 	} else if (!mCarrier) { // carrier up
 		mCarrier = true;
 		mTrayIcon->show();
-		mTrayIcon->showMessage(programName, QString("Interface %1 is up!").arg(mInterface),
-							   QSystemTrayIcon::Information,
-							   3000);
+		if (mOptions.mNotifications)
+			mTrayIcon->showMessage(programName, QString("Interface %1 is up!").arg(mInterface),
+								   QSystemTrayIcon::Information,
+								   3000);
 		mParent->checkTrayIconsAvailable();
 	}
 

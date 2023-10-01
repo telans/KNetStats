@@ -13,6 +13,7 @@ struct ViewOptions {
 	// general
 	int mUpdateInterval;
 	bool mMonitoring;
+	bool mNotifications;
 	// icon view
 	int mTheme;
 	// chart view

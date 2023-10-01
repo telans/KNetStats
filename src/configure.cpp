@@ -50,6 +50,7 @@ void Configure::changeInterface(QListWidgetItem *item) {
 		ViewOptions &oldview = mConfig[mCurrentItem];
 		// general options
 		oldview.mMonitoring = mMonitoringInterface->isChecked();
+		oldview.mNotifications = mDisplayNotifications->isChecked();
 		oldview.mUpdateInterval = mUpdateInterval->value();
 		// icon view
 		oldview.mTheme = mTheme->currentIndex();
@@ -66,6 +67,7 @@ void Configure::changeInterface(QListWidgetItem *item) {
 	ViewOptions &view = mConfig[interface];
 	// General options
 	mMonitoringInterface->setChecked(view.mMonitoring);
+	mDisplayNotifications->setChecked(view.mNotifications);
 	mUpdateInterval->setValue(view.mUpdateInterval);
 	mTheme->setCurrentIndex(view.mTheme);
 	// Chart Options
